@@ -227,7 +227,11 @@ ul { list-style: none; margin: 0; padding: 0; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: float 7s ease-in-out infinite;
+  animation: img-breathe 7s ease-in-out infinite;
+}
+@keyframes img-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .floating-card {
