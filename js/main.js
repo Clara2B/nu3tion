@@ -126,7 +126,7 @@
     if (!track) return;
 
     var cards = Array.from(track.children);
-    var index = 0;
+    var scrollTimer = null;
 
     function perView() {
       if (window.innerWidth <= 640) return 1;
@@ -136,11 +136,20 @@
 
     function maxIndex() { return Math.max(0, cards.length - perView()); }
 
+    function cardStep() {
+      return cards.length > 1 ? (cards[1].offsetLeft - cards[0].offsetLeft) : cards[0].offsetWidth;
+    }
+
+    function currentIndex() {
+      return Math.round(track.scrollLeft / cardStep());
+    }
+
     function renderDots() {
+      var idx = Math.max(0, Math.min(currentIndex(), maxIndex()));
       dotsWrap.innerHTML = '';
       for (var i = 0; i <= maxIndex(); i++) {
         var dot = document.createElement('span');
-        if (i === index) dot.classList.add('is-active');
+        if (i === idx) dot.classList.add('is-active');
         dot.addEventListener('click', function (i) {
           return function () { goTo(i); };
         }(i));
@@ -149,20 +158,25 @@
     }
 
     function goTo(newIndex) {
-      index = Math.max(0, Math.min(newIndex, maxIndex()));
-      var cardWidth = cards[0].getBoundingClientRect().width + 20;
-      track.style.transform = 'translateX(-' + (index * cardWidth) + 'px)';
-      renderDots();
+      var idx = Math.max(0, Math.min(newIndex, maxIndex()));
+      track.scrollTo({ left: idx * cardStep(), behavior: 'smooth' });
     }
 
-    prevBtn.addEventListener('click', function () { goTo(index - 1); });
-    nextBtn.addEventListener('click', function () { goTo(index + 1); });
-    window.addEventListener('resize', function () { goTo(index); });
+    prevBtn.addEventListener('click', function () { goTo(currentIndex() - 1); });
+    nextBtn.addEventListener('click', function () { goTo(currentIndex() + 1); });
+    track.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(renderDots, 100);
+    }, { passive: true });
+    window.addEventListener('resize', renderDots);
 
     var auto = setInterval(function () {
-      goTo(index + 1 > maxIndex() ? 0 : index + 1);
+      var idx = currentIndex();
+      goTo(idx + 1 > maxIndex() ? 0 : idx + 1);
     }, 5000);
-    track.closest('.carousel').addEventListener('mouseenter', function () { clearInterval(auto); });
+    function stopAuto() { clearInterval(auto); }
+    track.closest('.carousel').addEventListener('mouseenter', stopAuto);
+    track.addEventListener('touchstart', stopAuto, { passive: true });
 
     renderDots();
   }
@@ -286,7 +300,7 @@
         var el = document.createElement('div');
         el.className = 'cart-item';
         el.innerHTML =
-          '<div class="cart-item-media"></div>' +
+          '<div class="cart-item-media"><img src="img/Nu3tion 1.png" alt=""></div>' +
           '<div class="cart-item-info">' +
             '<p>' + item.name + '</p>' +
             '<span>' + item.flavor + ' · ' + formatBRL(item.price) + '</span>' +
