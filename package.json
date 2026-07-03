@@ -1,0 +1,12 @@
+{
+  "name": "nu3tion-site-modelo",
+  "version": "1.0.0",
+  "description": "Site modelo (landing page + loja em pagina unica) para aprovacao visual do cliente Nu3tion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
