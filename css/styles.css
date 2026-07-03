@@ -620,8 +620,32 @@ ul { list-style: none; margin: 0; padding: 0; }
 @media (max-width: 640px) {
   .persona-grid, .benefits-grid { grid-template-columns: 1fr; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
-  .steps-row { flex-direction: column; align-items: stretch; }
+  .steps-row { flex-direction: column; align-items: stretch; gap: 0; margin-top: 36px; }
   .step-connector { display: none; }
+  .step-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    gap: 16px;
+    padding-bottom: 30px;
+  }
+  .step-item:last-child { padding-bottom: 0; }
+  .step-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 56px;
+    left: 27px;
+    width: 2px;
+    height: calc(100% - 56px + 28px);
+    background: var(--color-border);
+  }
+  .step-visual { width: 56px; height: 56px; margin: 0; flex-shrink: 0; }
+  .step-visual svg { width: 26px; height: 26px; }
+  .step-number { width: 22px; height: 22px; font-size: 11px; top: -2px; right: -2px; }
+  .step-text { padding-top: 4px; }
+  .step-item h3 { margin-bottom: 4px; }
+  .step-item p { max-width: 280px; }
   .testimonial-card { flex: 0 0 100%; }
   .form-row--split { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; }
