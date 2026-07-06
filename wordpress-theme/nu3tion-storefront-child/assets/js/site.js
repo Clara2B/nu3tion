@@ -11,6 +11,7 @@
     setupCarousel();
     setupAccordion();
     setupNutritionTabs();
+    setupCepAutofill();
   }
 
   /* ---------- Header ---------- */
@@ -183,5 +184,61 @@
         });
       });
     });
+  }
+
+  /* ---------- Preenchimento automatico de endereco por CEP (checkout do WooCommerce) ----------
+   * Feito para o checkout classico do WooCommerce (campos #billing_postcode,
+   * #billing_address_1, #billing_city, #billing_state, #billing_neighborhood).
+   * Se a loja usar o checkout novo em blocos (Cart & Checkout blocks), os campos
+   * tem outros seletores e este trecho precisa ser adaptado.
+   */
+  function setupCepAutofill() {
+    if (!document.getElementById('billing_postcode')) return;
+
+    document.addEventListener('input', function (e) {
+      if (!e.target || e.target.id !== 'billing_postcode') return;
+
+      var digits = e.target.value.replace(/\D/g, '').slice(0, 8);
+      e.target.value = digits.length > 5 ? digits.slice(0, 5) + '-' + digits.slice(5) : digits;
+
+      if (digits.length === 8) lookupCep(digits);
+    });
+  }
+
+  function lookupCep(cep) {
+    fetch('https://viacep.com.br/ws/' + cep + '/json/')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.erro) return;
+
+        setFieldValue('billing_address_1', data.logradouro);
+        setFieldValue('billing_city', data.localidade);
+        setFieldValue('billing_neighborhood', data.bairro); // campo do plugin "Extra Checkout Fields for Brazil", se instalado
+        setStateField('billing_state', data.uf);
+
+        var numberField = document.getElementById('billing_number');
+        if (numberField) numberField.focus();
+      })
+      .catch(function () { /* silencioso: preenchimento manual continua funcionando */ });
+  }
+
+  function setFieldValue(id, value) {
+    var field = document.getElementById(id);
+    if (!field || !value) return;
+    field.value = value;
+    field.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function setStateField(id, uf) {
+    var field = document.getElementById(id);
+    if (!field || !uf) return;
+    // Campo de estado do WooCommerce costuma ser um <select> (as vezes com select2
+    // por cima) — usar jQuery quando disponivel garante que o select2 atualize a UI.
+    if (window.jQuery) {
+      window.jQuery(field).val(uf).trigger('change');
+    } else {
+      field.value = uf;
+      field.dispatchEvent(new Event('change', { bubbles: true }));
+    }
   }
 })();

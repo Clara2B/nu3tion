@@ -43,6 +43,8 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
       (R$, vírgula decimal — o WooCommerce já faz isso automaticamente se a
       moeda estiver configurada como Real em Configurações do WooCommerce).
 - [ ] Testar o checkout completo com o Mercado Pago em modo sandbox.
+- [ ] Confirmar que o preenchimento automático de CEP no checkout funciona (ver
+      seção abaixo — depende do checkout ser o "clássico" do WooCommerce).
 - [ ] Conferir se o CSS do Storefront não conflita com o nosso em alguma
       página que a gente não reescreveu (carrinho, checkout, minha conta) —
       essas páginas usam o visual padrão do Storefront por enquanto.
@@ -57,9 +59,14 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
   Construir um carrinho lateral customizado conectado de verdade ao WooCommerce
   é bem mais trabalho e não é essencial pro lançamento — dá pra fazer depois
   se o cliente quiser manter aquele visual específico.
-- **O preenchimento automático de endereço por CEP** (que existia no protótipo)
-  não foi recriado ainda no checkout do WooCommerce — é uma melhoria pra
-  adicionar depois, não bloqueia o lançamento.
+- **Preenchimento automático de endereço por CEP**: já implementado em
+  `assets/js/site.js` (função `setupCepAutofill`), usando a mesma API pública
+  ViaCEP do protótipo. Ele procura pelos campos `#billing_postcode`,
+  `#billing_address_1`, `#billing_city`, `#billing_state` e (se existir)
+  `#billing_neighborhood` — que são os IDs do **checkout clássico** do
+  WooCommerce. Se a loja usar o checkout novo em blocos ("Cart & Checkout
+  blocks", baseado em React), os campos têm outros seletores e essa função
+  vai precisar ser adaptada — confirmar isso ao testar ao vivo.
 - As páginas de carrinho, checkout e "minha conta" ainda usam o visual padrão
   do Storefront (não o nosso design customizado). Isso é intencional pra essa
   primeira versão — dá confiança pro cliente final (visual "de loja de
