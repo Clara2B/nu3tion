@@ -177,11 +177,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 .hero-blob--2 { width: 280px; height: 280px; background: var(--color-yellow-soft); bottom: -100px; left: -80px; animation-delay: -4s; }
 .hero-blob--3 { width: 220px; height: 220px; background: var(--color-accent-soft); top: 40%; left: 38%; animation-delay: -7s; opacity: 0.4; }
 
-.brand-leaf { position: absolute; z-index: 0; pointer-events: none; transform-origin: bottom center; }
-.brand-leaf-vein, .brand-leaf-stem { stroke: rgba(0, 0, 0, 0.16); }
-.brand-leaf--1 { top: 4%; left: -3%; width: 130px; color: var(--color-primary); opacity: 0.16; animation: leaf-sway-1 7s ease-in-out infinite; }
-.brand-leaf--2 { top: 58%; right: 1%; width: 100px; color: var(--color-yellow); opacity: 0.22; animation: leaf-sway-2 6s ease-in-out infinite; }
-.brand-leaf--3 { bottom: -6%; left: 32%; width: 76px; color: var(--color-primary); opacity: 0.14; animation: leaf-sway-3 8s ease-in-out infinite; }
+.brand-leaf { position: absolute; z-index: 0; pointer-events: none; transform-origin: bottom center; display: block; }
+.brand-leaf path, .brand-leaf ellipse { fill: currentColor; }
+.brand-leaf-vein, .brand-leaf-stem { fill: none; stroke: rgba(0, 0, 0, 0.16); }
+.brand-leaf--1 { top: 4%; left: -3%; width: 130px; height: 182px; color: var(--color-primary); opacity: 0.16; animation: leaf-sway-1 7s ease-in-out infinite; }
+.brand-leaf--2 { top: 58%; right: 1%; width: 100px; height: 160px; color: var(--color-yellow); opacity: 0.22; animation: leaf-sway-2 6s ease-in-out infinite; }
+.brand-leaf--3 { bottom: -6%; left: 32%; width: 76px; height: 106px; color: var(--color-primary); opacity: 0.14; animation: leaf-sway-3 8s ease-in-out infinite; }
 @keyframes leaf-sway-1 { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(-3deg); } }
 @keyframes leaf-sway-2 { 0%, 100% { transform: rotate(12deg); } 50% { transform: rotate(18deg); } }
 @keyframes leaf-sway-3 { 0%, 100% { transform: rotate(16deg); } 50% { transform: rotate(9deg); } }
