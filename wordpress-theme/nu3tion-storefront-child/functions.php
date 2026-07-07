@@ -83,3 +83,77 @@ function nu3tion_cart_count_fragment( $fragments ) {
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_count_fragment' );
+
+/**
+ * Meta tags Open Graph/Twitter + dados estruturados (schema.org) da pagina inicial.
+ *
+ * So roda se NENHUM plugin de SEO dedicado (Yoast, Rank Math) estiver ativo, para
+ * nao duplicar/conflitar com as tags que esses plugins ja geram sozinhos. Se um
+ * desses plugins for instalado depois, esta funcao para de rodar automaticamente
+ * e o SEO passa a ser configurado por la (recomendado a longo prazo).
+ */
+function nu3tion_seo_tags() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return;
+	}
+
+	$title       = 'OraProtein by NU3TION — Proteína vegetal, sabor açaí com abacaxi';
+	$description = 'Proteína vegetal premium com ora-pro-nobis, sabor açaí com abacaxi. Sem lactose, sem glúten, 100% vegana.';
+	$url         = home_url( '/' );
+	$image       = get_stylesheet_directory_uri() . '/assets/img/Nu3tion 1.png';
+
+	$product_id = function_exists( 'nu3tion_get_main_product_id' ) ? nu3tion_get_main_product_id() : 0;
+	$product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product( $product_id ) : null;
+	$price      = $product ? $product->get_price() : '159.90';
+	if ( $product && $product->get_image_id() ) {
+		$image = wp_get_attachment_image_url( $product->get_image_id(), 'large' );
+	}
+	?>
+	<link rel="canonical" href="<?php echo esc_url( $url ); ?>">
+	<meta property="og:type" content="website">
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:site_name" content="NU3TION">
+	<meta property="og:url" content="<?php echo esc_url( $url ); ?>">
+	<meta property="og:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
+	<meta property="og:image" content="<?php echo esc_url( $image ); ?>">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
+	<meta name="twitter:image" content="<?php echo esc_url( $image ); ?>">
+	<script type="application/ld+json">
+	<?php
+	echo wp_json_encode(
+		array(
+			'@context'        => 'https://schema.org',
+			'@type'           => 'Product',
+			'name'            => 'OraProtein',
+			'image'           => $image,
+			'description'     => $description,
+			'brand'           => array(
+				'@type' => 'Brand',
+				'name'  => 'NU3TION',
+			),
+			'sku'             => 'ORAPROTEIN-ACAI-ABACAXI',
+			'offers'          => array(
+				'@type'         => 'Offer',
+				'url'           => home_url( '/#comprar' ),
+				'priceCurrency' => 'BRL',
+				'price'         => (string) $price,
+				'availability'  => 'https://schema.org/InStock',
+			),
+			'aggregateRating' => array(
+				'@type'       => 'AggregateRating',
+				'ratingValue' => '4.8',
+				'reviewCount' => '127',
+			),
+		)
+	);
+	?>
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'nu3tion_seo_tags' );

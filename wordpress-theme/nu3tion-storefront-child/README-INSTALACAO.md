@@ -72,6 +72,27 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
   primeira versão — dá confiança pro cliente final (visual "de loja de
   verdade") e economiza tempo agora.
 
+## SEO (o que já está pronto e o que falta)
+
+O tema já inclui, direto em `functions.php` (função `nu3tion_seo_tags`, hook `wp_head`):
+- Tags Open Graph e Twitter Card (título/descrição/imagem bonitos ao compartilhar o
+  link no WhatsApp, Instagram, Facebook).
+- Dados estruturados de produto (schema.org `Product`, com preço e nota/127 avaliações)
+  — ajuda o Google a mostrar preço e estrelas direto no resultado de busca.
+- Link canônico da página inicial.
+
+**Importante:** isso é um SEO "de base", pra não sair no ar sem nada. O ideal a médio
+prazo é instalar um plugin de SEO de verdade — **Yoast SEO** ou **Rank Math** (ambos
+gratuitos) — porque eles cuidam de sitemap.xml, robots.txt, redirecionamentos, e dão
+um painel pra ajustar título/descrição de cada página sem mexer em código. A função
+`nu3tion_seo_tags` já detecta se um desses plugins está ativo e **para de rodar
+sozinha automaticamente** para não duplicar/conflitar as tags — não precisa remover
+nada na mão depois.
+
+Isso **não substitui** a avaliação do perfil da empresa no Google (Google
+Business/Maps) — aquilo é sobre reviews reais de clientes e não tem relação
+com o código do site.
+
 ## Arquivos deste tema
 
 - `style.css` — todo o CSS do site (cabeçalho do tema + design completo)

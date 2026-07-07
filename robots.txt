@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nu3tion.com.br/sitemap.xml
