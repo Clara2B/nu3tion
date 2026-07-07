@@ -755,4 +755,9 @@ ul { list-style: none; margin: 0; padding: 0; }
   .footer-inner { grid-template-columns: 1fr; }
   .guarantee-inner { flex-direction: column; text-align: center; }
   .checkout-modal { padding: 32px 22px; }
+  .closing-band { padding: 72px 0; }
+  .closing-text { margin-bottom: 32px; }
+  .closing-line { font-size: 16px; line-height: 1.7; }
+  .closing-line--accent { font-size: 25px; margin: 10px 0; }
+  .closing-line--soft { margin-top: 20px; font-size: 15px; }
 }
