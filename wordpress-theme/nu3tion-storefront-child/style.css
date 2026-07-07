@@ -472,12 +472,23 @@ body.nu3tion-page {
 .footer-inner { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
 .site-footer .logo { color: #fff; }
 .footer-brand p { color: rgba(255,255,255,0.65); font-size: 14px; max-width: 260px; }
+.footer-social { display: flex; gap: 10px; margin-top: 18px; }
+.footer-social a {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.footer-social a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 .footer-col h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
 .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
 .payment-icons { display: flex; gap: 8px; flex-wrap: wrap; }
 .payment-icons span { border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-sm); padding: 6px 12px; font-size: 12.5px; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding: 20px 24px; }
 .footer-bottom p { margin: 0; font-size: 12.5px; color: rgba(255,255,255,0.55); }
+.footer-bottom p + p { margin-top: 6px; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
