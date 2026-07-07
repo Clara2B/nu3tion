@@ -76,6 +76,8 @@ body.nu3tion-page {
 .reveal[data-reveal-delay="1"] { transition-delay: 0.08s; }
 .reveal[data-reveal-delay="2"] { transition-delay: 0.16s; }
 .reveal[data-reveal-delay="3"] { transition-delay: 0.24s; }
+.reveal[data-reveal-delay="4"] { transition-delay: 0.32s; }
+.reveal[data-reveal-delay="5"] { transition-delay: 0.4s; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -417,19 +419,53 @@ body.nu3tion-page {
 
 /* ---------- Closing band ---------- */
 .closing-band {
-  padding: 88px 0;
+  position: relative;
+  padding: 110px 0;
   text-align: center;
-  background: linear-gradient(120deg, var(--color-primary), var(--color-primary-dark) 70%);
+  background: radial-gradient(120% 150% at 50% -10%, var(--color-primary) 0%, var(--color-primary-dark) 60%, #10140a 100%);
+  overflow: hidden;
 }
-.closing-inner { display: flex; flex-direction: column; align-items: center; }
+.closing-glow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  width: 640px;
+  height: 640px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(52, 162, 219, 0.22), transparent 70%);
+  pointer-events: none;
+}
+.closing-leaf { position: absolute; color: rgba(255, 255, 255, 0.09); animation: none; }
+.closing-leaf--1 { top: -10%; left: 4%; width: 220px; height: 308px; transform: rotate(-18deg); }
+.closing-leaf--2 { bottom: -14%; right: 4%; width: 180px; height: 252px; transform: rotate(158deg); }
+.closing-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
 .closing-text {
-  color: #fff;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.65;
-  max-width: 580px;
-  margin: 0 auto 32px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto 40px;
 }
+.closing-line {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 19px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.closing-line--accent {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-sky);
+  margin: 8px 0;
+}
+.closing-line--soft {
+  margin-top: 18px;
+  font-size: 17px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+.closing-band .btn-primary svg { transition: transform 0.2s var(--ease); }
+.closing-band .btn-primary:hover svg { transform: translateX(3px); }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--color-primary); color: rgba(255,255,255,0.85); padding-top: 64px; }
