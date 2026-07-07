@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 		<div class="container footer-bottom">
-			<p>nu3tion · CNPJ 55.664.335/0001-04</p>
+			<p>NU3TION · CNPJ 55.664.335/0001-04</p>
 		</div>
 	</footer>
 

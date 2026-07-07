@@ -300,7 +300,7 @@
         var el = document.createElement('div');
         el.className = 'cart-item';
         el.innerHTML =
-          '<div class="cart-item-media"><img src="img/Nu3tion 1.png" alt=""></div>' +
+          '<div class="cart-item-media"><img src="img/Nu3tion-1.webp" alt=""></div>' +
           '<div class="cart-item-info">' +
             '<p>' + item.name + '</p>' +
             '<span>' + item.flavor + ' · ' + formatBRL(item.price) + '</span>' +

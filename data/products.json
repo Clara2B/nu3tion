@@ -4,7 +4,7 @@
   "flavor": "Açaí com Abacaxi",
   "proteinSource": "Ora-pro-nobis, superalimento vegetal brasileiro",
   "tagline": "Proteína vegetal premium, sabor 100% brasileiro",
-  "sizeLabel": "500g · aprox. 11 doses de 45g",
+  "sizeLabel": "500g · 16 doses de 30g",
   "price": 159.90,
   "originalPrice": 189.90,
   "pixPrice": 155.10,
@@ -15,7 +15,7 @@
   "stats": [
     { "value": 23, "suffix": "g", "label": "proteína por porção" },
     { "value": 0, "suffix": "", "label": "lactose e glúten" },
-    { "value": 5, "suffix": " min", "label": "de preparo" },
+    { "value": 2, "suffix": " min", "label": "de preparo" },
     { "value": 4.8, "suffix": "", "label": "nota média" }
   ]
 }
