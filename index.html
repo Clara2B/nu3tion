@@ -14,7 +14,7 @@
 <body>
 
 <div class="announce-bar">
-  <p>Frete grátis para todo o Brasil em compras acima de R$ 150 · Garantia de 30 dias</p>
+  <p>Frete grátis para todo o Brasil em compras acima de R$ 150</p>
 </div>
 
 <header class="site-header" id="siteHeader">
@@ -504,9 +504,22 @@
     <p class="cart-empty" id="cartEmpty">Seu carrinho está vazio.</p>
   </div>
   <div class="cart-drawer-foot">
+    <div class="cart-coupon-row">
+      <input type="text" id="couponInput" class="cart-coupon-input" placeholder="Cupom de desconto" aria-label="Cupom de desconto">
+      <button type="button" class="btn btn-secondary btn-sm" id="couponApplyBtn">Aplicar</button>
+    </div>
+    <p class="cart-coupon-message" id="couponMessage"></p>
     <div class="cart-subtotal-row">
       <span>Subtotal</span>
       <span id="cartSubtotal">R$ 0,00</span>
+    </div>
+    <div class="cart-subtotal-row cart-discount-row" id="cartDiscountRow" hidden>
+      <span>Desconto (<span id="couponCodeLabel"></span>)</span>
+      <span id="cartDiscountValue">-R$ 0,00</span>
+    </div>
+    <div class="cart-subtotal-row cart-total-row" id="cartTotalRow" hidden>
+      <span>Total</span>
+      <span id="cartTotalValue">R$ 0,00</span>
     </div>
     <button class="btn btn-primary btn-lg btn-block" id="checkoutOpenBtn" disabled>Finalizar compra</button>
   </div>

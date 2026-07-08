@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php wp_body_open(); ?>
 
 <div class="announce-bar">
-	<p>Frete grátis para todo o Brasil em compras acima de R$ 150 · Garantia de 30 dias</p>
+	<p>Frete grátis para todo o Brasil em compras acima de R$ 150</p>
 </div>
 
 <header class="site-header" id="siteHeader">
