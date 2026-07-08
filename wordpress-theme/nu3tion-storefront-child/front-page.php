@@ -46,23 +46,17 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="container hero-inner">
 			<div class="hero-copy">
 				<p class="eyebrow">Proteína vegetal · sabor açaí com abacaxi</p>
-				<h1>Proteína boa pra você,<br>gostosa pra todo mundo</h1>
+				<h1>A proteína vegetal inspirada na biodiversidade brasileira.</h1>
 				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, o OraProtein rende energia e ajuda na recuperação do corpo — feito com ora-pro-nobis, sem lactose e sem glúten.</p>
 
 				<div class="hero-cta-row">
 					<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar</a>
-					<div class="hero-price">
-						<?php if ( $product ) : ?>
-							<span class="price-now"><?php echo $product->get_price_html(); // phpcs:ignore ?></span>
-						<?php else : ?>
-							<span class="price-now">R$ 159,90</span>
-							<span class="price-old">R$ 189,90</span>
-						<?php endif; ?>
-					</div>
 				</div>
 
 				<ul class="hero-trust">
-					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>100% vegano</li>
+					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Fonte de fibras</li>
+					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Fonte de ômega 3</li>
+					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Clean label</li>
 					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Sem lactose</li>
 					<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Sem glúten</li>
 				</ul>
@@ -102,8 +96,8 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section" id="para-quem">
 		<div class="container">
 			<p class="section-eyebrow reveal">Para quem é</p>
-			<h2 class="section-title reveal">Uma proteína pra cada momento da sua rotina</h2>
-			<p class="section-sub reveal">Não importa a idade ou o ritmo do seu dia — proteína vegetal de qualidade faz diferença em qualquer fase da vida.</p>
+			<h2 class="section-title reveal">Nutrição brasileira e inteligente</h2>
+			<p class="section-sub reveal">Pensada para cada momento da sua rotina</p>
 
 			<div class="persona-grid">
 				<div class="persona-card reveal">
@@ -114,7 +108,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<div class="persona-card reveal" data-reveal-delay="1">
 					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
 					<h3>Rotina corrida</h3>
-					<p>Prepara em 5 minutos e cabe na correria entre reuniões e compromissos.</p>
+					<p>Prepara em 2 minutos e cabe na correria entre reuniões e compromissos.</p>
 				</div>
 				<div class="persona-card reveal" data-reveal-delay="2">
 					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
@@ -124,7 +118,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<div class="persona-card reveal" data-reveal-delay="3">
 					<div class="persona-icon persona-icon--d"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg></div>
 					<h3>Veganos e vegetarianos</h3>
-					<p>100% de origem vegetal, do ingrediente à cápsula da embalagem.</p>
+					<p>Ingredientes 100% vegetais, apto para veganos</p>
 				</div>
 			</div>
 		</div>
@@ -168,7 +162,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<span class="stat-label">lactose e glúten</span>
 				</div>
 				<div class="stat-item">
-					<span class="stat-value" data-counter data-target="5" data-suffix=" min">0 min</span>
+					<span class="stat-value" data-counter data-target="2" data-suffix=" min">0 min</span>
 					<span class="stat-label">de preparo</span>
 				</div>
 				<div class="stat-item">
@@ -214,7 +208,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</div>
 					<div class="step-text">
 						<h3>Agite e aproveite</h3>
-						<p>Pronto em menos de 5 minutos, a qualquer hora do dia.</p>
+						<p>Pronto em menos de 2 minutos, a qualquer hora do dia.</p>
 					</div>
 				</div>
 			</div>

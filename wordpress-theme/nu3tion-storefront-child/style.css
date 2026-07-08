@@ -131,7 +131,7 @@ body.nu3tion-page {
 }
 .site-header.scrolled { border-color: var(--color-border); box-shadow: 0 4px 20px rgba(20,21,15,0.05); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--color-primary); }
+.logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--color-primary); text-transform: uppercase; }
 .logo-img { height: 46px; width: auto; }
 .site-footer .logo-img { height: 40px; }
 .logo-dot { color: var(--color-accent); }
