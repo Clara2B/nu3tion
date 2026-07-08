@@ -34,6 +34,12 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
    **"Uma página estática"** e escolha (ou crie) uma página qualquer como
    página inicial — o WordPress vai usar automaticamente o `front-page.php`
    deste tema para ela, então o conteúdo da página em si não importa.
+7. Na mesma tela (**Configurações → Leitura**), em **"Página de posts"**,
+   selecione a página que já existe com o slug `/blog/` (ou crie uma página
+   vazia chamada "Blog" e selecione ela ali). Isso faz o WordPress usar o
+   `home.php` deste tema para mostrar a listagem de posts nesse endereço — os
+   posts antigos do cliente **continuam no banco de dados** e aparecem
+   automaticamente, só com o visual novo.
 
 ## O que ainda precisa ser testado/ajustado ao vivo (não dá pra verificar sem WordPress rodando)
 
@@ -49,6 +55,12 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
       página que a gente não reescreveu (carrinho, checkout, minha conta) —
       essas páginas usam o visual padrão do Storefront por enquanto.
 - [ ] Testar em mobile de verdade (não só no navegador).
+- [ ] Testar o blog: conferir se `/blog/` mostra a listagem nova (`home.php`),
+      se abrir um post usa o layout novo (`single.php`), e se categorias/tags
+      também usam o visual novo (`archive.php`). Confirmar que os posts
+      antigos do cliente aparecem certinho, com imagem destacada — se algum
+      post não tiver imagem destacada definida, aparece um espaço reservado
+      no lugar (dá pra cadastrar a imagem depois, em cada post).
 
 ## O que foi decidido para essa primeira versão (mudanças de escopo conscientes)
 
@@ -78,5 +90,10 @@ assim que tivermos acesso — isso é normal, não é sinal de que algo está er
 - `functions.php` — configuração do tema, SKU do produto principal
 - `header.php` / `footer.php` — cabeçalho e rodapé
 - `front-page.php` — a página inicial inteira (todas as seções de marketing + produto)
+- `home.php` — listagem principal do blog (a página configurada em "Página de posts")
+- `archive.php` — listagem de posts por categoria/tag/data
+- `single.php` — página de um post individual
+- `index.php` — modelo de reserva exigido pelo WordPress (raramente usado na prática)
+- `template-parts/content-blog-card.php` — o card de post reutilizado nas listagens
 - `assets/js/site.js` — menu mobile, animações, carrossel de depoimentos, FAQ, abas de nutrição
 - `assets/img/` — todas as imagens do site

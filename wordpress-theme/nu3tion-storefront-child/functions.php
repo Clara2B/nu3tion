@@ -42,6 +42,8 @@ add_action( 'wp_enqueue_scripts', 'nu3tion_enqueue_assets', 20 );
 function nu3tion_theme_setup() {
 	add_theme_support( 'woocommerce' );
 	add_theme_support( 'title-tag' );
+	add_theme_support( 'post-thumbnails' );
+	add_image_size( 'nu3tion-blog-card', 480, 320, true );
 }
 add_action( 'after_setup_theme', 'nu3tion_theme_setup' );
 

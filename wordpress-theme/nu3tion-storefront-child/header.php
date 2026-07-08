@@ -46,6 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<a href="<?php echo esc_url( home_url( '/#nutricional' ) ); ?>">Nutrição</a>
 				<a href="<?php echo esc_url( home_url( '/#depoimentos' ) ); ?>">Depoimentos</a>
 				<a href="<?php echo esc_url( home_url( '/#faq' ) ); ?>">Dúvidas</a>
+				<a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog/' ) ); ?>">Blog</a>
 			<?php endif; ?>
 		</nav>
 
