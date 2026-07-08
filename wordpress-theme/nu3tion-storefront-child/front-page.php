@@ -109,7 +109,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<div class="persona-card reveal" data-reveal-delay="1">
 					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
 					<h3>Rotina corrida</h3>
-					<p>Prepara em 2 minutos e cabe na correria entre reuniões e compromissos.</p>
+					<p>Preparo em menos de 2 minutos.</p>
 				</div>
 				<div class="persona-card reveal" data-reveal-delay="2">
 					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
@@ -214,6 +214,10 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 			</div>
 		</div>
+		<div class="steps-tip">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12M4.5 6l2.5.5M4.5 6l.5-2.5M19.5 6l-2.5.5M19.5 6l-.5-2.5M4.5 18l2.5-.5M4.5 18l.5 2.5M19.5 18l-2.5-.5M19.5 18l-.5 2.5"/></svg>
+			<span><strong>Dica da casa:</strong> Fica bem mais gostoso gelado ou com gelo!</span>
+		</div>
 	</section>
 
 	<section class="section section--tinted" id="comprar">
@@ -228,7 +232,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<?php endif; ?>
 					</div>
 					<div class="product-badges">
-						<span>100% vegano</span>
 						<span>Sem lactose</span>
 						<span>Sem glúten</span>
 						<span>Sem açúcar adicionado</span>
@@ -267,6 +270,11 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						</div>
 						<p style="color:#a11; font-weight:600;">⚠ Produto ainda não encontrado no WooCommerce (confira o SKU em <code>functions.php → nu3tion_get_main_product_id()</code>).</p>
 					<?php endif; ?>
+
+					<p class="coupon-note">
+						<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 .59 1.41l9 9a2 2 0 0 0 2.82 0l8-8a2 2 0 0 0 0-2.82l-9-9A2 2 0 0 0 12 2Z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+						Adicione seu cupom na finalização da compra!
+					</p>
 
 					<ul class="product-guarantees">
 						<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/></svg>Garantia de satisfação de 30 dias</li>
@@ -395,16 +403,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<p>Sim, oferecemos garantia de satisfação de 30 dias a partir do recebimento do produto.</p>
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="guarantee-band reveal">
-		<div class="container guarantee-inner">
-			<svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
-			<div>
-				<h3>30 dias de garantia</h3>
-				<p>Se não gostar por qualquer motivo, devolvemos seu dinheiro. Sem burocracia.</p>
 			</div>
 		</div>
 	</section>

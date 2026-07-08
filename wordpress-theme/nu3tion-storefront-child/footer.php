@@ -14,6 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					nu3tion<span class="logo-dot">.</span>
 				</p>
 				<p>Proteína vegetal premium, feita para todas as fases da vida.</p>
+				<div class="footer-social">
+					<a href="https://www.instagram.com/nu3tion.brasil/" target="_blank" rel="noopener" aria-label="NU3TION no Instagram">
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+					</a>
+				</div>
 			</div>
 			<div class="footer-col">
 				<h4>Navegação</h4>
