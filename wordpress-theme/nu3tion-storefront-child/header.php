@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="container header-inner">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo">
 			<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Logo.webp' ); ?>" alt="" class="logo-img" onerror="this.remove()">
-			nu3tion<span class="logo-dot">.</span>
+			Nu3tioN<span class="logo-dot">.</span>
 		</a>
 
 		<nav class="main-nav" id="mainNav" aria-label="Navegação principal">
