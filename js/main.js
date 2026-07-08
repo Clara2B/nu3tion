@@ -5,7 +5,13 @@
     product: null,
     quantity: 1,
     cart: JSON.parse(localStorage.getItem('nu3tion_cart') || '[]'),
-    checkoutStep: 1
+    checkoutStep: 1,
+    coupon: null
+  };
+
+  var COUPONS = {
+    'NU10': 0.10,
+    'BEMVINDO15': 0.15
   };
 
   document.addEventListener('DOMContentLoaded', init);
@@ -21,6 +27,7 @@
     setupNutritionTabs();
     setupQuantity();
     setupCart();
+    setupCoupon();
     setupCheckout();
     renderCart();
   }
@@ -275,6 +282,11 @@
     return state.cart.reduce(function (sum, i) { return sum + i.price * i.quantity; }, 0);
   }
 
+  function couponDiscountValue() {
+    if (!state.coupon) return 0;
+    return Math.round(cartTotal() * state.coupon.percent * 100) / 100;
+  }
+
   function pulseCartIcon() {
     var count = document.getElementById('cartCount');
     count.classList.remove('pulse');
@@ -322,6 +334,20 @@
     }
 
     subtotalEl.textContent = formatBRL(cartTotal());
+
+    var discount = couponDiscountValue();
+    var discountRow = document.getElementById('cartDiscountRow');
+    var totalRow = document.getElementById('cartTotalRow');
+    if (state.coupon && discount > 0) {
+      document.getElementById('couponCodeLabel').textContent = state.coupon.code;
+      document.getElementById('cartDiscountValue').textContent = '-' + formatBRL(discount);
+      document.getElementById('cartTotalValue').textContent = formatBRL(cartTotal() - discount);
+      discountRow.hidden = false;
+      totalRow.hidden = false;
+    } else {
+      discountRow.hidden = true;
+      totalRow.hidden = true;
+    }
   }
 
   function openCartDrawer() {
@@ -344,6 +370,52 @@
     document.getElementById('cartBackdrop').addEventListener('click', closeCartDrawer);
   }
 
+  /* ---------- Cupom de desconto ---------- */
+  function setupCoupon() {
+    var input = document.getElementById('couponInput');
+    var btn = document.getElementById('couponApplyBtn');
+    var message = document.getElementById('couponMessage');
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = 'cart-coupon-message' + (type ? ' is-' + type : '');
+    }
+
+    function applyOrRemove() {
+      if (state.coupon) {
+        state.coupon = null;
+        input.value = '';
+        input.disabled = false;
+        btn.textContent = 'Aplicar';
+        showMessage('', '');
+        renderCart();
+        return;
+      }
+
+      var code = input.value.trim().toUpperCase();
+      if (!code) return;
+
+      if (COUPONS.hasOwnProperty(code)) {
+        state.coupon = { code: code, percent: COUPONS[code] };
+        input.value = code;
+        input.disabled = true;
+        btn.textContent = 'Remover';
+        showMessage('Cupom aplicado: ' + Math.round(COUPONS[code] * 100) + '% de desconto.', 'success');
+      } else {
+        showMessage('Cupom inválido ou expirado.', 'error');
+      }
+      renderCart();
+    }
+
+    btn.addEventListener('click', applyOrRemove);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applyOrRemove();
+      }
+    });
+  }
+
   /* ---------- Checkout ---------- */
   function goToStep(step) {
     state.checkoutStep = step;
@@ -362,8 +434,9 @@
     var form = document.getElementById('checkoutForm');
     var payment = form.querySelector('input[name="paymentMethod"]:checked').value;
     var paymentLabels = { pix: 'Pix', cartao: 'Cartão de crédito', boleto: 'Boleto bancário' };
-    var total = cartTotal();
-    var discount = payment === 'pix' ? Math.round(total * 0.05 * 100) / 100 : 0;
+    var couponDiscount = couponDiscountValue();
+    var afterCoupon = cartTotal() - couponDiscount;
+    var pixDiscount = payment === 'pix' ? Math.round(afterCoupon * 0.05 * 100) / 100 : 0;
 
     var rows = state.cart.map(function (item) {
       return '<p><span>' + item.quantity + 'x ' + item.name + '</span><span>' + formatBRL(item.price * item.quantity) + '</span></p>';
@@ -372,8 +445,9 @@
     summary.innerHTML =
       rows +
       '<p><span>Forma de pagamento</span><span>' + paymentLabels[payment] + '</span></p>' +
-      (discount > 0 ? '<p><span>Desconto Pix</span><span>-' + formatBRL(discount) + '</span></p>' : '') +
-      '<p><span>Total</span><span>' + formatBRL(total - discount) + '</span></p>';
+      (couponDiscount > 0 ? '<p><span>Cupom (' + state.coupon.code + ')</span><span>-' + formatBRL(couponDiscount) + '</span></p>' : '') +
+      (pixDiscount > 0 ? '<p><span>Desconto Pix</span><span>-' + formatBRL(pixDiscount) + '</span></p>' : '') +
+      '<p><span>Total</span><span>' + formatBRL(afterCoupon - pixDiscount) + '</span></p>';
   }
 
   function openCheckout() {
