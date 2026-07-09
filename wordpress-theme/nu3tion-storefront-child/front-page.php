@@ -189,14 +189,14 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="story-founders">
 				<div class="story-founder-card reveal">
 					<div class="story-founder-photo">
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.webp' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.avif' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
 						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
 					</div>
 					<p class="story-founder-name">Lucas</p>
 				</div>
 				<div class="story-founder-card reveal" data-reveal-delay="1">
 					<div class="story-founder-photo">
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/pedro.WEBP' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Pedro.avif' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
 						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
 					</div>
 					<p class="story-founder-name">Pedro</p>
