@@ -401,6 +401,33 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="accordion" id="faqAccordion">
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
+						Tem açúcar?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Somente açúcares naturais dos ingredientes, o equivalente a 1 uva.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Quanto rende?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Cada pote de 500g rende aproximadamente 16 doses de 30g.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Como preparar?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Basta bater ou misturar uma dose (30g) com 200ml de água, leite vegetal ou a bebida da sua preferência. Pronto em menos de 2 minutos.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
 						Qual o prazo de entrega?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
@@ -410,20 +437,11 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
-						Serve para quem tem intolerância à lactose?
+						Posso substituir o whey?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Sim. O OraProtein é 100% vegetal, sem lactose e sem glúten na formulação.</p>
-					</div>
-				</div>
-				<div class="accordion-item reveal">
-					<button class="accordion-trigger" aria-expanded="false">
-						Posso tomar em qualquer idade?
-						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-					</button>
-					<div class="accordion-panel">
-						<p>O produto é indicado para adultos em geral. Se você tem alguma condição de saúde específica, converse com seu médico ou nutricionista antes de incluir qualquer alimento novo na rotina.</p>
+						<p>Sim. O OraProtein entrega 23g de proteína por porção, de origem 100% vegetal, sem lactose e sem glúten.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
@@ -446,24 +464,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
-						Qual a quantidade de proteína?
-						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-					</button>
-					<div class="accordion-panel">
-						<p>23g por dose.</p>
-					</div>
-				</div>
-				<div class="accordion-item reveal">
-					<button class="accordion-trigger" aria-expanded="false">
-						Tem açúcar?
-						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-					</button>
-					<div class="accordion-panel">
-						<p>Somente açúcares naturais dos ingredientes, o equivalente a 1 uva.</p>
-					</div>
-				</div>
-				<div class="accordion-item reveal">
-					<button class="accordion-trigger" aria-expanded="false">
 						Tem gosto de ora-pro-nóbis?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
@@ -473,29 +473,29 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
-						Posso substituir o whey?
+						Posso tomar em qualquer idade?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Sim. O OraProtein entrega 23g de proteína por porção, de origem 100% vegetal, sem lactose e sem glúten.</p>
+						<p>O produto é indicado para adultos em geral. Se você tem alguma condição de saúde específica, converse com seu médico ou nutricionista antes de incluir qualquer alimento novo na rotina.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
-						Como preparar?
+						Qual a quantidade de proteína?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Basta bater ou misturar uma dose (30g) com 200ml de água, leite vegetal ou a bebida da sua preferência. Pronto em menos de 2 minutos.</p>
+						<p>23g por dose.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
 					<button class="accordion-trigger" aria-expanded="false">
-						Quanto rende?
+						Serve para quem tem intolerância à lactose?
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Cada pote de 500g rende aproximadamente 16 doses de 30g.</p>
+						<p>Sim. O OraProtein é 100% vegetal, sem lactose e sem glúten na formulação.</p>
 					</div>
 				</div>
 			</div>
