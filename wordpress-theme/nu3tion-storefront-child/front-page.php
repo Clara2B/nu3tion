@@ -239,7 +239,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 
 				<div class="product-info reveal" data-reveal-delay="1">
-					<p class="product-flavor">Açaí com abacaxi · 500g · aprox. 11 doses de 45g</p>
+					<p class="product-flavor">Açaí com abacaxi · 500g · aprox. 16 doses de 30g</p>
 					<h2 class="product-title">OraProtein</h2>
 					<div class="product-rating">
 						<span class="stars" aria-hidden="true">★★★★★</span>
