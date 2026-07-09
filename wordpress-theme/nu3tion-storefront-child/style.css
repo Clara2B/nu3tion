@@ -330,6 +330,9 @@ body.nu3tion-page {
 .story-founder-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .story-founder-placeholder { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5; }
 .story-founder-name { margin: 14px 0 0; font-size: 14px; font-weight: 600; color: var(--color-ink-soft); }
+@media (min-width: 961px) {
+  .story-founder-photo { width: 180px; height: 180px; }
+}
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
 /* ---------- Product panel (integrado ao WooCommerce) ---------- */
