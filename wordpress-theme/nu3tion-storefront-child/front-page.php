@@ -267,7 +267,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<span>Sem lactose</span>
 						<span>Sem glúten</span>
 						<span>Sem açúcar adicionado</span>
-						<span>Sem gordura</span>
+						<span>Sem gordura adicionada</span>
 					</div>
 				</div>
 
