@@ -498,15 +498,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<p>Cada pote de 500g rende aproximadamente 16 doses de 30g.</p>
 					</div>
 				</div>
-				<div class="accordion-item reveal">
-					<button class="accordion-trigger" aria-expanded="false">
-						Pode consumir diariamente?
-						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-					</button>
-					<div class="accordion-panel">
-						<p>Sim, idealmente 1 vez por dia ou conforme orientação médica.</p>
-					</div>
-				</div>
 			</div>
 		</div>
 	</section>
