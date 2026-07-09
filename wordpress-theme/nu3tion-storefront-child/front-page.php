@@ -152,6 +152,11 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<h3>Origem sustentável</h3>
 					<p>Desenvolvido com ingredientes de origem vegetal, cuidadosamente combinados para oferecer qualidade nutricional.</p>
 				</div>
+				<div class="benefit-card reveal" data-reveal-delay="4">
+					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
+					<h3>Para quem prefere proteína clean label</h3>
+					<p>O OraProtein não possui aditivos artificiais como corantes, conservantes, açúcares ou gorduras adicionados.</p>
+				</div>
 			</div>
 
 			<div class="stats-bar reveal" id="statsBar">
@@ -191,10 +196,10 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="story-founder-card reveal" data-reveal-delay="1">
 					<div class="story-founder-photo">
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Fundador-2.png' ); ?>" alt="Foto de um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/pedro.WEBP' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
 						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
 					</div>
-					<p class="story-founder-name">Fundador 2</p>
+					<p class="story-founder-name">Pedro</p>
 				</div>
 			</div>
 		</div>
