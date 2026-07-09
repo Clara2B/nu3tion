@@ -48,6 +48,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<p class="eyebrow">Proteína vegetal · sabor açaí com abacaxi</p>
 				<h1>A proteína vegetal inspirada na biodiversidade brasileira.</h1>
 				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, o OraProtein rende energia e ajuda na recuperação do corpo — feito com ora-pro-nobis, sem lactose e sem glúten.</p>
+				<p class="hero-sub">23g de proteína por porção, contém todos os aminoácidos essenciais, fonte de fibras e ômega 3 em uma fórmula exclusiva desenvolvida ao longo de dois anos.</p>
 
 				<div class="hero-cta-row">
 					<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar</a>
@@ -83,7 +84,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="trust-marquee">
 			<div class="trust-marquee-track">
 				<?php for ( $i = 0; $i < 2; $i++ ) : ?>
-				<div class="trust-item"<?php echo $i > 0 ? ' aria-hidden="true"' : ''; ?>><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg>Vegano certificado</div>
+				<div class="trust-item"<?php echo $i > 0 ? ' aria-hidden="true"' : ''; ?>><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg>Fonte de 13 vitaminas e minerais</div>
 				<div class="trust-item"<?php echo $i > 0 ? ' aria-hidden="true"' : ''; ?>><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 12a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4M4 12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4"/></svg>Sem lactose</div>
 				<div class="trust-item"<?php echo $i > 0 ? ' aria-hidden="true"' : ''; ?>><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m8 8 8 8"/></svg>Sem glúten</div>
 				<div class="trust-item"<?php echo $i > 0 ? ' aria-hidden="true"' : ''; ?>><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16V7a1 1 0 0 1 1-1h9v10M3 16h10M3 16v2a1 1 0 0 0 1 1h1m8-3v3m0-3h5a1 1 0 0 0 1-1v-3l-3-4h-3v7"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>Entrega em todo o Brasil</div>
@@ -97,29 +98,29 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section" id="para-quem">
 		<div class="container">
 			<p class="section-eyebrow reveal">Para quem é</p>
-			<h2 class="section-title reveal">Nutrição brasileira e inteligente</h2>
-			<p class="section-sub reveal">Pensada para cada momento da sua rotina</p>
+			<h2 class="section-title reveal">OraProtein acompanha diferentes estilos de vida</h2>
+			<p class="section-sub reveal">Nutrição brasileira e inteligente</p>
 
 			<div class="persona-grid">
 				<div class="persona-card reveal">
 					<div class="persona-icon persona-icon--a"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
-					<h3>Quem treina forte</h3>
-					<p>Recuperação muscular pós-treino com aminoácidos de fontes vegetais.</p>
+					<h3>Do primeiro treino ao alto rendimento</h3>
+					<p>Uma forma prática de consumir proteína para quem busca evoluir, seja treinando por saúde, qualidade de vida ou performance.</p>
 				</div>
 				<div class="persona-card reveal" data-reveal-delay="1">
-					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-					<h3>Rotina corrida</h3>
-					<p>Preparo em menos de 2 minutos.</p>
+					<div class="persona-icon persona-icon--d"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg></div>
+					<h3>Pra quem prefere proteína clean label</h3>
+					<p>Ingredientes 100% vegetais, apto para veganos</p>
 				</div>
 				<div class="persona-card reveal" data-reveal-delay="2">
-					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
-					<h3>Melhor idade</h3>
-					<p>Ajuda a manter a massa muscular com uma digestão leve, sem lactose.</p>
+					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+					<h3>Para uma rotina prática e nutritiva</h3>
+					<p>Preparo em menos de 2 minutos.</p>
 				</div>
 				<div class="persona-card reveal" data-reveal-delay="3">
-					<div class="persona-icon persona-icon--d"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg></div>
-					<h3>Veganos e vegetarianos</h3>
-					<p>Ingredientes 100% vegetais, apto para veganos</p>
+					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
+					<h3>Pra quem busca envelhecer com mais qualidade</h3>
+					<p>Ajuda a manter a massa muscular com uma digestão leve, sem lactose.</p>
 				</div>
 			</div>
 		</div>
@@ -133,23 +134,23 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="benefits-grid">
 				<div class="benefit-card reveal">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v18M6 3c4 0 4 4 8 4M6 11c4 0 4 4 8 4"/></svg>
-					<h3>Alta concentração de proteína</h3>
-					<p>Feito com ora-pro-nobis, superalimento brasileiro fonte de proteína, vitaminas e fibras.</p>
+					<h3>Fórmula exclusiva</h3>
+					<p>Desenvolvida durante mais de dois anos. Feito com ora-pro-nóbis, um superalimento fonte de proteína, vitaminas e fibras.</p>
 				</div>
 				<div class="benefit-card reveal" data-reveal-delay="1">
+					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 12a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4M4 12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4"/></svg>
+					<h3>Nutrição completa, digestão leve</h3>
+					<p>Sem lactose e sem glúten, pensado pra quem tem sensibilidade alimentar.</p>
+				</div>
+				<div class="benefit-card reveal" data-reveal-delay="2">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.5s-8-5-8-11.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-8 11.5-10 11.5Z"/></svg>
 					<h3>Sabor que conquista</h3>
 					<p>Açaí com abacaxi: um sabor genuinamente brasileiro, leve e nada artificial.</p>
 				</div>
-				<div class="benefit-card reveal" data-reveal-delay="2">
-					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 12a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4M4 12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4"/></svg>
-					<h3>Digestão leve</h3>
-					<p>Sem lactose e sem glúten, pensado pra quem tem sensibilidade alimentar.</p>
-				</div>
 				<div class="benefit-card reveal" data-reveal-delay="3">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg>
 					<h3>Origem sustentável</h3>
-					<p>Produção vegetal com menor impacto ambiental que proteínas animais.</p>
+					<p>Desenvolvido com ingredientes de origem vegetal, cuidadosamente combinados para oferecer qualidade nutricional.</p>
 				</div>
 			</div>
 
@@ -174,9 +175,17 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		</div>
 	</section>
 
+	<section class="section" id="historia">
+		<div class="container container--narrow">
+			<p class="section-eyebrow reveal">Nossa história</p>
+			<h2 class="section-title reveal">Uma história que começou em família.</h2>
+			<p class="section-sub reveal">A ideia nasceu de uma conversa entre dois primos: como criar um alimento proteico de origem vegetal que unisse qualidade, praticidade e ingredientes brasileiros? Depois de mais de dois anos de desenvolvimento, nasceu o OraProtein.</p>
+		</div>
+	</section>
+
 	<section class="section" id="como-usar">
 		<div class="container">
-			<p class="section-eyebrow reveal">Como usar</p>
+			<p class="section-eyebrow reveal">Como consumir</p>
 			<h2 class="section-title reveal">Pronto em 3 passos</h2>
 
 			<div class="steps-row">
@@ -218,6 +227,12 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12M4.5 6l2.5.5M4.5 6l.5-2.5M19.5 6l-2.5.5M19.5 6l-.5-2.5M4.5 18l2.5-.5M4.5 18l.5 2.5M19.5 18l-2.5-.5M19.5 18l-.5 2.5"/></svg>
 			<span><strong>Dica da casa:</strong> Fica bem mais gostoso gelado ou com gelo!</span>
 		</div>
+		<div class="steps-video-row">
+			<button type="button" class="btn btn-secondary" id="watchVideoBtn">
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3V9Z" fill="currentColor" stroke="none"/></svg>
+				Assistir preparo em vídeo
+			</button>
+		</div>
 	</section>
 
 	<section class="section section--tinted" id="comprar">
@@ -235,6 +250,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<span>Sem lactose</span>
 						<span>Sem glúten</span>
 						<span>Sem açúcar adicionado</span>
+						<span>Sem gordura</span>
 					</div>
 				</div>
 
@@ -277,7 +293,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</p>
 
 					<ul class="product-guarantees">
-						<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/></svg>Garantia de satisfação de 30 dias</li>
 						<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16V7a1 1 0 0 1 1-1h9v10M3 16h10M3 16v2a1 1 0 0 0 1 1h1m8-3v3m0-3h5a1 1 0 0 0 1-1v-3l-3-4h-3v7"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>Frete grátis acima de R$ 150</li>
 						<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Pix, cartão ou boleto</li>
 					</ul>
@@ -373,7 +388,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Entregamos para todo o Brasil. O prazo médio é de 5 a 10 dias úteis, dependendo da sua região.</p>
+						<p>Envio rápido de 2 a 10 dias, dependendo da região.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
@@ -430,10 +445,101 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<p>Somente açúcares naturais dos ingredientes, o equivalente a 1 uva.</p>
 					</div>
 				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Tem gosto de ora-pro-nóbis?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Não. O sabor é mascarado pelo açaí com abacaxi — o que você sente é a fruta, não a folha.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Posso substituir o whey?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Sim. O OraProtein entrega 23g de proteína por porção, de origem 100% vegetal, sem lactose e sem glúten.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Como preparar?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Basta bater ou misturar uma dose (30g) com 200ml de água, leite vegetal ou a bebida da sua preferência. Pronto em menos de 2 minutos.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Quanto rende?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Cada pote de 500g rende aproximadamente 16 doses de 30g.</p>
+					</div>
+				</div>
+				<div class="accordion-item reveal">
+					<button class="accordion-trigger" aria-expanded="false">
+						Pode consumir diariamente?
+						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+					</button>
+					<div class="accordion-panel">
+						<p>Sim, idealmente 1 vez por dia ou conforme orientação médica.</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
+	<section class="guarantee-band reveal">
+		<div class="container guarantee-inner">
+			<div class="guarantee-icon">
+				<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+			</div>
+			<div>
+				<h3>Garantia de satisfação</h3>
+				<p>Se a experiência não atender às suas expectativas, fale conosco. Queremos entender o motivo e encontrar a melhor solução.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="closing-band">
+		<div class="closing-glow" aria-hidden="true"></div>
+		<svg class="brand-leaf closing-leaf closing-leaf--1" viewBox="0 0 100 140" aria-hidden="true">
+			<path d="M50 4C74 24 90 54 90 82c0 30-18 54-40 54S10 112 10 82C10 54 26 24 50 4Z"/>
+		</svg>
+		<svg class="brand-leaf closing-leaf closing-leaf--2" viewBox="0 0 100 140" aria-hidden="true">
+			<path d="M50 4C74 24 90 54 90 82c0 30-18 54-40 54S10 112 10 82C10 54 26 24 50 4Z"/>
+		</svg>
+		<div class="container closing-inner">
+			<p class="closing-text">
+				<span class="closing-line reveal" data-reveal-delay="1">Você não está comprando apenas uma proteína.</span>
+				<span class="closing-line reveal" data-reveal-delay="2">Está escolhendo uma nova forma de consumir proteína vegetal.</span>
+				<span class="closing-line closing-line--accent reveal" data-reveal-delay="3">Mais natural.</span>
+				<span class="closing-line closing-line--accent reveal" data-reveal-delay="4">Mais completa.</span>
+				<span class="closing-line closing-line--soft reveal" data-reveal-delay="5">Inspirada em um ingrediente brasileiro extraordinário.</span>
+			</p>
+			<a href="#comprar" class="btn btn-primary btn-lg reveal" data-reveal-delay="5">
+				Quero experimentar o OraProtein
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+			</a>
+		</div>
+	</section>
+
 </main>
+
+<div class="modal-backdrop" id="videoBackdrop"></div>
+<div class="video-modal" id="videoModal" role="dialog" aria-modal="true" aria-hidden="true">
+	<button class="icon-btn video-modal-close" id="videoModalClose" aria-label="Fechar vídeo">
+		<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+	</button>
+	<video id="prepVideo" class="video-modal-player" controls playsinline>
+		<source src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/video/Preparo OraProtein.mp4' ); ?>" type="video/mp4">
+		Seu navegador não suporta a reprodução deste vídeo.
+	</video>
+</div>
 
 <?php get_footer(); ?>

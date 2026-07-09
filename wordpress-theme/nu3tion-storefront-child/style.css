@@ -76,6 +76,8 @@ body.nu3tion-page {
 .reveal[data-reveal-delay="1"] { transition-delay: 0.08s; }
 .reveal[data-reveal-delay="2"] { transition-delay: 0.16s; }
 .reveal[data-reveal-delay="3"] { transition-delay: 0.24s; }
+.reveal[data-reveal-delay="4"] { transition-delay: 0.32s; }
+.reveal[data-reveal-delay="5"] { transition-delay: 0.4s; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -309,6 +311,7 @@ body.nu3tion-page {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.035); }
 }
+.steps-video-row { display: flex; justify-content: center; margin-top: 20px; }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
 /* ---------- Product panel (integrado ao WooCommerce) ---------- */
@@ -423,11 +426,77 @@ body.nu3tion-page {
 .accordion-panel p { padding: 0 4px 20px; font-size: 14.5px; margin: 0; }
 
 /* ---------- Guarantee band ---------- */
-.guarantee-band { padding: 56px 0; }
-.guarantee-inner { display: flex; align-items: center; gap: 20px; background: var(--color-primary-soft); border-radius: var(--radius-lg); padding: 32px 40px; }
-.guarantee-inner svg { color: var(--color-primary); flex-shrink: 0; }
-.guarantee-inner h3 { margin-bottom: 4px; font-size: 19px; }
-.guarantee-inner p { margin: 0; font-size: 14px; }
+.guarantee-band { padding: 64px 0; }
+.guarantee-inner {
+  display: flex; align-items: center; gap: 24px;
+  background: linear-gradient(135deg, var(--color-surface), var(--color-primary-soft));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 44px;
+  box-shadow: var(--shadow-card);
+}
+.guarantee-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--color-primary-soft); color: var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(69, 81, 31, 0.18);
+}
+.guarantee-inner h3 { margin-bottom: 6px; font-size: 20px; }
+.guarantee-inner p { margin: 0; font-size: 14.5px; }
+
+/* ---------- Closing band ---------- */
+.closing-band {
+  position: relative;
+  padding: 110px 0;
+  text-align: center;
+  background: radial-gradient(120% 150% at 50% -10%, var(--color-primary) 0%, var(--color-primary-dark) 60%, #10140a 100%);
+  overflow: hidden;
+}
+.closing-glow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  width: 640px;
+  height: 640px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(52, 162, 219, 0.22), transparent 70%);
+  pointer-events: none;
+}
+.closing-leaf { position: absolute; color: rgba(255, 255, 255, 0.09); animation: none; }
+.closing-leaf--1 { top: -10%; left: 4%; width: 220px; height: 308px; transform: rotate(-18deg); }
+.closing-leaf--2 { bottom: -14%; right: 4%; width: 180px; height: 252px; transform: rotate(158deg); }
+.closing-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+.closing-text { display: flex; flex-direction: column; max-width: 600px; margin: 0 auto 40px; }
+.closing-line { color: rgba(255, 255, 255, 0.88); font-size: 19px; line-height: 1.6; font-weight: 400; }
+.closing-line--accent { font-family: var(--font-display); font-size: 32px; font-weight: 600; color: var(--color-sky); margin: 8px 0; }
+.closing-line--soft { margin-top: 18px; font-size: 17px; font-style: italic; color: rgba(255, 255, 255, 0.7); }
+.closing-band .btn-primary svg { transition: transform 0.2s var(--ease); }
+.closing-band .btn-primary:hover svg { transform: translateX(3px); }
+
+/* ---------- Video modal ---------- */
+.video-modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -48%) scale(0.96);
+  width: 720px; max-width: 92vw;
+  background: #000;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+  overflow: hidden;
+  z-index: 71;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+}
+.video-modal.is-open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+.video-modal-close { position: absolute; top: 10px; right: 10px; z-index: 1; background: rgba(0,0,0,0.5); color: #fff; }
+.video-modal-close:hover { background: rgba(0,0,0,0.7); }
+.video-modal-player { display: block; width: 100%; max-height: 80vh; }
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(20, 30, 24, 0.45);
+  opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease), visibility 0.3s;
+  z-index: 60;
+}
+.modal-backdrop.is-open { opacity: 1; visibility: visible; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--color-primary); color: rgba(255,255,255,0.85); padding-top: 64px; }
@@ -550,4 +619,9 @@ body.nu3tion-page {
   .testimonial-card { flex: 0 0 100%; }
   .footer-inner { grid-template-columns: 1fr; }
   .guarantee-inner { flex-direction: column; text-align: center; }
+  .closing-band { padding: 72px 0; }
+  .closing-text { margin-bottom: 32px; }
+  .closing-line { font-size: 16px; line-height: 1.7; }
+  .closing-line--accent { font-size: 25px; margin: 10px 0; }
+  .closing-line--soft { margin-top: 20px; font-size: 15px; }
 }
