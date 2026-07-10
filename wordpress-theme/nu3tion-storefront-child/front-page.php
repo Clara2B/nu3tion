@@ -177,12 +177,12 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<span class="stat-label">nota média</span>
 				</div>
 			</div>
+
+			<div class="mid-cta">
+				<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
+			</div>
 		</div>
 	</section>
-
-	<div class="mid-cta">
-		<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
-	</div>
 
 	<section class="section" id="historia">
 		<div class="container container--narrow">
@@ -259,11 +259,11 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				Assistir preparo em vídeo
 			</button>
 		</div>
-	</section>
 
-	<div class="mid-cta">
-		<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
-	</div>
+		<div class="mid-cta">
+			<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
+		</div>
+	</section>
 
 	<section class="section section--tinted" id="comprar">
 		<div class="container">
@@ -403,12 +403,12 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</button>
 				</div>
 			</div>
+
+			<div class="mid-cta">
+				<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
+			</div>
 		</div>
 	</section>
-
-	<div class="mid-cta">
-		<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
-	</div>
 
 	<section class="section section--tinted" id="faq">
 		<div class="container container--narrow">
