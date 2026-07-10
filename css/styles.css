@@ -900,3 +900,6 @@ ul { list-style: none; margin: 0; padding: 0; }
   .closing-line--accent { font-size: 25px; margin: 10px 0; }
   .closing-line--soft { margin-top: 20px; font-size: 15px; }
 }
+@media (max-width: 400px) {
+  .header-actions .btn-primary.btn-sm { display: none; }
+}
