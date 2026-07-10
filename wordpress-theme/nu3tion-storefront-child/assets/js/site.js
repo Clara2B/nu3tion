@@ -12,7 +12,6 @@
     setupAccordion();
     setupNutritionTabs();
     setupCepAutofill();
-    setupVideoModal();
   }
 
   /* ---------- Header ---------- */
@@ -185,34 +184,6 @@
         });
       });
     });
-  }
-
-  /* ---------- Video de preparo ---------- */
-  function setupVideoModal() {
-    var openBtn = document.getElementById('watchVideoBtn');
-    var modal = document.getElementById('videoModal');
-    var backdrop = document.getElementById('videoBackdrop');
-    var closeBtn = document.getElementById('videoModalClose');
-    var video = document.getElementById('prepVideo');
-    if (!openBtn || !modal) return;
-
-    function openVideo() {
-      modal.classList.add('is-open');
-      backdrop.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      video.play();
-    }
-    function closeVideo() {
-      modal.classList.remove('is-open');
-      backdrop.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      video.pause();
-      video.currentTime = 0;
-    }
-
-    openBtn.addEventListener('click', openVideo);
-    closeBtn.addEventListener('click', closeVideo);
-    backdrop.addEventListener('click', closeVideo);
   }
 
   /* ---------- Preenchimento automatico de endereco por CEP (checkout do WooCommerce) ----------

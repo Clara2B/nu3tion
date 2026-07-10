@@ -396,7 +396,9 @@ ul { list-style: none; margin: 0; padding: 0; }
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.035); }
 }
-.steps-video-row { display: flex; justify-content: center; margin-top: 20px; }
+.steps-video { max-width: 480px; margin: 24px auto 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+.steps-video-player { display: block; width: 100%; }
+.steps-video + .mid-cta { margin-top: 24px; }
 
 /* ---------- Storytelling founders ---------- */
 .story-founders { display: flex; justify-content: center; flex-wrap: wrap; gap: 36px; margin-top: 48px; }
@@ -747,23 +749,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 .checkout-summary p { margin: 0 0 8px; display: flex; justify-content: space-between; }
 .checkout-summary p:last-child { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--color-border); font-weight: 700; color: var(--color-ink); }
 
-/* ---------- Video modal ---------- */
-.video-modal {
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -48%) scale(0.96);
-  width: 720px; max-width: 92vw;
-  background: #000;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
-  overflow: hidden;
-  z-index: 71;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
-}
-.video-modal.is-open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-.video-modal-close { position: absolute; top: 10px; right: 10px; z-index: 1; background: rgba(0,0,0,0.5); color: #fff; }
-.video-modal-close:hover { background: rgba(0,0,0,0.7); }
-.video-modal-player { display: block; width: 100%; max-height: 80vh; }
 
 .checkout-success { text-align: center; padding: 12px 0; }
 .success-check {
