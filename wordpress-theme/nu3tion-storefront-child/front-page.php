@@ -298,7 +298,16 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<?php if ( $product ) : ?>
 						<div class="product-price-block">
 							<div class="price-row"><?php echo $product->get_price_html(); // phpcs:ignore ?></div>
-							<p class="price-detail">Pix, cartão (em até 3x sem juros) ou boleto no checkout</p>
+							<?php
+							/*
+							 * Texto generico de proposito: nao cita desconto Pix nem numero
+							 * de parcelas, pois isso depende do gateway configurado em
+							 * WooCommerce > Configuracoes > Pagamentos. Depois de ativar o
+							 * gateway (Mercado Pago, Pagar.me, Efi, etc.), ajuste esta frase
+							 * para refletir as condicoes reais (ex: "5% de desconto no Pix").
+							 */
+							?>
+							<p class="price-detail">Pix, cartão ou boleto no checkout</p>
 						</div>
 
 						<?php

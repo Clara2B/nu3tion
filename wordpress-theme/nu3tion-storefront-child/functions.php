@@ -1,6 +1,18 @@
 <?php
 /**
  * Funcoes do tema filho Nu3tion (Storefront Child)
+ *
+ * CONFIGURACAO DE PAGAMENTO
+ * Este tema nao processa pagamentos: ele so exibe o formulario nativo do
+ * WooCommerce (carrinho, checkout) e usa `wc_get_cart_url()` para o link do
+ * carrinho no cabecalho. Para habilitar Pix/cartao/boleto de verdade:
+ *   1. Instale e ative o plugin do gateway escolhido (ex: "Mercado Pago para
+ *      WooCommerce", Pagar.me, Efi, Asaas etc.).
+ *   2. Configure as credenciais e metodos em
+ *      WooCommerce > Configuracoes > Pagamentos.
+ * Nenhuma alteracao de tema e necessaria para esse passo. So revise o texto
+ * de "price-detail" em front-page.php se as condicoes reais (desconto Pix,
+ * numero de parcelas) forem diferentes do que esta escrito ali.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
