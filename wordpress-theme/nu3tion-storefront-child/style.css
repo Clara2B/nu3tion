@@ -666,6 +666,8 @@ body.nu3tion-page {
 .blog-back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 48px; font-weight: 600; color: var(--color-primary); }
 
 @media (max-width: 640px) {
+  .floating-card--rating { left: 2%; }
+  .floating-card--flavor { right: 2%; }
   .hero-trust { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; row-gap: 10px; }
   .hero-trust li.hero-trust-break { display: none; }
   .persona-grid, .benefits-grid, .blog-grid { grid-template-columns: 1fr; }
