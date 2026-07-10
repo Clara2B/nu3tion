@@ -99,7 +99,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="container">
 			<p class="section-eyebrow reveal">Para quem é</p>
 			<h2 class="section-title reveal">OraProtein acompanha diferentes estilos de vida</h2>
-			<p class="section-sub reveal">Nutrição brasileira e inteligente</p>
+			<p class="section-sub reveal">Nutrição Brasileira e Inteligente</p>
 
 			<div class="persona-grid">
 				<div class="persona-card reveal">
