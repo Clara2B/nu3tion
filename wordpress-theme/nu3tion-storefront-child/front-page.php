@@ -337,7 +337,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section" id="entenda">
 		<div class="container">
 			<p class="section-eyebrow reveal">Entenda nosso produto</p>
-			<h2 class="section-title reveal">O que torna o OraProtein diferente</h2>
+			<h2 class="section-title reveal">Por dentro do OraProtein</h2>
 
 			<div class="explain-panel">
 				<div class="explain-list">
