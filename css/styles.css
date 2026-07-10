@@ -293,8 +293,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 /* ---------- Sections ---------- */
 .section { padding: 96px 0; }
-#historia { padding-bottom: 20px; }
-#como-usar { padding-top: 0; }
 .section--tinted { background: var(--color-tint); }
 .section-eyebrow { text-align: center; font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 10px; }
 .section-eyebrow--left { text-align: left; }
