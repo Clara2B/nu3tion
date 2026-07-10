@@ -276,7 +276,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<?php if ( $product && $product->get_image_id() ) : ?>
 							<?php echo wp_get_attachment_image( $product->get_image_id(), 'large', false, array( 'class' => 'product-media-img' ) ); ?>
 						<?php else : ?>
-							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 1.png' ); ?>" alt="Pacote de OraProtein, sabor açaí com abacaxi, 500g" class="product-media-img">
+							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein, sabor açaí com abacaxi, 500g" class="product-media-img">
 						<?php endif; ?>
 					</div>
 					<div class="product-badges">
