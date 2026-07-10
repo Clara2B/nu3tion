@@ -366,7 +366,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 				<div class="explain-media reveal" data-reveal-delay="1">
 					<div class="explain-media-frame">
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="OraProtein sendo preparado" class="explain-media-img">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Entenda.avif' ); ?>" alt="OraProtein sendo preparado" class="explain-media-img">
 					</div>
 				</div>
 			</div>
