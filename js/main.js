@@ -29,6 +29,7 @@
     setupCart();
     setupCoupon();
     setupCheckout();
+    setupVideoMute();
     renderCart();
   }
 
@@ -506,6 +507,28 @@
       closeCheckout();
       document.getElementById('checkoutForm').reset();
       goToStep(1);
+    });
+  }
+
+  /* ---------- Mudo/som do vídeo de preparo ---------- */
+  function setupVideoMute() {
+    var video = document.getElementById('prepVideo');
+    var btn = document.getElementById('videoMuteBtn');
+    if (!video || !btn) return;
+    var iconMuted = btn.querySelector('.icon-muted');
+    var iconUnmuted = btn.querySelector('.icon-unmuted');
+
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      btn.setAttribute('aria-pressed', String(!video.muted));
+      btn.setAttribute('aria-label', video.muted ? 'Ativar som do vídeo' : 'Silenciar vídeo');
+      if (video.muted) {
+        iconMuted.removeAttribute('hidden');
+        iconUnmuted.setAttribute('hidden', '');
+      } else {
+        iconMuted.setAttribute('hidden', '');
+        iconUnmuted.removeAttribute('hidden');
+      }
     });
   }
 

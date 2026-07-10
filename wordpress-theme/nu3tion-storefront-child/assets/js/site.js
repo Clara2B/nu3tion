@@ -12,6 +12,7 @@
     setupAccordion();
     setupNutritionTabs();
     setupCepAutofill();
+    setupVideoMute();
   }
 
   /* ---------- Header ---------- */
@@ -183,6 +184,28 @@
           panel.classList.toggle('is-active', panel.getAttribute('data-nutrition-panel') === target);
         });
       });
+    });
+  }
+
+  /* ---------- Mudo/som do video de preparo ---------- */
+  function setupVideoMute() {
+    var video = document.getElementById('prepVideo');
+    var btn = document.getElementById('videoMuteBtn');
+    if (!video || !btn) return;
+    var iconMuted = btn.querySelector('.icon-muted');
+    var iconUnmuted = btn.querySelector('.icon-unmuted');
+
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      btn.setAttribute('aria-pressed', String(!video.muted));
+      btn.setAttribute('aria-label', video.muted ? 'Ativar som do vídeo' : 'Silenciar vídeo');
+      if (video.muted) {
+        iconMuted.removeAttribute('hidden');
+        iconUnmuted.setAttribute('hidden', '');
+      } else {
+        iconMuted.setAttribute('hidden', '');
+        iconUnmuted.removeAttribute('hidden');
+      }
     });
   }
 
