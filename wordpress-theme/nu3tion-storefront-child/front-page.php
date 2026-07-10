@@ -364,12 +364,12 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<div class="carousel-track" id="carouselTrack">
 					<article class="testimonial-card">
 						<div class="testimonial-photo">
-							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Paulinho-Otimizada.webp' ); ?>" alt="Paulinho Franzen" style="object-position: 50% 15%;">
+							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Prancha-Jesus.webp' ); ?>" alt="Saulo Lyra" style="object-position: 50% 30%;">
 						</div>
 						<div class="testimonial-body">
-							<p class="testimonial-name">Paulinho Franzen</p>
-							<p class="testimonial-role">Atleta corredor</p>
-							<p class="testimonial-text">"ORAPROTEIN: sabor top, leve pra digerir e pesado na energia pros treinos e correria do dia-a-dia."</p>
+							<p class="testimonial-name">Saulo Lyra</p>
+							<p class="testimonial-role">Surfista Tricampeão Brasileiro</p>
+							<p class="testimonial-text">"Tenho 62 anos, sou atleta há 43, nos últimos 12 sou vegetariano, OraProtein é uma forma saudável, prática e natural que proporciona alta performance com o corpo leve e muita energia!"</p>
 							<span class="stars stars--sm" aria-hidden="true">★★★★★</span>
 						</div>
 					</article>
@@ -386,12 +386,12 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</article>
 					<article class="testimonial-card">
 						<div class="testimonial-photo">
-							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Prancha-Jesus.webp' ); ?>" alt="Saulo Lyra" style="object-position: 50% 30%;">
+							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Paulinho-Otimizada.webp' ); ?>" alt="Paulinho Franzen" style="object-position: 50% 15%;">
 						</div>
 						<div class="testimonial-body">
-							<p class="testimonial-name">Saulo Lyra</p>
-							<p class="testimonial-role">Surfista Tricampeão Brasileiro</p>
-							<p class="testimonial-text">"Tenho 62 anos, sou atleta há 43, nos últimos 12 sou vegetariano, OraProtein é uma forma saudável, prática e natural que proporciona alta performance com o corpo leve e muita energia!"</p>
+							<p class="testimonial-name">Paulinho Franzen</p>
+							<p class="testimonial-role">Atleta corredor</p>
+							<p class="testimonial-text">"ORAPROTEIN: sabor top, leve pra digerir e pesado na energia pros treinos e correria do dia-a-dia."</p>
 							<span class="stars stars--sm" aria-hidden="true">★★★★★</span>
 						</div>
 					</article>
