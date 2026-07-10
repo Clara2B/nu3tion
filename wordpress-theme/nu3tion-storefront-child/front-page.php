@@ -66,7 +66,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 			<div class="hero-media">
 				<div class="hero-media-frame">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 2.png' ); ?>" alt="OraProtein sendo servido em um copo, pronto para beber" class="hero-media-img">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 2.avif' ); ?>" alt="OraProtein sendo servido em um copo, pronto para beber" class="hero-media-img">
 				</div>
 				<div class="floating-card floating-card--rating">
 					<span class="stars" aria-hidden="true">★★★★★</span>
