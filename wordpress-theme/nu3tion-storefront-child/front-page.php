@@ -364,26 +364,30 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</div>
 
 					<div class="ingredient-grid">
-						<div class="ingredient-card reveal">
+						<a href="https://www.tuasaude.com/ora-pro-nobis/" target="_blank" rel="noopener" class="ingredient-card reveal">
 							<div class="ingredient-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
 							<h3>Ora-pro-nobis</h3>
 							<p>Descubra os benefícios desta planta brasileira para a sua saúde.</p>
-						</div>
-						<div class="ingredient-card reveal" data-reveal-delay="1">
+							<span class="ingredient-more">Saiba mais</span>
+						</a>
+						<a href="https://www.tuasaude.com/beneficios-da-chia/" target="_blank" rel="noopener" class="ingredient-card reveal" data-reveal-delay="1">
 							<div class="ingredient-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="9" r="1.4"/><circle cx="14" cy="7" r="1.4"/><circle cx="17" cy="13" r="1.4"/><circle cx="10" cy="15" r="1.4"/><circle cx="6" cy="15" r="1.4"/><circle cx="15" cy="18" r="1.4"/></svg></div>
 							<h3>Chia</h3>
 							<p>Conheça os benefícios desta semente para a sua saúde.</p>
-						</div>
-						<div class="ingredient-card reveal" data-reveal-delay="2">
+							<span class="ingredient-more">Saiba mais</span>
+						</a>
+						<a href="https://www.tuasaude.com/acai/" target="_blank" rel="noopener" class="ingredient-card reveal" data-reveal-delay="2">
 							<div class="ingredient-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="9" r="3"/><circle cx="12" cy="15" r="3"/><path d="M12 2v2M9 4l1 2M15 4l-1 2"/></svg></div>
 							<h3>Açaí</h3>
 							<p>Afinal, você conhece o poder do açaí?</p>
-						</div>
-						<div class="ingredient-card reveal" data-reveal-delay="3">
+							<span class="ingredient-more">Saiba mais</span>
+						</a>
+						<a href="https://www.tuasaude.com/ervilha/" target="_blank" rel="noopener" class="ingredient-card reveal" data-reveal-delay="3">
 							<div class="ingredient-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 0 5.5 2.5 5.5 6v6a5.5 5.5 0 0 1-11 0V9C6.5 5.5 9 3 12 3Z"/><path d="M6.5 10h11M6.5 13.5h11"/></svg></div>
 							<h3>Ervilha</h3>
 							<p>Descubra os benefícios da proteína de ervilha.</p>
-						</div>
+							<span class="ingredient-more">Saiba mais</span>
+						</a>
 					</div>
 				</div>
 
