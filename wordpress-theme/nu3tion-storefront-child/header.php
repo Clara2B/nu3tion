@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php wp_body_open(); ?>
 
 <div class="announce-bar">
-	<p>Frete grátis para todo o Brasil em compras acima de R$ 150</p>
+	<p>Aniversário de 2 anos da OraProtein: frete grátis para todo o Brasil!</p>
 </div>
 
 <header class="site-header" id="siteHeader">

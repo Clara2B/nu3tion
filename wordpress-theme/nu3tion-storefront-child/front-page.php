@@ -51,7 +51,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<p class="hero-sub">23g de proteína por porção, contém todos os aminoácidos essenciais, fonte de fibras e ômega 3 em uma fórmula exclusiva desenvolvida ao longo de dois anos.</p>
 
 				<div class="hero-cta-row">
-					<a href="#comprar" class="btn btn-primary btn-lg">Experimento OraProtein®</a>
+					<a href="#comprar" class="btn btn-primary btn-lg">Experimentar o OraProtein®</a>
 				</div>
 
 				<ul class="hero-trust">
