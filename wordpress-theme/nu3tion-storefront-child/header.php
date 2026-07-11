@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php wp_body_open(); ?>
 
 <div class="announce-bar">
-	<p>Aniversário de 2 anos da OraProtein: frete grátis para todo o Brasil!</p>
+	<p>Aniversário de 2 anos da OraProtein®: frete grátis para todo o Brasil!</p>
 </div>
 
 <header class="site-header" id="siteHeader">

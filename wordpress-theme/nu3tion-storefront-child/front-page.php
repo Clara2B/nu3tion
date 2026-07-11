@@ -47,7 +47,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="hero-copy">
 				<p class="eyebrow">Proteína vegetal · sabor açaí com abacaxi</p>
 				<h1>A proteína vegetal inspirada na biodiversidade brasileira.</h1>
-				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, o OraProtein rende energia e ajuda na recuperação do corpo — feito com ora-pro-nobis, sem lactose e sem glúten.</p>
+				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, o OraProtein® rende energia e ajuda na recuperação do corpo — feito com ora-pro-nobis, sem lactose e sem glúten.</p>
 				<p class="hero-sub">23g de proteína por porção, contém todos os aminoácidos essenciais, fonte de fibras e ômega 3 em uma fórmula exclusiva desenvolvida ao longo de dois anos.</p>
 
 				<div class="hero-cta-row">
@@ -66,7 +66,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 			<div class="hero-media">
 				<div class="hero-media-frame">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 2.png' ); ?>" alt="OraProtein sendo servido em um copo, pronto para beber" class="hero-media-img">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 2.png' ); ?>" alt="OraProtein® sendo servido em um copo, pronto para beber" class="hero-media-img">
 				</div>
 				<div class="floating-card floating-card--rating">
 					<span class="stars" aria-hidden="true">★★★★★</span>
@@ -98,7 +98,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section" id="para-quem">
 		<div class="container">
 			<p class="section-eyebrow reveal">Para quem é</p>
-			<h2 class="section-title reveal">OraProtein acompanha diferentes estilos de vida</h2>
+			<h2 class="section-title reveal">OraProtein® acompanha diferentes estilos de vida</h2>
 			<p class="section-sub reveal">Nutrição Brasileira e Inteligente</p>
 
 			<div class="persona-grid">
@@ -129,7 +129,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section section--tinted" id="beneficios">
 		<div class="container">
 			<p class="section-eyebrow reveal">Benefícios</p>
-			<h2 class="section-title reveal">Por que o OraProtein é diferente</h2>
+			<h2 class="section-title reveal">Por que o OraProtein® é diferente</h2>
 
 			<div class="benefits-grid">
 				<div class="benefit-card reveal">
@@ -155,7 +155,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<div class="benefit-card reveal" data-reveal-delay="4">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
 					<h3>Para quem prefere proteína clean label</h3>
-					<p>O OraProtein não possui aditivos - como corantes, conservantes, açúcares ou gorduras - provenientes de fontes artificiais.</p>
+					<p>O OraProtein® não possui aditivos - como corantes, conservantes, açúcares ou gorduras - provenientes de fontes artificiais.</p>
 				</div>
 			</div>
 
@@ -188,20 +188,20 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="container container--narrow">
 			<p class="section-eyebrow reveal">Nossa história</p>
 			<h2 class="section-title reveal">Uma história que começou em família.</h2>
-			<p class="section-sub reveal">A ideia nasceu de uma conversa entre dois primos: como criar um alimento proteico de origem vegetal que unisse qualidade, praticidade e ingredientes brasileiros? Depois de mais de dois anos de desenvolvimento, nasceu o OraProtein.</p>
+			<p class="section-sub reveal">A ideia nasceu de uma conversa entre dois primos: como criar um alimento proteico de origem vegetal que unisse qualidade, praticidade e ingredientes brasileiros? Depois de mais de dois anos de desenvolvimento, nasceu o OraProtein®.</p>
 
 			<div class="story-founders">
 				<div class="story-founder-card reveal">
 					<div class="story-founder-photo">
 						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.avif' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.avif' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
 					</div>
 					<p class="story-founder-name">Lucas</p>
 				</div>
 				<div class="story-founder-card reveal" data-reveal-delay="1">
 					<div class="story-founder-photo">
 						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Pedro.avif' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein" class="story-founder-img" onerror="this.remove()">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Pedro.avif' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
 					</div>
 					<p class="story-founder-name">Pedro</p>
 				</div>
@@ -222,7 +222,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</div>
 					<div class="step-text">
 						<h3>Uma dose (scoop)</h3>
-						<p>Adicione uma medida de OraProtein no seu shaker.</p>
+						<p>Adicione uma medida de OraProtein® no seu shaker.</p>
 					</div>
 				</div>
 				<div class="step-connector" aria-hidden="true"></div>
@@ -276,7 +276,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<?php if ( $product && $product->get_image_id() ) : ?>
 							<?php echo wp_get_attachment_image( $product->get_image_id(), 'large', false, array( 'class' => 'product-media-img' ) ); ?>
 						<?php else : ?>
-							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein, sabor açaí com abacaxi, 500g" class="product-media-img">
+							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein®, sabor açaí com abacaxi, 500g" class="product-media-img">
 						<?php endif; ?>
 					</div>
 					<div class="product-badges">
@@ -289,7 +289,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 				<div class="product-info reveal" data-reveal-delay="1">
 					<p class="product-flavor">Açaí com abacaxi · 500g · aprox. 16 doses de 30g</p>
-					<h2 class="product-title">OraProtein</h2>
+					<h2 class="product-title">OraProtein®</h2>
 					<div class="product-rating">
 						<span class="stars" aria-hidden="true">★★★★★</span>
 						<span>4.8 (127 avaliações)</span>
@@ -346,7 +346,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 	<section class="section" id="entenda">
 		<div class="container">
 			<p class="section-eyebrow reveal">Entenda nosso produto</p>
-			<h2 class="section-title reveal">Por dentro do OraProtein</h2>
+			<h2 class="section-title reveal">Por dentro do OraProtein®</h2>
 
 			<div class="explain-panel">
 				<div class="explain-list">
@@ -402,7 +402,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 				<div class="explain-media reveal" data-reveal-delay="1">
 					<div class="explain-media-frame">
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Entenda.avif' ); ?>" alt="OraProtein sendo preparado" class="explain-media-img">
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Entenda.avif' ); ?>" alt="OraProtein® sendo preparado" class="explain-media-img">
 					</div>
 				</div>
 			</div>
@@ -413,7 +413,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="container">
 			<p class="section-eyebrow reveal">Transparência total</p>
 			<h2 class="section-title reveal">Tabela nutricional</h2>
-			<p class="section-sub reveal">Informação nutricional oficial do OraProtein, direto do laudo do fabricante.</p>
+			<p class="section-sub reveal">Informação nutricional oficial do OraProtein®, direto do laudo do fabricante.</p>
 
 			<div class="nutrition-tabs reveal">
 				<div class="nutrition-tab-buttons">
@@ -421,10 +421,10 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<button type="button" class="nutrition-tab-btn" data-nutrition-tab="vitaminas">Vitaminas e minerais</button>
 				</div>
 				<div class="nutrition-tab-panel is-active" data-nutrition-panel="macro">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional.webp' ); ?>" alt="Tabela de informação nutricional do OraProtein" class="nutrition-table-img">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional.webp' ); ?>" alt="Tabela de informação nutricional do OraProtein®" class="nutrition-table-img">
 				</div>
 				<div class="nutrition-tab-panel" data-nutrition-panel="vitaminas">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional-2.webp' ); ?>" alt="Tabela de vitaminas e minerais do OraProtein" class="nutrition-table-img">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional-2.webp' ); ?>" alt="Tabela de vitaminas e minerais do OraProtein®" class="nutrition-table-img">
 				</div>
 			</div>
 		</div>
@@ -483,7 +483,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			</div>
 
 			<div class="mid-cta">
-				<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
+				<a href="#comprar" class="btn btn-primary btn-lg">Quero meu OraProtein®</a>
 			</div>
 		</div>
 	</section>
@@ -536,7 +536,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Sim. O OraProtein entrega 23g de proteína por porção, de origem 100% vegetal, sem lactose e sem glúten.</p>
+						<p>Sim. O OraProtein® entrega 23g de proteína por porção, de origem 100% vegetal, sem lactose e sem glúten.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
@@ -554,7 +554,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Sim, OraProtein é um superalimento e vai te manter nutrido e saciado até a próxima refeição. Dica: experimente substituir o café da manhã.</p>
+						<p>Sim, OraProtein® é um superalimento e vai te manter nutrido e saciado até a próxima refeição. Dica: experimente substituir o café da manhã.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
@@ -590,7 +590,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Sim. O OraProtein é 100% vegetal, sem lactose e sem glúten na formulação.</p>
+						<p>Sim. O OraProtein® é 100% vegetal, sem lactose e sem glúten na formulação.</p>
 					</div>
 				</div>
 			</div>
@@ -626,7 +626,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				<span class="closing-line closing-line--soft reveal" data-reveal-delay="5">Inspirada em um ingrediente brasileiro extraordinário.</span>
 			</p>
 			<a href="#comprar" class="btn btn-primary btn-lg reveal" data-reveal-delay="5">
-				Quero experimentar o OraProtein
+				Quero experimentar o OraProtein®
 				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 			</a>
 		</div>
