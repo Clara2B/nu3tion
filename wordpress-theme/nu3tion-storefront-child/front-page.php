@@ -367,7 +367,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		</div>
 		<div class="steps-tip">
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12M4.5 6l2.5.5M4.5 6l.5-2.5M19.5 6l-2.5.5M19.5 6l-.5-2.5M4.5 18l2.5-.5M4.5 18l.5 2.5M19.5 18l-2.5-.5M19.5 18l-.5 2.5"/></svg>
-			<span><strong>Dica da casa:</strong> Fica bem mais gostoso gelado ou com gelo!</span>
+			<span><strong>Dica da casa:</strong> Fica bem mais gostoso com gelo ou gelado!</span>
 		</div>
 		<div class="steps-video">
 			<video class="steps-video-player" id="prepVideo" autoplay muted loop playsinline>
