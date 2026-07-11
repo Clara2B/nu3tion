@@ -95,37 +95,6 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		</div>
 	</section>
 
-	<section class="section" id="para-quem">
-		<div class="container">
-			<p class="section-eyebrow reveal">Para quem é</p>
-			<h2 class="section-title reveal">OraProtein® acompanha diferentes estilos de vida</h2>
-			<p class="section-sub reveal">Nutrição Brasileira e Inteligente</p>
-
-			<div class="persona-grid">
-				<div class="persona-card reveal">
-					<div class="persona-icon persona-icon--a"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
-					<h3>Do primeiro treino ao alto rendimento</h3>
-					<p>Uma forma prática de consumir proteína para quem busca evoluir, seja treinando por saúde, qualidade de vida ou performance.</p>
-				</div>
-				<div class="persona-card reveal" data-reveal-delay="1">
-					<div class="persona-icon persona-icon--d"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg></div>
-					<h3>Pra quem prefere proteína clean label</h3>
-					<p>Ingredientes 100% vegetais, apto para veganos</p>
-				</div>
-				<div class="persona-card reveal" data-reveal-delay="2">
-					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-					<h3>Para uma rotina prática e nutritiva</h3>
-					<p>Preparo em menos de 2 minutos.</p>
-				</div>
-				<div class="persona-card reveal" data-reveal-delay="3">
-					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
-					<h3>Pra quem busca envelhecer com mais qualidade</h3>
-					<p>Ajuda a manter a massa muscular com uma digestão leve, sem lactose.</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<section class="section section--tinted" id="beneficios">
 		<div class="container">
 			<p class="section-eyebrow reveal">Benefícios</p>
@@ -184,87 +153,34 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		</div>
 	</section>
 
-	<section class="section" id="historia">
-		<div class="container container--narrow">
-			<p class="section-eyebrow reveal">Nossa história</p>
-			<h2 class="section-title reveal">Uma história que começou em família.</h2>
-			<p class="section-sub reveal">A ideia nasceu de uma conversa entre dois primos: como criar um alimento proteico de origem vegetal que unisse qualidade, praticidade e ingredientes brasileiros? Depois de mais de dois anos de desenvolvimento, nasceu o OraProtein®.</p>
-
-			<div class="story-founders">
-				<div class="story-founder-card reveal">
-					<div class="story-founder-photo">
-						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.avif' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
-					</div>
-					<p class="story-founder-name">Lucas</p>
-				</div>
-				<div class="story-founder-card reveal" data-reveal-delay="1">
-					<div class="story-founder-photo">
-						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
-						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Pedro.avif' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
-					</div>
-					<p class="story-founder-name">Pedro</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="section" id="como-usar">
+	<section class="section" id="para-quem">
 		<div class="container">
-			<p class="section-eyebrow reveal">Como consumir</p>
-			<h2 class="section-title reveal">Pronto em 3 passos</h2>
+			<p class="section-eyebrow reveal">Para quem é</p>
+			<h2 class="section-title reveal">OraProtein® acompanha diferentes estilos de vida</h2>
+			<p class="section-sub reveal">Nutrição Brasileira e Inteligente</p>
 
-			<div class="steps-row">
-				<div class="step-item reveal">
-					<div class="step-visual step-visual--a">
-						<span class="step-number">1</span>
-						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11h12a1 1 0 0 1 1 1 7 7 0 0 1-14 0 1 1 0 0 1 1-1Z"/><path d="M16 12h4"/><circle cx="6" cy="6" r="0.9" fill="currentColor" stroke="none"/><circle cx="9.5" cy="3.8" r="0.9" fill="currentColor" stroke="none"/><circle cx="12.5" cy="6.3" r="0.9" fill="currentColor" stroke="none"/></svg>
-					</div>
-					<div class="step-text">
-						<h3>Uma dose (scoop)</h3>
-						<p>Adicione uma medida de OraProtein® no seu shaker.</p>
-					</div>
+			<div class="persona-grid">
+				<div class="persona-card reveal">
+					<div class="persona-icon persona-icon--a"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
+					<h3>Do primeiro treino ao alto rendimento</h3>
+					<p>Uma forma prática de consumir proteína para quem busca evoluir, seja treinando por saúde, qualidade de vida ou performance.</p>
 				</div>
-				<div class="step-connector" aria-hidden="true"></div>
-				<div class="step-item reveal" data-reveal-delay="1">
-					<div class="step-visual step-visual--b">
-						<span class="step-number">2</span>
-						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10l-1.3 15.2A2 2 0 0 1 13.7 20h-3.4a2 2 0 0 1-2-1.8L7 3Z"/><path d="M6 3h12"/><path d="M8.1 10.5h7.8"/></svg>
-					</div>
-					<div class="step-text">
-						<h3>200ml de líquido</h3>
-						<p>Água, leite vegetal ou a bebida da sua preferência.</p>
-					</div>
+				<div class="persona-card reveal" data-reveal-delay="1">
+					<div class="persona-icon persona-icon--d"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c4 3 7 5 7 10a7 7 0 0 1-14 0c0-5 3-7 7-10Z"/></svg></div>
+					<h3>Pra quem prefere proteína clean label</h3>
+					<p>Ingredientes 100% vegetais, apto para veganos</p>
 				</div>
-				<div class="step-connector" aria-hidden="true"></div>
-				<div class="step-item reveal" data-reveal-delay="2">
-					<div class="step-visual step-visual--c">
-						<span class="step-number">3</span>
-						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="7" width="8" height="13" rx="2"/><path d="M10 7V4h4v3"/><path d="M4 9.5 5.8 11M4 15l1.8-1.5M20 9.5 18.2 11M20 15l-1.8-1.5"/></svg>
-					</div>
-					<div class="step-text">
-						<h3>Agite e aproveite</h3>
-						<p>Pronto em menos de 2 minutos, a qualquer hora do dia.</p>
-					</div>
+				<div class="persona-card reveal" data-reveal-delay="2">
+					<div class="persona-icon persona-icon--b"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+					<h3>Para uma rotina prática e nutritiva</h3>
+					<p>Preparo em menos de 2 minutos.</p>
+				</div>
+				<div class="persona-card reveal" data-reveal-delay="3">
+					<div class="persona-icon persona-icon--c"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-8.5C.7 9 2 5 6 5c2 0 3.5 1 4 2 .5-1 2-2 4-2 4 0 5.3 4 3.5 7.5C19.5 16.65 12 21 12 21Z"/></svg></div>
+					<h3>Pra quem busca envelhecer com mais qualidade</h3>
+					<p>Ajuda a manter a massa muscular com uma digestão leve, sem lactose.</p>
 				</div>
 			</div>
-		</div>
-		<div class="steps-tip">
-			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12M4.5 6l2.5.5M4.5 6l.5-2.5M19.5 6l-2.5.5M19.5 6l-.5-2.5M4.5 18l2.5-.5M4.5 18l.5 2.5M19.5 18l-2.5-.5M19.5 18l-.5 2.5"/></svg>
-			<span><strong>Dica da casa:</strong> Fica bem mais gostoso gelado ou com gelo!</span>
-		</div>
-		<div class="steps-video">
-			<video class="steps-video-player" id="prepVideo" autoplay muted loop playsinline>
-				<source src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/video/Preparo OraProtein.mp4' ); ?>" type="video/mp4">
-			</video>
-			<button type="button" class="steps-video-mute" id="videoMuteBtn" aria-label="Ativar som do vídeo" aria-pressed="false">
-				<svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16.5 9 22 14.5M22 9l-5.5 5.5"/></svg>
-				<svg class="icon-unmuted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" hidden><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.3 5.7a9 9 0 0 1 0 12.6"/></svg>
-			</button>
-		</div>
-
-		<div class="mid-cta">
-			<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
 		</div>
 	</section>
 
@@ -409,24 +325,62 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		</div>
 	</section>
 
-	<section class="section" id="nutricional">
+	<section class="section" id="como-usar">
 		<div class="container">
-			<p class="section-eyebrow reveal">Transparência total</p>
-			<h2 class="section-title reveal">Tabela nutricional</h2>
-			<p class="section-sub reveal">Informação nutricional oficial do OraProtein®, direto do laudo do fabricante.</p>
+			<p class="section-eyebrow reveal">Como consumir</p>
+			<h2 class="section-title reveal">Pronto em 3 passos</h2>
 
-			<div class="nutrition-tabs reveal">
-				<div class="nutrition-tab-buttons">
-					<button type="button" class="nutrition-tab-btn is-active" data-nutrition-tab="macro">Informação nutricional</button>
-					<button type="button" class="nutrition-tab-btn" data-nutrition-tab="vitaminas">Vitaminas e minerais</button>
+			<div class="steps-row">
+				<div class="step-item reveal">
+					<div class="step-visual step-visual--a">
+						<span class="step-number">1</span>
+						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11h12a1 1 0 0 1 1 1 7 7 0 0 1-14 0 1 1 0 0 1 1-1Z"/><path d="M16 12h4"/><circle cx="6" cy="6" r="0.9" fill="currentColor" stroke="none"/><circle cx="9.5" cy="3.8" r="0.9" fill="currentColor" stroke="none"/><circle cx="12.5" cy="6.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+					</div>
+					<div class="step-text">
+						<h3>Uma dose (scoop)</h3>
+						<p>Adicione uma medida de OraProtein® no seu shaker.</p>
+					</div>
 				</div>
-				<div class="nutrition-tab-panel is-active" data-nutrition-panel="macro">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional.webp' ); ?>" alt="Tabela de informação nutricional do OraProtein®" class="nutrition-table-img">
+				<div class="step-connector" aria-hidden="true"></div>
+				<div class="step-item reveal" data-reveal-delay="1">
+					<div class="step-visual step-visual--b">
+						<span class="step-number">2</span>
+						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10l-1.3 15.2A2 2 0 0 1 13.7 20h-3.4a2 2 0 0 1-2-1.8L7 3Z"/><path d="M6 3h12"/><path d="M8.1 10.5h7.8"/></svg>
+					</div>
+					<div class="step-text">
+						<h3>200ml de líquido</h3>
+						<p>Água, leite vegetal ou a bebida da sua preferência.</p>
+					</div>
 				</div>
-				<div class="nutrition-tab-panel" data-nutrition-panel="vitaminas">
-					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional-2.webp' ); ?>" alt="Tabela de vitaminas e minerais do OraProtein®" class="nutrition-table-img">
+				<div class="step-connector" aria-hidden="true"></div>
+				<div class="step-item reveal" data-reveal-delay="2">
+					<div class="step-visual step-visual--c">
+						<span class="step-number">3</span>
+						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="7" width="8" height="13" rx="2"/><path d="M10 7V4h4v3"/><path d="M4 9.5 5.8 11M4 15l1.8-1.5M20 9.5 18.2 11M20 15l-1.8-1.5"/></svg>
+					</div>
+					<div class="step-text">
+						<h3>Agite e aproveite</h3>
+						<p>Pronto em menos de 2 minutos, a qualquer hora do dia.</p>
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="steps-tip">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12M4.5 6l2.5.5M4.5 6l.5-2.5M19.5 6l-2.5.5M19.5 6l-.5-2.5M4.5 18l2.5-.5M4.5 18l.5 2.5M19.5 18l-2.5-.5M19.5 18l-.5 2.5"/></svg>
+			<span><strong>Dica da casa:</strong> Fica bem mais gostoso gelado ou com gelo!</span>
+		</div>
+		<div class="steps-video">
+			<video class="steps-video-player" id="prepVideo" autoplay muted loop playsinline>
+				<source src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/video/Preparo OraProtein.mp4' ); ?>" type="video/mp4">
+			</video>
+			<button type="button" class="steps-video-mute" id="videoMuteBtn" aria-label="Ativar som do vídeo" aria-pressed="false">
+				<svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16.5 9 22 14.5M22 9l-5.5 5.5"/></svg>
+				<svg class="icon-unmuted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" hidden><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.3 5.7a9 9 0 0 1 0 12.6"/></svg>
+			</button>
+		</div>
+
+		<div class="mid-cta">
+			<a href="#comprar" class="btn btn-primary btn-lg">Quero experimentar o OraProtein®</a>
 		</div>
 	</section>
 
@@ -484,6 +438,31 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 			<div class="mid-cta">
 				<a href="#comprar" class="btn btn-primary btn-lg">Quero meu OraProtein®</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="historia">
+		<div class="container container--narrow">
+			<p class="section-eyebrow reveal">Nossa história</p>
+			<h2 class="section-title reveal">Uma história que começou em família.</h2>
+			<p class="section-sub reveal">A ideia nasceu de uma conversa entre dois primos: como criar um alimento proteico de origem vegetal que unisse qualidade, praticidade e ingredientes brasileiros? Depois de mais de dois anos de desenvolvimento, nasceu o OraProtein®.</p>
+
+			<div class="story-founders">
+				<div class="story-founder-card reveal">
+					<div class="story-founder-photo">
+						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Lucas.avif' ); ?>" alt="Foto de Lucas, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
+					</div>
+					<p class="story-founder-name">Lucas</p>
+				</div>
+				<div class="story-founder-card reveal" data-reveal-delay="1">
+					<div class="story-founder-photo">
+						<svg class="story-founder-placeholder" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+						<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Pedro.avif' ); ?>" alt="Foto de Pedro, um dos fundadores da OraProtein®" class="story-founder-img" onerror="this.remove()">
+					</div>
+					<p class="story-founder-name">Pedro</p>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -592,6 +571,27 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					<div class="accordion-panel">
 						<p>Sim. O OraProtein® é 100% vegetal, sem lactose e sem glúten na formulação.</p>
 					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="nutricional">
+		<div class="container">
+			<p class="section-eyebrow reveal">Transparência total</p>
+			<h2 class="section-title reveal">Tabela nutricional</h2>
+			<p class="section-sub reveal">Informação nutricional oficial do OraProtein®, direto do laudo do fabricante.</p>
+
+			<div class="nutrition-tabs reveal">
+				<div class="nutrition-tab-buttons">
+					<button type="button" class="nutrition-tab-btn is-active" data-nutrition-tab="macro">Informação nutricional</button>
+					<button type="button" class="nutrition-tab-btn" data-nutrition-tab="vitaminas">Vitaminas e minerais</button>
+				</div>
+				<div class="nutrition-tab-panel is-active" data-nutrition-panel="macro">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional.webp' ); ?>" alt="Tabela de informação nutricional do OraProtein®" class="nutrition-table-img">
+				</div>
+				<div class="nutrition-tab-panel" data-nutrition-panel="vitaminas">
+					<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Tabela-nutricional-2.webp' ); ?>" alt="Tabela de vitaminas e minerais do OraProtein®" class="nutrition-table-img">
 				</div>
 			</div>
 		</div>
