@@ -46,9 +46,9 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 		<div class="container hero-inner">
 			<div class="hero-copy">
 				<p class="eyebrow">Proteína vegetal · sabor açaí com abacaxi</p>
-				<h1>A proteína vegetal inspirada na biodiversidade brasileira.</h1>
-				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, o OraProtein® rende energia e ajuda na recuperação do corpo — feito com ora-pro-nobis, sem lactose e sem glúten.</p>
-				<p class="hero-sub">Muita saciedade em 23g de proteína, com todos os aminoácidos essenciais, em uma fórmula exclusiva desenvolvida ao longo de dois anos.</p>
+				<h1>A proteína vegetal inspirada na biodiversidade brasileira</h1>
+				<p class="hero-sub">Da corrida de domingo à caminhada dos 60 anos, OraProtein® acompanha diferentes estilos de vida com proteína de origem vegetal, em uma fórmula exclusiva desenvolvida ao longo de dois anos.</p>
+				<p class="hero-sub">23 g de proteína, fonte de fibras e ingredientes de origem vegetal para uma nutrição completa que acompanha você do café da manhã ao pós-treino.</p>
 
 				<div class="hero-cta-row">
 					<a href="#comprar" class="btn btn-primary btn-lg">Experimentar o OraProtein®</a>
@@ -108,8 +108,8 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="benefit-card reveal" data-reveal-delay="1">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-					<h3>Saciedade</h3>
-					<p>O alto teor de fibras insolúveis aliado às fibras solúveis presentes na chia prolonga a sensação de saciedade e auxilia no controle do apetite ao longo do dia.</p>
+					<h3>Mais saciedade para o dia a dia</h3>
+					<p>A combinação de ingredientes e fibras faz do OraProtein® uma opção prática para quem busca incluir mais proteína e fibras na alimentação.</p>
 				</div>
 				<div class="benefit-card reveal" data-reveal-delay="2">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 12a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4M4 12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4"/></svg>
@@ -204,7 +204,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 
 				<div class="product-info reveal" data-reveal-delay="1">
-					<p class="product-flavor">Açaí com abacaxi · 500g · aprox. 16 doses de 30g</p>
+					<p class="product-flavor">Açaí com abacaxi · 500g · 11 doses de 45 g</p>
 					<h2 class="product-title">OraProtein®</h2>
 					<div class="product-rating">
 						<span class="stars" aria-hidden="true">★★★★★</span>
@@ -327,7 +327,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 
 	<section class="section" id="como-usar">
 		<div class="container">
-			<p class="section-eyebrow reveal">Como consumir</p>
+			<p class="section-eyebrow reveal">Sugestão de consumo</p>
 			<h2 class="section-title reveal">Pronto em 3 passos</h2>
 
 			<div class="steps-row">
@@ -337,8 +337,8 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11h12a1 1 0 0 1 1 1 7 7 0 0 1-14 0 1 1 0 0 1 1-1Z"/><path d="M16 12h4"/><circle cx="6" cy="6" r="0.9" fill="currentColor" stroke="none"/><circle cx="9.5" cy="3.8" r="0.9" fill="currentColor" stroke="none"/><circle cx="12.5" cy="6.3" r="0.9" fill="currentColor" stroke="none"/></svg>
 					</div>
 					<div class="step-text">
-						<h3>Uma dose (scoop)</h3>
-						<p>Adicione uma medida de OraProtein® no seu shaker.</p>
+						<h3>1,5 dose (scoop)</h3>
+						<p>Adicione 1 dose e meia (1,5 scoop) de OraProtein®, ou conforme orientação do nutricionista.</p>
 					</div>
 				</div>
 				<div class="step-connector" aria-hidden="true"></div>
@@ -348,7 +348,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10l-1.3 15.2A2 2 0 0 1 13.7 20h-3.4a2 2 0 0 1-2-1.8L7 3Z"/><path d="M6 3h12"/><path d="M8.1 10.5h7.8"/></svg>
 					</div>
 					<div class="step-text">
-						<h3>200ml de líquido</h3>
+						<h3>300ml de líquido</h3>
 						<p>Água, leite vegetal ou a bebida da sua preferência.</p>
 					</div>
 				</div>
@@ -488,7 +488,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Cada pote de 500g rende aproximadamente 16 doses de 30g.</p>
+						<p>Cada pote de 500g rende aproximadamente 11 doses de 45 g.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
@@ -497,7 +497,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
 					</button>
 					<div class="accordion-panel">
-						<p>Basta bater ou misturar uma dose (30g) com 200ml de água, leite vegetal ou a bebida da sua preferência. Pronto em menos de 2 minutos.</p>
+						<p>Basta bater ou misturar 1 dose e meia (1,5 scoop) com 300ml de água, leite vegetal ou a bebida da sua preferência. Pronto em menos de 2 minutos.</p>
 					</div>
 				</div>
 				<div class="accordion-item reveal">
