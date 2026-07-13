@@ -108,7 +108,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 				<div class="benefit-card reveal" data-reveal-delay="1">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-					<h3>Mais saciedade para o dia a dia</h3>
+					<h3>Mais fibras no dia a dia</h3>
 					<p>A combinação de ingredientes e fibras faz do OraProtein® uma opção prática para quem busca incluir mais proteína e fibras na alimentação.</p>
 				</div>
 				<div class="benefit-card reveal" data-reveal-delay="2">
