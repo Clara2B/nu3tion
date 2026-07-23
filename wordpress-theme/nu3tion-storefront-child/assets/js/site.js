@@ -13,6 +13,7 @@
     setupNutritionTabs();
     setupCepAutofill();
     setupVideoMute();
+    setupStockModal();
   }
 
   /* ---------- Header ---------- */
@@ -206,6 +207,35 @@
         iconMuted.setAttribute('hidden', '');
         iconUnmuted.removeAttribute('hidden');
       }
+    });
+  }
+
+  /* ---------- Popup de "produto esgotado" (aparece ao clicar no botao desabilitado) ---------- */
+  function setupStockModal() {
+    var trigger = document.getElementById('outOfStockBtn');
+    var modal = document.getElementById('stockModal');
+    var backdrop = document.getElementById('stockModalBackdrop');
+    var closeBtn = document.getElementById('stockModalClose');
+    var okBtn = document.getElementById('stockModalOk');
+    if (!trigger || !modal || !backdrop) return;
+
+    function openModal() {
+      modal.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      modal.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    trigger.addEventListener('click', openModal);
+    backdrop.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (okBtn) okBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
     });
   }
 

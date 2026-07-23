@@ -226,14 +226,20 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 							<p class="price-detail">Pix, cartão ou boleto no checkout</p>
 						</div>
 
-						<?php
-						// Formulario nativo de compra do WooCommerce (carrinho/quantidade/AJAX).
-						global $post;
-						$post = get_post( $product_id ); // phpcs:ignore
-						setup_postdata( $post );
-						woocommerce_template_single_add_to_cart();
-						wp_reset_postdata();
-						?>
+						<?php if ( $product->is_in_stock() ) : ?>
+							<?php
+							// Formulario nativo de compra do WooCommerce (carrinho/quantidade/AJAX).
+							global $post;
+							$post = get_post( $product_id ); // phpcs:ignore
+							setup_postdata( $post );
+							woocommerce_template_single_add_to_cart();
+							wp_reset_postdata();
+							?>
+						<?php else : ?>
+							<button type="button" class="btn btn-primary btn-lg btn-block is-disabled" id="outOfStockBtn">
+								Produto esgotado
+							</button>
+						<?php endif; ?>
 					<?php else : ?>
 						<div class="product-price-block">
 							<div class="price-row">
@@ -257,6 +263,21 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 				</div>
 			</div>
 		</div>
+
+		<?php if ( $product && ! $product->is_in_stock() ) : ?>
+		<div class="modal-backdrop" id="stockModalBackdrop"></div>
+		<div class="stock-modal" id="stockModal" role="dialog" aria-modal="true" aria-hidden="true">
+			<button class="icon-btn stock-modal-close" id="stockModalClose" aria-label="Fechar aviso">
+				<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+			</button>
+			<div class="stock-modal-icon">
+				<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+			</div>
+			<h3>Produto esgotado</h3>
+			<p>No momento o OraProtein® está fora de estoque. Assim que novas unidades chegarem, avisaremos por aqui.</p>
+			<button type="button" class="btn btn-primary btn-block" id="stockModalOk">Entendi</button>
+		</div>
+		<?php endif; ?>
 	</section>
 
 	<section class="section" id="entenda">

@@ -9,6 +9,7 @@
   "originalPrice": 189.90,
   "pixPrice": 155.10,
   "installments": { "count": 3, "value": 58.29 },
+  "stock": 12,
   "badges": ["100% vegano", "Sem lactose", "Sem glúten", "Sem açúcar adicionado"],
   "rating": 4.8,
   "reviewCount": 127,

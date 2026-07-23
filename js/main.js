@@ -30,6 +30,7 @@
     setupCoupon();
     setupCheckout();
     setupVideoMute();
+    setupStockModal();
     renderCart();
   }
 
@@ -46,6 +47,7 @@
         var old = document.querySelectorAll('#heroPriceOld, #productPriceOld');
         now.forEach(function (el) { el.textContent = formatBRL(data.price); });
         old.forEach(function (el) { el.textContent = formatBRL(data.originalPrice); });
+        applyStockState(data);
       })
       .catch(function () {
         state.product = {
@@ -245,8 +247,23 @@
     localStorage.setItem('nu3tion_cart', JSON.stringify(state.cart));
   }
 
+  function isOutOfStock(product) {
+    return !!product && product.stock !== undefined && product.stock <= 0;
+  }
+
+  function applyStockState(product) {
+    var btn = document.getElementById('addToCartBtn');
+    if (!btn || !isOutOfStock(product)) return;
+    btn.classList.add('is-disabled');
+    btn.childNodes[0].textContent = 'Produto esgotado';
+  }
+
   function addToCart(quantity) {
     if (!state.product) return;
+    if (isOutOfStock(state.product)) {
+      openStockModal();
+      return;
+    }
     var existing = state.cart.find(function (i) { return i.id === state.product.id; });
     if (existing) existing.quantity += quantity;
     else {
@@ -464,6 +481,27 @@
     document.getElementById('checkoutModal').classList.remove('is-open');
     document.getElementById('checkoutBackdrop').classList.remove('is-open');
     document.getElementById('checkoutModal').setAttribute('aria-hidden', 'true');
+  }
+
+  /* ---------- Popup de "produto esgotado" ---------- */
+  function openStockModal() {
+    document.getElementById('stockModal').classList.add('is-open');
+    document.getElementById('stockModalBackdrop').classList.add('is-open');
+    document.getElementById('stockModal').setAttribute('aria-hidden', 'false');
+  }
+
+  function closeStockModal() {
+    document.getElementById('stockModal').classList.remove('is-open');
+    document.getElementById('stockModalBackdrop').classList.remove('is-open');
+    document.getElementById('stockModal').setAttribute('aria-hidden', 'true');
+  }
+
+  function setupStockModal() {
+    var modal = document.getElementById('stockModal');
+    if (!modal) return;
+    document.getElementById('stockModalBackdrop').addEventListener('click', closeStockModal);
+    document.getElementById('stockModalClose').addEventListener('click', closeStockModal);
+    document.getElementById('stockModalOk').addEventListener('click', closeStockModal);
   }
 
   function setupCheckout() {
