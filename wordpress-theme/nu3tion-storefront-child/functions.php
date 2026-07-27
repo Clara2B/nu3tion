@@ -107,6 +107,23 @@ function nu3tion_cart_count_fragment( $fragments ) {
 add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_count_fragment' );
 
 /**
+ * Fragmento do CONTEUDO do carrinho lateral (a lista de itens do
+ * woocommerce_mini_cart()). Sem isso, so o numerinho do header atualizava
+ * via AJAX — mudar quantidade, aplicar cupom ou adicionar produto de fato
+ * alterava o carrinho no servidor, mas a tela do painel lateral nunca era
+ * avisada disso (o JS so troca o que aparece no fragment que o servidor
+ * manda, e "div.cart-drawer-body" nao existia na resposta ate agora).
+ */
+function nu3tion_cart_drawer_body_fragment( $fragments ) {
+	ob_start();
+	woocommerce_mini_cart();
+	$mini_cart = ob_get_clean();
+	$fragments['div.cart-drawer-body'] = '<div class="cart-drawer-body">' . $mini_cart . '</div>';
+	return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_drawer_body_fragment' );
+
+/**
  * Valida o telefone no backend (checkout classico do WooCommerce), alem da
  * mascara no frontend. O campo aceita tanto "DDD + numero" (10-11 digitos)
  * quanto com o codigo do pais na frente, "55 + DDD + numero" (12-13 digitos)
