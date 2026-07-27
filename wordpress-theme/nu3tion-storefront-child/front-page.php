@@ -189,7 +189,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="product-panel">
 				<div class="product-visual reveal">
 					<div class="product-visual-frame">
-						<?php if ( $product && $product->get_image_id() ) : ?>
+						<?php if ( ! empty( $product ) && $product->get_image_id() ) : ?>
 							<?php echo wp_get_attachment_image( $product->get_image_id(), 'large', false, array( 'class' => 'product-media-img' ) ); ?>
 						<?php else : ?>
 							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein®, sabor açaí com abacaxi, 500g" class="product-media-img">
@@ -203,7 +203,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 					</div>
 				</div>
 
-				<div class="product-info reveal" data-reveal-delay="1"<?php echo $product ? ' data-product-id="' . esc_attr( $product_id ) . '"' : ''; ?>>
+				<div class="product-info reveal" data-reveal-delay="1"<?php echo ! empty( $product ) ? ' data-product-id="' . esc_attr( $product_id ) . '"' : ''; ?>>
 					<p class="product-flavor">Açaí com abacaxi · 500g · 11 doses de 45 g</p>
 					<h2 class="product-title">OraProtein®</h2>
 					<div class="product-rating">
@@ -211,7 +211,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						<span>4.8 (127 avaliações)</span>
 					</div>
 
-					<?php if ( $product ) : ?>
+					<?php if ( ! empty( $product ) ) : ?>
 						<div class="product-price-block">
 							<div class="price-row"><?php echo $product->get_price_html(); // phpcs:ignore ?></div>
 							<?php
@@ -264,7 +264,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			</div>
 		</div>
 
-		<?php if ( $product && ! $product->is_in_stock() ) : ?>
+		<?php if ( ! empty( $product ) && ! $product->is_in_stock() ) : ?>
 		<div class="modal-backdrop" id="stockModalBackdrop"></div>
 		<div class="stock-modal" id="stockModal" role="dialog" aria-modal="true" aria-hidden="true">
 			<button class="icon-btn stock-modal-close" id="stockModalClose" aria-label="Fechar aviso">
