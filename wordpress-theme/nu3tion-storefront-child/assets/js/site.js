@@ -273,39 +273,84 @@
   }
 
   /* ---------- Adicionar ao carrinho sem sair da pagina inicial ----------
-   * O formulario nativo do WooCommerce (woocommerce_template_single_add_to_cart)
-   * so' e' ajaxificado pelo proprio WooCommerce quando usado nas vitrines/lojas.
-   * Aqui ele esta embutido na home, entao um submit normal navegaria pra pagina
-   * avulsa do produto. Em vez de reimplementar o "adicionar ao carrinho" via
-   * fetch (o endpoint wc-ajax=add_to_cart deste servidor esta devolvendo
-   * resposta vazia, provavelmente por causa de um dos plugins de pixel de
-   * rastreamento), miramos o envio do formulario pra um iframe escondido —
-   * o WooCommerce processa a compra normalmente (exatamente como ja
-   * funciona hoje), so' que dentro do iframe, sem navegar a pagina visivel.
-   * Depois so' atualizamos o numero do carrinho via wc-ajax=get_refreshed_fragments,
-   * que funciona normalmente. Ao final, mostramos o popup de confirmacao
+   * Caminho rapido: chama direto o endpoint nativo de add-to-cart do
+   * WooCommerce via fetch (resposta leve em JSON). So' cai pro metodo de
+   * reserva (enviar o formulario de verdade dentro de um iframe escondido —
+   * mais lento, porque carrega a pagina inteira do produto, com todos os
+   * scripts, mas sempre funciona) se o caminho rapido falhar — por exemplo
+   * se algum plugin de pixel de rastreamento (Reddit, Snapchat, etc.)
+   * corromper a resposta AJAX. Ao final, mostramos o popup de confirmacao
    * (so' depois da resposta real do servidor, nunca antes).
    */
   function setupAjaxAddToCart() {
     var form = document.querySelector('.product-panel form.cart');
     var frame = document.querySelector('iframe[name="nu3tion-cart-frame"]');
-    if (!form || !frame) return;
+    if (!form) return;
 
-    form.setAttribute('target', frame.getAttribute('name'));
+    var wrapper = form.closest('[data-product-id]');
+    var productId = wrapper ? wrapper.getAttribute('data-product-id') : null;
 
-    var submitted = false;
+    var iframeSubmitted = false;
     var pendingQty = 1;
-    form.addEventListener('submit', function () {
-      submitted = true;
+
+    if (frame) {
+      frame.addEventListener('load', function () {
+        if (!iframeSubmitted) return; // ignora o load inicial (iframe em branco)
+        iframeSubmitted = false;
+        refreshCartFragments(pendingQty);
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      var btn = form.querySelector('.single_add_to_cart_button');
+      if (btn && btn.classList.contains('is-loading')) {
+        e.preventDefault(); // trava clique duplicado
+        return;
+      }
+      if (!productId) return; // sem o id do produto, deixa o formulario seguir do jeito antigo
+
+      e.preventDefault();
       var qtyField = form.querySelector('input[name="quantity"]');
-      pendingQty = qtyField ? qtyField.value : 1;
+      var quantity = qtyField ? qtyField.value : '1';
+      if (btn) btn.classList.add('is-loading');
+
+      var formData = new FormData(form);
+      formData.set('product_id', productId);
+      formData.set('quantity', quantity);
+
+      fetch('/?wc-ajax=add_to_cart', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Resposta HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (response) {
+          if (!response || response.error) throw new Error('Resposta invalida do add_to_cart');
+          if (btn) btn.classList.remove('is-loading');
+          applyCartUpdate(response.fragments, quantity);
+        })
+        .catch(function (err) {
+          // Caminho rapido falhou (ex: pixel de rastreamento interferindo na
+          // resposta) — usa o metodo de reserva, mais lento mas confiavel.
+          console.warn('Add-to-cart rapido falhou, usando metodo de reserva:', err);
+          submitViaIframe(quantity);
+        });
     });
 
-    frame.addEventListener('load', function () {
-      if (!submitted) return; // ignora o load inicial (iframe em branco)
-      submitted = false;
-      refreshCartFragments(pendingQty);
-    });
+    function submitViaIframe(quantity) {
+      if (!frame) {
+        HTMLFormElement.prototype.submit.call(form); // sem iframe disponivel: deixa navegar normal
+        return;
+      }
+      pendingQty = quantity;
+      form.target = frame.getAttribute('name');
+      iframeSubmitted = true;
+      HTMLFormElement.prototype.submit.call(form); // bypassa o listener de submit acima, evita loop
+    }
 
     function refreshCartFragments(qty) {
       fetch('/?wc-ajax=get_refreshed_fragments', {
@@ -316,28 +361,34 @@
         .then(function (res) { return res.json(); })
         .then(function (response) {
           if (!response || !response.fragments) return;
-          Object.keys(response.fragments).forEach(function (selector) {
-            document.querySelectorAll(selector).forEach(function (el) {
-              el.outerHTML = response.fragments[selector];
-            });
-          });
-          var cartCount = document.querySelector('.cart-count');
-          if (cartCount) {
-            cartCount.classList.remove('pulse');
-            void cartCount.offsetWidth;
-            cartCount.classList.add('pulse');
-          }
-
-          var productNameEl = document.querySelector('.product-title');
-          var productName = productNameEl ? productNameEl.textContent.trim() : '';
-          showCartToast('success', 'Produto adicionado ao carrinho com sucesso.', {
-            detail: qty + 'x ' + productName
-          });
+          applyCartUpdate(response.fragments, qty);
         })
         .catch(function (err) {
           console.error('Erro ao adicionar ao carrinho:', err);
           showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
         });
+    }
+
+    function applyCartUpdate(fragments, qty) {
+      if (fragments) {
+        Object.keys(fragments).forEach(function (selector) {
+          document.querySelectorAll(selector).forEach(function (el) {
+            el.outerHTML = fragments[selector];
+          });
+        });
+      }
+      var cartCount = document.querySelector('.cart-count');
+      if (cartCount) {
+        cartCount.classList.remove('pulse');
+        void cartCount.offsetWidth;
+        cartCount.classList.add('pulse');
+      }
+
+      var productNameEl = document.querySelector('.product-title');
+      var productName = productNameEl ? productNameEl.textContent.trim() : '';
+      showCartToast('success', 'Produto adicionado ao carrinho com sucesso.', {
+        detail: qty + 'x ' + productName
+      });
     }
   }
 
