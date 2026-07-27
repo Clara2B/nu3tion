@@ -358,11 +358,21 @@ body.nu3tion-page {
 .product-panel { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; }
 .product-visual { width: 100%; }
 .product-visual-frame {
+  position: relative;
   aspect-ratio: 1 / 1;
   background: linear-gradient(155deg, var(--color-surface), var(--color-primary-soft));
   border-radius: var(--radius-lg);
   display: flex; align-items: center; justify-content: center;
   box-shadow: var(--shadow-card); overflow: hidden;
+}
+/* Posicionamento absoluto ignora qualquer comportamento de flexbox/tamanho
+   intrinseco do <img> e forca o preenchimento exato do quadro quadrado. */
+.product-visual-frame .product-media-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .product-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .product-badges span { background: var(--color-primary-soft); color: var(--color-primary); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; }

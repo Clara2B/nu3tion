@@ -214,7 +214,7 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 								false,
 								array(
 									'class' => 'product-media-img',
-									'style' => 'width:100%;height:100%;object-fit:cover;display:block;',
+									'style' => 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;',
 								)
 							);
 							?>
