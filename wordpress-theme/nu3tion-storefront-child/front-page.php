@@ -189,8 +189,21 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 			<div class="product-panel">
 				<div class="product-visual reveal">
 					<div class="product-visual-frame">
-						<?php if ( ! empty( $product ) && $product->get_image_id() ) : ?>
-							<?php echo wp_get_attachment_image( $product->get_image_id(), 'large', false, array( 'class' => 'product-media-img' ) ); ?>
+						<?php
+						// Usa a imagem principal do produto; se nao estiver definida,
+						// cai pra primeira foto da galeria (em vez de ir direto pra
+						// imagem generica de reserva) — assim funciona mesmo se so a
+						// galeria tiver sido preenchida no admin.
+						$product_image_id = ! empty( $product ) ? $product->get_image_id() : 0;
+						if ( ! $product_image_id && ! empty( $product ) ) {
+							$gallery_ids = $product->get_gallery_image_ids();
+							if ( ! empty( $gallery_ids ) ) {
+								$product_image_id = $gallery_ids[0];
+							}
+						}
+						?>
+						<?php if ( $product_image_id ) : ?>
+							<?php echo wp_get_attachment_image( $product_image_id, 'large', false, array( 'class' => 'product-media-img' ) ); ?>
 						<?php else : ?>
 							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein®, sabor açaí com abacaxi, 500g" class="product-media-img">
 						<?php endif; ?>
