@@ -108,17 +108,21 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_count_fragment' )
 
 /**
  * Valida o telefone no backend (checkout classico do WooCommerce), alem da
- * mascara no frontend. Aceita 10 ou 11 digitos (DDD + numero fixo/celular).
- * A mascara visual fica no campo, mas o que importa aqui e a quantidade de
- * digitos reais, entao normalizamos removendo tudo que nao for numero antes
- * de validar.
+ * mascara no frontend. O campo aceita tanto "DDD + numero" (10-11 digitos)
+ * quanto com o codigo do pais na frente, "55 + DDD + numero" (12-13 digitos)
+ * — formato usado pela mascara atual do campo (setupPhoneDDDPrefix, em
+ * site.js). A mascara visual fica no campo, mas o que importa aqui e a
+ * quantidade de digitos reais, entao normalizamos removendo tudo que nao for
+ * numero antes de validar.
  */
 function nu3tion_validate_billing_phone( $data, $errors ) {
 	if ( empty( $data['billing_phone'] ) ) {
 		return;
 	}
 	$digits = preg_replace( '/\D/', '', $data['billing_phone'] );
-	if ( strlen( $digits ) < 10 || strlen( $digits ) > 11 ) {
+	$length = strlen( $digits );
+	$valid  = ( $length >= 10 && $length <= 11 ) || ( $length >= 12 && $length <= 13 && '55' === substr( $digits, 0, 2 ) );
+	if ( ! $valid ) {
 		$errors->add( 'billing_phone', __( 'Informe um telefone valido com DDD, no formato (11) 94001-1535.', 'nu3tion' ) );
 	}
 }

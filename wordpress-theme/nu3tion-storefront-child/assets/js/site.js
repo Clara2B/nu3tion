@@ -12,10 +12,16 @@
     setupAccordion();
     setupNutritionTabs();
     setupCepAutofill();
+    setupPhoneDDDPrefix();
     setupVideoMute();
-    setupStockModal();
-    setupPhoneMask();
+    setupProductQuantityStepper();
+    setupAddToCartIcon();
     setupAjaxAddToCart();
+    setupCartDrawer();
+    setupCartDrawerEnhancements();
+    setupWooCheckoutSteps();
+    setupOrderPaymentWatcher();
+    setupStockModal();
   }
 
   /* ---------- Header ---------- */
@@ -212,6 +218,657 @@
     });
   }
 
+  /* ---------- Botoes -/+ no campo de quantidade do WooCommerce (visual do prototipo) ----------
+   * O WooCommerce ja' renderiza um <label class="screen-reader-text"> escondido (so' pra leitor
+   * de tela) antes do input. Aproveitamos ele como o texto visivel "Quantidade" e agrupamos
+   * so' os botoes -/+ e o input numa pilula separada, pra bater com o layout do prototipo
+   * (rotulo a esquerda, controles a direita).
+   */
+  function setupProductQuantityStepper() {
+    var qtyWrap = document.querySelector('.product-panel .quantity');
+    if (!qtyWrap || qtyWrap.querySelector('.qty-stepper-btn')) return;
+    var input = qtyWrap.querySelector('input.qty');
+    if (!input) return;
+
+    var pill = document.createElement('div');
+    pill.className = 'qty-control-pill';
+
+    var minusBtn = document.createElement('button');
+    minusBtn.type = 'button';
+    minusBtn.className = 'qty-stepper-btn';
+    minusBtn.setAttribute('aria-label', 'Diminuir quantidade');
+    minusBtn.textContent = '−';
+
+    var plusBtn = document.createElement('button');
+    plusBtn.type = 'button';
+    plusBtn.className = 'qty-stepper-btn';
+    plusBtn.setAttribute('aria-label', 'Aumentar quantidade');
+    plusBtn.textContent = '+';
+
+    qtyWrap.insertBefore(pill, input);
+    pill.appendChild(minusBtn);
+    pill.appendChild(input);
+    pill.appendChild(plusBtn);
+
+    function changeQty(delta) {
+      var min = parseInt(input.min, 10) || 1;
+      var value = parseInt(input.value, 10) || min;
+      value = Math.max(min, value + delta);
+      input.value = value;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    minusBtn.addEventListener('click', function () { changeQty(-1); });
+    plusBtn.addEventListener('click', function () { changeQty(1); });
+  }
+
+  /* ---------- Icone de carrinho no botao "Adicionar ao carrinho" (visual do prototipo) ---------- */
+  function setupAddToCartIcon() {
+    var btn = document.querySelector('.product-panel .single_add_to_cart_button');
+    if (!btn || btn.querySelector('svg')) return;
+    btn.insertAdjacentHTML(
+      'beforeend',
+      ' <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/></svg>'
+    );
+  }
+
+  /* ---------- Adicionar ao carrinho sem sair da pagina inicial ----------
+   * O formulario nativo do WooCommerce (woocommerce_template_single_add_to_cart)
+   * so' e' ajaxificado pelo proprio WooCommerce quando usado nas vitrines/lojas.
+   * Aqui ele esta embutido na home, entao um submit normal navegaria pra pagina
+   * avulsa do produto. Em vez de reimplementar o "adicionar ao carrinho" via
+   * fetch (o endpoint wc-ajax=add_to_cart deste servidor esta devolvendo
+   * resposta vazia, provavelmente por causa de um dos plugins de pixel de
+   * rastreamento), miramos o envio do formulario pra um iframe escondido —
+   * o WooCommerce processa a compra normalmente (exatamente como ja
+   * funciona hoje), so' que dentro do iframe, sem navegar a pagina visivel.
+   * Depois so' atualizamos o numero do carrinho via wc-ajax=get_refreshed_fragments,
+   * que funciona normalmente. Ao final, mostramos o popup de confirmacao
+   * (so' depois da resposta real do servidor, nunca antes).
+   */
+  function setupAjaxAddToCart() {
+    var form = document.querySelector('.product-panel form.cart');
+    var frame = document.querySelector('iframe[name="nu3tion-cart-frame"]');
+    if (!form || !frame) return;
+
+    form.setAttribute('target', frame.getAttribute('name'));
+
+    var submitted = false;
+    var pendingQty = 1;
+    form.addEventListener('submit', function () {
+      submitted = true;
+      var qtyField = form.querySelector('input[name="quantity"]');
+      pendingQty = qtyField ? qtyField.value : 1;
+    });
+
+    frame.addEventListener('load', function () {
+      if (!submitted) return; // ignora o load inicial (iframe em branco)
+      submitted = false;
+      refreshCartFragments(pendingQty);
+    });
+
+    function refreshCartFragments(qty) {
+      fetch('/?wc-ajax=get_refreshed_fragments', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (response) {
+          if (!response || !response.fragments) return;
+          Object.keys(response.fragments).forEach(function (selector) {
+            document.querySelectorAll(selector).forEach(function (el) {
+              el.outerHTML = response.fragments[selector];
+            });
+          });
+          var cartCount = document.querySelector('.cart-count');
+          if (cartCount) {
+            cartCount.classList.remove('pulse');
+            void cartCount.offsetWidth;
+            cartCount.classList.add('pulse');
+          }
+
+          var productNameEl = document.querySelector('.product-title');
+          var productName = productNameEl ? productNameEl.textContent.trim() : '';
+          showCartToast('success', 'Produto adicionado ao carrinho com sucesso.', {
+            detail: qty + 'x ' + productName
+          });
+        })
+        .catch(function (err) {
+          console.error('Erro ao adicionar ao carrinho:', err);
+          showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
+        });
+    }
+  }
+
+  /* ---------- Painel lateral do carrinho (dados reais do WooCommerce) ----------
+   * O icone de carrinho do header abre esse painel em vez de navegar pra
+   * pagina de carrinho padrao. O conteudo (itens, remover, subtotal, botao de
+   * finalizar compra) e' o proprio mini-carrinho nativo do WooCommerce
+   * (woocommerce_mini_cart(), renderizado no footer.php), entao "Remover" e
+   * "Finalizar compra" ja' funcionam de verdade sem nenhum JS extra nosso.
+   */
+  function setupCartDrawer() {
+    var toggle = document.getElementById('cartToggle');
+    var drawer = document.getElementById('cartDrawer');
+    var backdrop = document.getElementById('cartBackdrop');
+    var closeBtn = document.getElementById('cartClose');
+    if (!toggle || !drawer || !backdrop) return;
+
+    function openDrawer() {
+      drawer.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      openDrawer();
+    });
+    closeBtn && closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+  }
+
+  /* ---------- Quantidade editavel e cupom reais dentro do carrinho lateral ----------
+   * O widget nativo do WooCommerce (woocommerce_mini_cart()) so' mostra a
+   * quantidade como texto e nao tem campo de cupom. Adicionamos os dois por
+   * cima, chamando endpoints AJAX proprios em functions.php que so' delegam
+   * pra logica real do WooCommerce (WC()->cart->set_quantity() e
+   * WC()->cart->add_discount()) e devolvem os mesmos "fragments" que o
+   * WooCommerce ja usa — o carrinho lateral sempre reflete o carrinho real.
+   *
+   * Como o conteudo do carrinho e' recarregado via fragments toda vez que
+   * algo muda (adicionar, remover, mudar quantidade, aplicar cupom), essa
+   * montagem e' idempotente e refeita sempre que os fragments atualizam —
+   * inclusive quando quem atualiza e' o proprio JS nativo do WooCommerce
+   * (ex: clicar em "Remover", que ja' funciona via wc-cart-fragments.js).
+   */
+  function setupCartDrawerEnhancements() {
+    var drawer = document.getElementById('cartDrawer');
+    if (!drawer) return;
+    var nonce = drawer.getAttribute('data-nonce') || '';
+
+    ensureCouponForm();
+    enhanceQuantities();
+
+    if (window.jQuery) {
+      window.jQuery(document.body).on(
+        'wc_fragments_refreshed wc_fragment_refresh added_to_cart removed_from_cart',
+        function () {
+          ensureCouponForm();
+          enhanceQuantities();
+        }
+      );
+    }
+
+    /* O carrinho nativo do WooCommerce (wc-cart-fragments.js) as vezes
+     * substitui o conteudo do mini-carrinho (ex: fragments em cache no
+     * sessionStorage, aplicados logo no carregamento da pagina) sem disparar
+     * "wc_fragments_refreshed" a tempo do nosso listener acima ja' estar
+     * pronto — deixando a quantidade sem os botoes -/+ ate a proxima mudanca
+     * no carrinho. Um MutationObserver no corpo do painel garante que a
+     * pilula de quantidade e o campo de cupom sejam re-inseridos sempre que
+     * o conteudo mudar, seja qual for a causa.
+     */
+    var drawerBody = drawer.querySelector('.cart-drawer-body');
+    if (drawerBody && window.MutationObserver) {
+      var observer = new MutationObserver(function () {
+        ensureCouponForm();
+        enhanceQuantities();
+      });
+      observer.observe(drawerBody, { childList: true, subtree: true });
+    }
+
+    function ensureCouponForm() {
+      var body = drawer.querySelector('.cart-drawer-body');
+      if (!body || body.querySelector('.cart-drawer-coupon')) return;
+      var form = document.createElement('form');
+      form.className = 'cart-drawer-coupon';
+      form.innerHTML =
+        '<input type="text" class="cart-drawer-coupon-input" placeholder="Cupom de desconto" autocomplete="off">' +
+        '<button type="submit" class="btn btn-secondary btn-sm">Aplicar</button>';
+      body.appendChild(form);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = form.querySelector('.cart-drawer-coupon-input');
+        var code = input.value.trim();
+        if (!code) return;
+        var btn = form.querySelector('button');
+        btn.disabled = true;
+
+        fetch('/?wc-ajax=nu3tion_apply_coupon', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'nonce=' + encodeURIComponent(nonce) + '&coupon_code=' + encodeURIComponent(code)
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (response) {
+            btn.disabled = false;
+            if (!response || !response.fragments) return;
+            applyFragments(response.fragments);
+            showCartNotice(response.notices_html);
+          })
+          .catch(function () { btn.disabled = false; });
+      });
+    }
+
+    function enhanceQuantities() {
+      drawer.querySelectorAll('.mini_cart_item').forEach(function (item) {
+        if (item.querySelector('.cart-qty-pill')) return;
+        var qtySpan = item.querySelector('.quantity');
+        var removeLink = item.querySelector('a.remove');
+        if (!qtySpan || !removeLink) return;
+        var cartItemKey = removeLink.getAttribute('data-cart_item_key');
+        var match = qtySpan.textContent.match(/(\d+)/);
+        var qty = match ? parseInt(match[1], 10) : 1;
+        var priceEl = qtySpan.querySelector('.woocommerce-Price-amount');
+        var priceOuter = priceEl ? priceEl.outerHTML : '';
+
+        var pill = document.createElement('div');
+        pill.className = 'cart-qty-pill';
+        pill.innerHTML =
+          '<button type="button" class="cart-qty-btn" data-delta="-1" aria-label="Diminuir quantidade">−</button>' +
+          '<span class="cart-qty-value">' + qty + '</span>' +
+          '<button type="button" class="cart-qty-btn" data-delta="1" aria-label="Aumentar quantidade">+</button>';
+
+        qtySpan.innerHTML = '';
+        qtySpan.appendChild(pill);
+        if (priceOuter) {
+          var priceWrap = document.createElement('span');
+          priceWrap.className = 'cart-qty-price';
+          priceWrap.innerHTML = '× ' + priceOuter;
+          qtySpan.appendChild(priceWrap);
+        }
+
+        pill.querySelectorAll('.cart-qty-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var delta = parseInt(btn.getAttribute('data-delta'), 10);
+            var newQty = Math.max(1, qty + delta);
+            if (newQty === qty) return;
+            updateQuantity(cartItemKey, newQty);
+          });
+        });
+      });
+    }
+
+    function updateQuantity(cartItemKey, quantity) {
+      fetch('/?wc-ajax=nu3tion_update_cart_qty', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'nonce=' + encodeURIComponent(nonce) + '&cart_item_key=' + encodeURIComponent(cartItemKey) + '&quantity=' + quantity
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (response) {
+          if (!response || !response.fragments) return;
+          applyFragments(response.fragments);
+        })
+        .catch(function (err) { console.error('Erro ao atualizar quantidade do carrinho:', err); });
+    }
+
+    function applyFragments(fragments) {
+      Object.keys(fragments).forEach(function (selector) {
+        document.querySelectorAll(selector).forEach(function (el) {
+          el.outerHTML = fragments[selector];
+        });
+      });
+      if (window.jQuery) {
+        window.jQuery(document.body).trigger('wc_fragments_refreshed');
+      } else {
+        ensureCouponForm();
+        enhanceQuantities();
+      }
+    }
+
+    function showCartNotice(html) {
+      if (!html) return;
+      var body = drawer.querySelector('.cart-drawer-body');
+      if (!body) return;
+      var existing = body.querySelector('.cart-drawer-notice');
+      if (existing) existing.remove();
+      var wrap = document.createElement('div');
+      wrap.className = 'cart-drawer-notice';
+      wrap.innerHTML = html;
+      body.insertBefore(wrap, body.firstChild);
+      setTimeout(function () { wrap.remove(); }, 5000);
+    }
+  }
+
+  /* ---------- Checkout real do WooCommerce como assistente de 3 passos ----------
+   * Reproduz o fluxo do checkout-modal do prototipo (Dados de entrega > Forma de
+   * pagamento > Revisar e confirmar, com bolinhas de progresso) usando os
+   * elementos REAIS do formulario de checkout do WooCommerce. Nao criamos nenhum
+   * campo novo nem duplicamos logica de pedido/pagamento: so' organizamos a
+   * exibicao (mostrar/esconder secoes) e inserimos os botoes de navegacao entre
+   * passos. O envio final continua sendo o proprio #place_order do WooCommerce.
+   *
+   * O WooCommerce atualiza a revisao do pedido (tabela + metodos de pagamento)
+   * via AJAX sempre que o endereco muda (evento jQuery "updated_checkout"). Por
+   * isso a montagem dos passos 2 e 3 e' idempotente e re-executada nesse evento,
+   * caso o WooCommerce tenha recriado esses elementos.
+   */
+  function setupWooCheckoutSteps() {
+    var card = document.querySelector('.wc-checkout-card');
+    if (!card) return;
+    var form = card.querySelector('form.woocommerce-checkout');
+    if (!form) return;
+
+    ensureStepMarkup();
+    bindStepNav();
+    bindSubmitGuard();
+    goToStep(1);
+
+    if (window.jQuery) {
+      window.jQuery(document.body).on('updated_checkout', function () {
+        ensureStepMarkup();
+        goToStep(parseInt(card.getAttribute('data-current-step'), 10) || 1);
+      });
+    }
+
+    function ensureStepMarkup() {
+      if (!card.querySelector('.checkout-progress')) {
+        var progress = document.createElement('div');
+        progress.className = 'checkout-progress';
+        progress.innerHTML =
+          '<span class="checkout-dot is-active" data-step="1"></span>' +
+          '<span class="checkout-dot" data-step="2"></span>' +
+          '<span class="checkout-dot" data-step="3"></span>';
+        form.parentNode.insertBefore(progress, form);
+      }
+
+      var col2set = form.querySelector('.col2-set');
+      var orderReview = form.querySelector('#order_review');
+      if (!col2set || !orderReview) return;
+
+      if (!col2set.classList.contains('checkout-step')) {
+        col2set.classList.add('checkout-step');
+        col2set.setAttribute('data-step', '1');
+        var heading1 = document.createElement('h3');
+        heading1.textContent = 'Dados de entrega';
+        col2set.insertBefore(heading1, col2set.firstChild);
+        var next1 = document.createElement('button');
+        next1.type = 'button';
+        next1.className = 'btn btn-primary btn-block checkout-next';
+        next1.setAttribute('data-next', '2');
+        next1.textContent = 'Continuar';
+        col2set.appendChild(next1);
+      }
+
+      var paymentDiv = orderReview.querySelector('#payment');
+      var paymentUl = orderReview.querySelector('ul.wc_payment_methods');
+      var placeOrderRow = orderReview.querySelector('.place-order');
+      var table = orderReview.querySelector('table.shop_table');
+
+      if (paymentDiv && paymentUl && !paymentDiv.querySelector('.checkout-step-heading-2')) {
+        var heading2 = document.createElement('h3');
+        heading2.className = 'checkout-step-heading-2';
+        heading2.textContent = 'Forma de pagamento';
+        paymentDiv.insertBefore(heading2, paymentDiv.firstChild);
+
+        var nav2 = document.createElement('div');
+        nav2.className = 'checkout-nav checkout-nav-2';
+        nav2.innerHTML =
+          '<button type="button" class="btn btn-secondary checkout-back" data-back="1">Voltar</button>' +
+          '<button type="button" class="btn btn-primary checkout-next" data-next="3">Revisar pedido</button>';
+        paymentUl.parentNode.insertBefore(nav2, paymentUl.nextSibling);
+      }
+
+      if (table && !orderReview.querySelector('.checkout-step-heading-3')) {
+        var heading3 = document.createElement('h3');
+        heading3.className = 'checkout-step-heading-3';
+        heading3.textContent = 'Revisar e confirmar';
+        orderReview.insertBefore(heading3, table);
+
+        var summary = document.createElement('div');
+        summary.className = 'checkout-summary';
+        orderReview.insertBefore(summary, table);
+      }
+
+      if (placeOrderRow && !placeOrderRow.querySelector('.checkout-back-3')) {
+        var back3 = document.createElement('button');
+        back3.type = 'button';
+        back3.className = 'btn btn-secondary checkout-back-3';
+        back3.setAttribute('data-back', '2');
+        back3.textContent = 'Voltar';
+        placeOrderRow.insertBefore(back3, placeOrderRow.firstChild);
+      }
+    }
+
+    function bindStepNav() {
+      form.addEventListener('click', function (e) {
+        var nextBtn = e.target.closest('.checkout-next');
+        var backBtn = e.target.closest('.checkout-back, .checkout-back-3');
+        if (nextBtn) {
+          e.preventDefault();
+          var currentStep = parseInt(card.getAttribute('data-current-step'), 10) || 1;
+          if (!validateStep(currentStep)) return;
+          goToStep(parseInt(nextBtn.getAttribute('data-next'), 10));
+        } else if (backBtn) {
+          e.preventDefault();
+          goToStep(parseInt(backBtn.getAttribute('data-back'), 10));
+        }
+      });
+    }
+
+    /* Enviar o formulario nativamente antes do passo 3 (ex: apertando Enter
+     * num campo do passo 1 ou 2) pularia o assistente direto pro envio real
+     * do pedido no WooCommerce. Bloqueamos isso e, em vez de enviar, avancamos
+     * pro proximo passo normalmente (com a mesma validacao do botao Continuar).
+     * No passo 3, o envio segue normal — e' o "Finalizar pedido" de verdade.
+     */
+    function bindSubmitGuard() {
+      form.addEventListener('submit', function (e) {
+        var currentStep = parseInt(card.getAttribute('data-current-step'), 10) || 1;
+        if (currentStep >= 3) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (!validateStep(currentStep)) return;
+        goToStep(currentStep + 1);
+      }, true);
+    }
+
+    function stepContainer(step) {
+      var orderReview = form.querySelector('#order_review');
+      if (step === 1) return form.querySelector('.col2-set');
+      if (step === 2) return orderReview ? orderReview.querySelector('#payment') : null;
+      return orderReview;
+    }
+
+    function markFieldError(field) {
+      form.querySelectorAll('.has-error').forEach(function (el) { el.classList.remove('has-error'); });
+      var row = field.closest('.form-row') || field.parentElement;
+      if (row) row.classList.add('has-error');
+      field.focus();
+    }
+
+    function validateStep(step) {
+      var container = stepContainer(step);
+      if (!container) return true;
+      // O WooCommerce marca campo obrigatorio com a classe "validate-required"
+      // no ".form-row" (nao usa o atributo HTML required no input).
+      var rows = container.querySelectorAll('.form-row.validate-required');
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i].closest('.payment_box')) continue; // formulario proprio do gateway, tem validacao dele
+        var field = rows[i].querySelector('input, select, textarea');
+        if (!field) continue;
+        if (field.offsetParent === null) continue; // campo escondido (ex: select nativo por baixo do select2)
+        if (!field.value || !field.value.trim()) {
+          markFieldError(field);
+          return false;
+        }
+      }
+      // Campos com o atributo required nativo, fora dos formularios proprios
+      // de gateway (ex: cartao, boleto) — esses tem validacao/preenchimento
+      // proprio (ex: "Sem numero" do endereco do Mercado Pago) que nosso
+      // checador generico nao entende, e acabava bloqueando o avanco a toa.
+      var required = container.querySelectorAll('input[required], select[required]');
+      for (var j = 0; j < required.length; j++) {
+        var reqField = required[j];
+        if (reqField.closest('.payment_box')) continue;
+        if (reqField.offsetParent === null) continue;
+        if (!reqField.value || !reqField.value.trim()) {
+          markFieldError(reqField);
+          return false;
+        }
+      }
+      form.querySelectorAll('.has-error').forEach(function (el) { el.classList.remove('has-error'); });
+      return true;
+    }
+
+    /* Monta a caixa de resumo (etapa 3) a partir dos dados reais que o
+     * WooCommerce ja' calculou na tabela de revisao do pedido (escondida
+     * visualmente, mas continua no DOM e e' a fonte de verdade dos valores).
+     */
+    function renderSummary() {
+      var orderReview = form.querySelector('#order_review');
+      var table = orderReview ? orderReview.querySelector('table.shop_table') : null;
+      var summary = orderReview ? orderReview.querySelector('.checkout-summary') : null;
+      if (!table || !summary) return;
+
+      var rows = [];
+      table.querySelectorAll('tbody tr.cart_item').forEach(function (tr) {
+        var nameCell = tr.querySelector('.product-name');
+        var totalCell = tr.querySelector('.product-total');
+        if (!nameCell || !totalCell) return;
+        var qtyEl = nameCell.querySelector('.product-quantity');
+        var qtyMatch = qtyEl ? qtyEl.textContent.replace(/\D/g, '') : '';
+        var name = nameCell.childNodes[0] ? nameCell.childNodes[0].textContent.trim() : nameCell.textContent.trim();
+        var label = qtyMatch ? qtyMatch + 'x ' + name : name;
+        rows.push('<p><span>' + label + '</span><span>' + totalCell.innerHTML.trim() + '</span></p>');
+      });
+
+      // Taxas/descontos condicionais (ex: desconto de 5% no Pix) aparecem
+      // como linhas ".fee" na tabela nativa do WooCommerce.
+      table.querySelectorAll('tbody tr.fee').forEach(function (tr) {
+        var label = tr.querySelector('th');
+        var value = tr.querySelector('td');
+        if (!label || !value) return;
+        rows.push('<p><span>' + label.textContent.trim() + '</span><span>' + value.innerHTML.trim() + '</span></p>');
+      });
+
+      var checkedPayment = orderReview.querySelector('input[name="payment_method"]:checked');
+      var paymentLabel = checkedPayment ? checkedPayment.closest('li').querySelector('label') : null;
+      var paymentText = paymentLabel ? paymentLabel.textContent.trim().replace(/\s+/g, ' ') : '';
+      if (paymentText) {
+        rows.push('<p><span>Forma de pagamento</span><span>' + paymentText + '</span></p>');
+      }
+
+      var totalRow = table.querySelector('tfoot tr.order-total td');
+      // A celula do WooCommerce ja' vem com <strong> em volta do valor.
+      var totalHtml = totalRow ? totalRow.innerHTML.trim() : '';
+      rows.push('<p><strong>Total</strong>' + totalHtml + '</p>');
+
+      summary.innerHTML = rows.join('');
+    }
+
+    function goToStep(step) {
+      card.setAttribute('data-current-step', String(step));
+      var orderReview = form.querySelector('#order_review');
+      var col2set = form.querySelector('.col2-set');
+      var paymentUl = orderReview ? orderReview.querySelector('ul.wc_payment_methods') : null;
+      var heading2 = orderReview ? orderReview.querySelector('.checkout-step-heading-2') : null;
+      var nav2 = orderReview ? orderReview.querySelector('.checkout-nav-2') : null;
+      var heading3 = orderReview ? orderReview.querySelector('.checkout-step-heading-3') : null;
+      var summary = orderReview ? orderReview.querySelector('.checkout-summary') : null;
+      var placeOrderRow = orderReview ? orderReview.querySelector('.place-order') : null;
+
+      toggleStepVisibility(col2set, step === 1);
+      toggleStepVisibility(orderReview, step !== 1);
+
+      [paymentUl, heading2, nav2].forEach(function (el) {
+        toggleStepVisibility(el, step === 2);
+      });
+      [heading3, summary, placeOrderRow].forEach(function (el) {
+        toggleStepVisibility(el, step === 3);
+      });
+      if (step === 3) renderSummary();
+
+      card.querySelectorAll('.checkout-dot').forEach(function (dot) {
+        dot.classList.toggle('is-active', parseInt(dot.getAttribute('data-step'), 10) <= step);
+      });
+
+      var top = card.getBoundingClientRect().top + window.scrollY - 24;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    /* O script do Mercado Pago (cartao e boleto) tenta se conectar aos
+     * campos de pagamento logo que a pagina carrega, e desiste de vez se
+     * nao encontrar ("No checkout form found after 10 attempts"). Como o
+     * "display: none" esconde os campos completamente de scripts de
+     * terceiros (nao so' visualmente), passos escondidos usam uma classe
+     * que so' tira da vista/interacao (posicionamento fora do fluxo +
+     * visibility: hidden), mantendo os campos "presentes" pro Mercado Pago
+     * conseguir se conectar mesmo antes do cliente chegar na etapa certa.
+     */
+    function toggleStepVisibility(el, visible) {
+      if (!el) return;
+      el.classList.toggle('checkout-step-hidden', !visible);
+    }
+  }
+
+  /* ---------- Popup de "pagamento confirmado" na pagina de agradecimento ----------
+   * Sempre que o cliente chega nessa pagina com o pedido ja' pago, mostramos
+   * o popup na hora. Pedidos pagos de forma assincrona (ex: Pix, que muitas
+   * vezes so' confirma enquanto o cliente ainda esta' na tela do QR Code do
+   * proprio gateway) podem chegar aqui ja' pagos — nesse caso mostramos
+   * direto, sem esperar. Se ainda estiver pendente, consultamos
+   * periodicamente (a cada 4s) ate' o status mudar pra pago.
+   */
+  function setupOrderPaymentWatcher() {
+    var watcher = document.getElementById('orderPaymentWatcher');
+    if (!watcher) return;
+
+    var orderId = watcher.getAttribute('data-order-id');
+    var orderKey = watcher.getAttribute('data-order-key');
+    var homeUrl = watcher.getAttribute('data-home-url');
+
+    if (watcher.getAttribute('data-paid') === '1') {
+      showPaymentSuccessPopup();
+      return;
+    }
+
+    var interval = setInterval(check, 4000);
+
+    function check() {
+      fetch(
+        '/?wc-ajax=nu3tion_check_order_payment&order_id=' + encodeURIComponent(orderId) +
+        '&order_key=' + encodeURIComponent(orderKey)
+      )
+        .then(function (res) { return res.json(); })
+        .then(function (response) {
+          if (response && response.paid) {
+            clearInterval(interval);
+            showPaymentSuccessPopup();
+          }
+        });
+    }
+
+    function showPaymentSuccessPopup() {
+      var overlay = document.createElement('div');
+      overlay.className = 'payment-success-overlay';
+      overlay.innerHTML =
+        '<div class="payment-success-card">' +
+        '<svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>' +
+        '<h3>Pagamento confirmado!</h3>' +
+        '<p>Redirecionando para a página inicial...</p>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      setTimeout(function () { overlay.classList.add('is-open'); }, 10);
+      setTimeout(function () { window.location.href = homeUrl; }, 2500);
+    }
+  }
+
   /* ---------- Popup de "produto esgotado" (aparece ao clicar no botao desabilitado) ---------- */
   function setupStockModal() {
     var trigger = document.getElementById('outOfStockBtn');
@@ -241,7 +898,10 @@
     });
   }
 
-  /* ---------- Toast de carrinho (sucesso/erro) ---------- */
+  /* ---------- Toast de carrinho (sucesso/erro) ----------
+   * Usado pelo setupAjaxAddToCart acima, so' depois da confirmacao real do
+   * servidor (nunca antes). Elemento #cartToastRegion fica no footer.php.
+   */
   var toastTimer = null;
 
   function dismissToast(toastEl) {
@@ -276,7 +936,7 @@
     if (type === 'success') {
       actionsHtml =
         '<div class="toast-actions">' +
-          (opts.cartUrl ? '<a href="' + opts.cartUrl + '" class="toast-btn toast-btn--primary">Ver carrinho</a>' : '') +
+          '<button type="button" class="toast-btn toast-btn--primary" data-toast-view-cart>Ver carrinho</button>' +
           '<button type="button" class="toast-btn toast-btn--ghost" data-toast-dismiss>Continuar comprando</button>' +
         '</div>';
     }
@@ -295,152 +955,16 @@
     toast.querySelector('.toast-close').addEventListener('click', function () { dismissToast(toast); });
     var dismissBtn = toast.querySelector('[data-toast-dismiss]');
     if (dismissBtn) dismissBtn.addEventListener('click', function () { dismissToast(toast); });
+    var viewCartBtn = toast.querySelector('[data-toast-view-cart]');
+    if (viewCartBtn) {
+      viewCartBtn.addEventListener('click', function () {
+        dismissToast(toast);
+        var cartToggle = document.getElementById('cartToggle');
+        if (cartToggle) cartToggle.click();
+      });
+    }
 
     toastTimer = setTimeout(function () { dismissToast(toast); }, 6000);
-  }
-
-  /* ---------- Adicionar ao carrinho via AJAX (sem recarregar a pagina) ----------
-   * O formulario nativo do WooCommerce (form.cart) por padrao faz um POST
-   * tradicional com reload completo — e essa e a causa real da demora
-   * percebida ao clicar em "Adicionar ao carrinho". Aqui interceptamos o
-   * submit e chamamos o endpoint AJAX nativo do proprio WooCommerce
-   * (wc-ajax=add_to_cart), reaproveitando a resposta (fragments) que ele ja
-   * devolve para atualizar so o contador do carrinho, sem tocar no resto da
-   * pagina. So mostra o pop-up de sucesso depois da confirmacao real do
-   * servidor — nunca antes.
-   */
-  function setupAjaxAddToCart() {
-    var form = document.querySelector('.product-panel form.cart');
-    if (!form || typeof wc_add_to_cart_params === 'undefined') return;
-
-    var wrapper = form.closest('[data-product-id]');
-    var productId = wrapper ? wrapper.getAttribute('data-product-id') : null;
-    if (!productId) return;
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var btn = form.querySelector('.single_add_to_cart_button');
-      if (!btn || btn.classList.contains('is-loading')) return; // trava clique duplicado
-
-      var qtyField = form.querySelector('input[name="quantity"]');
-      var quantity = qtyField ? qtyField.value : '1';
-      var productName = document.querySelector('.product-title');
-      productName = productName ? productName.textContent.trim() : '';
-
-      btn.classList.add('is-loading');
-
-      var formData = new FormData(form);
-      formData.set('product_id', productId);
-      formData.set('quantity', quantity);
-
-      var ajaxUrl = wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart');
-
-      fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Resposta HTTP ' + res.status);
-          return res.json();
-        })
-        .then(function (response) {
-          btn.classList.remove('is-loading');
-
-          if (!response || response.error) {
-            showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
-            return;
-          }
-
-          if (response.fragments) {
-            Object.keys(response.fragments).forEach(function (selector) {
-              document.querySelectorAll(selector).forEach(function (el) {
-                el.outerHTML = response.fragments[selector];
-              });
-            });
-          }
-
-          document.body.dispatchEvent(new CustomEvent('wc_fragment_refresh'));
-
-          showCartToast('success', 'Produto adicionado ao carrinho com sucesso.', {
-            detail: quantity + 'x ' + productName,
-            cartUrl: wc_add_to_cart_params.cart_url
-          });
-        })
-        .catch(function (err) {
-          btn.classList.remove('is-loading');
-          console.error('Erro ao adicionar ao carrinho:', err); // fica visivel no console pra depuracao, sem esconder do usuario
-          showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
-        });
-    });
-  }
-
-  /* ---------- Mascara de telefone: (DDD) 00000-0000 ----------
-   * Aplicada via delegacao de evento (funciona em qualquer campo de telefone
-   * que exista hoje ou seja adicionado depois via AJAX, sem precisar religar
-   * listeners). Cobre:
-   *   - #billing_phone: campo nativo do WooCommerce, usado tanto no checkout
-   *     classico quanto em Minha Conta > Enderecos (mesmo id nos dois).
-   *   - qualquer <input type="tel"> ou com name contendo "phone"/"telefone",
-   *     para pegar formularios de contato (ex: WPForms) sem depender de
-   *     marcacao especifica de um plugin.
-   * So mexe no que o usuario digitou (recalcula a partir dos digitos), entao
-   * funciona igual em Android, iPhone, Chrome, Safari e Firefox — nao depende
-   * de nenhuma API especifica de teclado, so de value/selectionStart, que sao
-   * padrao em qualquer navegador.
-   */
-  function isPhoneField(el) {
-    if (!el || el.tagName !== 'INPUT') return false;
-    if (el.id === 'billing_phone') return true;
-    if (el.type === 'tel') return true;
-    var name = (el.name || '').toLowerCase();
-    return name.indexOf('phone') !== -1 || name.indexOf('telefone') !== -1;
-  }
-
-  function formatPhoneBR(digits) {
-    digits = digits.slice(0, 11);
-    if (!digits.length) return '';
-    if (digits.length <= 2) return '(' + digits;
-    var ddd = digits.slice(0, 2);
-    var rest = digits.slice(2);
-    if (rest.length <= 5) return '(' + ddd + ') ' + rest;
-    return '(' + ddd + ') ' + rest.slice(0, 5) + '-' + rest.slice(5, 9);
-  }
-
-  function setupPhoneMask() {
-    document.addEventListener('input', function (e) {
-      var el = e.target;
-      if (!isPhoneField(el)) return;
-
-      var raw = el.value;
-      var cursor = el.selectionStart === null ? raw.length : el.selectionStart;
-      var digitsBeforeCursor = raw.slice(0, cursor).replace(/\D/g, '').length;
-
-      var digits = raw.replace(/\D/g, '').slice(0, 11);
-      var formatted = formatPhoneBR(digits);
-      el.value = formatted;
-
-      // Recoloca o cursor logo apos o mesmo numero de digitos que havia antes
-      // do cursor, contando dentro do texto ja formatado (evita o cursor
-      // "pular" pro fim a cada tecla, que e o que costuma parecer quebrado).
-      var seen = 0;
-      var pos = formatted.length;
-      for (var i = 0; i < formatted.length; i++) {
-        if (/\d/.test(formatted[i])) seen++;
-        if (seen === digitsBeforeCursor) { pos = i + 1; break; }
-      }
-      if (digitsBeforeCursor === 0) pos = 0;
-      el.setSelectionRange(pos, pos);
-    });
-
-    // Cola (paste) tambem passa pelo evento "input" acima na maioria dos
-    // navegadores modernos, mas alguns webviews antigos so disparam "paste" —
-    // tratamos os dois pra garantir consistencia entre Android/iPhone/desktop.
-    document.addEventListener('paste', function (e) {
-      if (!isPhoneField(e.target)) return;
-      setTimeout(function () {
-        var el = e.target;
-        var digits = el.value.replace(/\D/g, '').slice(0, 11);
-        el.value = formatPhoneBR(digits);
-      }, 0);
-    });
   }
 
   /* ---------- Preenchimento automatico de endereco por CEP (checkout do WooCommerce) ----------
@@ -497,5 +1021,54 @@
       field.value = uf;
       field.dispatchEvent(new Event('change', { bubbles: true }));
     }
+  }
+
+  /* ---------- Formato "55 (DDD) numero" no telefone ----------
+   * O campo continua sendo o mesmo #billing_phone de sempre (nada e'
+   * escondido nem duplicado) — o "55" so' vem preenchido automaticamente
+   * pra pessoa nao precisar digitar, mas e' texto normal, ela pode apagar
+   * ou alterar como quiser. A cada tecla, reformatamos os digitos digitados
+   * no padrao "55 (DDD) numero".
+   *
+   * O plugin "Brazilian Market on WooCommerce" ja' aplica sua propria
+   * mascara "(00) 00000-0000" nesse campo (formato de DDD nacional, sem
+   * codigo do pais) — por isso desligamos essa mascara antes (se existir) e
+   * aplicamos a nossa por cima, sempre com setTimeout(0) pra garantir que
+   * nossa formatacao seja a ultima a rodar em cada tecla, mesmo que algum
+   * outro script tambem esteja escutando o mesmo campo.
+   */
+  function setupPhoneDDDPrefix() {
+    var field = document.getElementById('billing_phone');
+    if (!field || field.dataset.dddMaskReady) return;
+    field.dataset.dddMaskReady = '1';
+
+    function formatPhone(value) {
+      var digits = value.replace(/\D/g, '').slice(0, 13);
+      var cc = digits.slice(0, 2);
+      var ddd = digits.slice(2, 4);
+      var number = digits.slice(4);
+
+      var out = cc;
+      if (ddd) out += ' (' + ddd + (ddd.length === 2 ? ')' : '');
+      if (number) {
+        out += ' ' + (number.length > 5 ? number.slice(0, 5) + '-' + number.slice(5) : number);
+      } else if (ddd.length === 2) {
+        out += ' ';
+      }
+      return out;
+    }
+
+    setTimeout(function () {
+      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.unmask) {
+        window.jQuery(field).unmask();
+      }
+      field.value = formatPhone(field.value || '55');
+    }, 400);
+
+    field.addEventListener('input', function () {
+      setTimeout(function () {
+        field.value = formatPhone(field.value);
+      }, 0);
+    });
   }
 })();
