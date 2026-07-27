@@ -1030,52 +1030,61 @@
     }
   }
 
-  /* ---------- Formato "55 (DDD) numero" no telefone ----------
-   * O campo continua sendo o mesmo #billing_phone de sempre (nada e'
-   * escondido nem duplicado) — o "55" so' vem preenchido automaticamente
-   * pra pessoa nao precisar digitar, mas e' texto normal, ela pode apagar
-   * ou alterar como quiser. A cada tecla, reformatamos os digitos digitados
-   * no padrao "55 (DDD) numero".
+  /* ---------- Mascara de telefone: (DDD) 00000-0000 (sem "55" na frente) ----------
+   * O campo continua sendo o mesmo #billing_phone de sempre. Recalcula os
+   * digitos a cada tecla e reformata no padrao "(DDD) 00000-0000",
+   * reposicionando o cursor pelo numero de digitos que havia antes dele
+   * (evita o cursor "pular" pro fim a cada tecla).
    *
    * O plugin "Brazilian Market on WooCommerce" ja' aplica sua propria
-   * mascara "(00) 00000-0000" nesse campo (formato de DDD nacional, sem
-   * codigo do pais) — por isso desligamos essa mascara antes (se existir) e
-   * aplicamos a nossa por cima, sempre com setTimeout(0) pra garantir que
-   * nossa formatacao seja a ultima a rodar em cada tecla, mesmo que algum
-   * outro script tambem esteja escutando o mesmo campo.
+   * mascara nesse campo — por isso desligamos essa mascara antes (se
+   * existir) e aplicamos a nossa por cima, sempre com setTimeout(0) pra
+   * garantir que nossa formatacao seja a ultima a rodar em cada tecla.
    */
   function setupPhoneDDDPrefix() {
     var field = document.getElementById('billing_phone');
     if (!field || field.dataset.dddMaskReady) return;
     field.dataset.dddMaskReady = '1';
 
-    function formatPhone(value) {
-      var digits = value.replace(/\D/g, '').slice(0, 13);
-      var cc = digits.slice(0, 2);
-      var ddd = digits.slice(2, 4);
-      var number = digits.slice(4);
+    function formatPhone(digits) {
+      digits = digits.slice(0, 11);
+      if (!digits.length) return '';
+      if (digits.length <= 2) return '(' + digits;
+      var ddd = digits.slice(0, 2);
+      var rest = digits.slice(2);
+      if (rest.length <= 5) return '(' + ddd + ') ' + rest;
+      return '(' + ddd + ') ' + rest.slice(0, 5) + '-' + rest.slice(5, 9);
+    }
 
-      var out = cc;
-      if (ddd) out += ' (' + ddd + (ddd.length === 2 ? ')' : '');
-      if (number) {
-        out += ' ' + (number.length > 5 ? number.slice(0, 5) + '-' + number.slice(5) : number);
-      } else if (ddd.length === 2) {
-        out += ' ';
+    function reformat() {
+      var raw = field.value;
+      var cursor = field.selectionStart === null ? raw.length : field.selectionStart;
+      var digitsBeforeCursor = raw.slice(0, cursor).replace(/\D/g, '').length;
+
+      var digits = raw.replace(/\D/g, '').slice(0, 11);
+      var formatted = formatPhone(digits);
+      field.value = formatted;
+
+      var seen = 0;
+      var pos = formatted.length;
+      for (var i = 0; i < formatted.length; i++) {
+        if (/\d/.test(formatted[i])) seen++;
+        if (seen === digitsBeforeCursor) { pos = i + 1; break; }
       }
-      return out;
+      if (digitsBeforeCursor === 0) pos = 0;
+      field.setSelectionRange(pos, pos);
     }
 
     setTimeout(function () {
       if (window.jQuery && window.jQuery.fn && window.jQuery.fn.unmask) {
         window.jQuery(field).unmask();
       }
-      field.value = formatPhone(field.value || '55');
+      field.value = formatPhone(field.value.replace(/\D/g, ''));
     }, 400);
 
-    field.addEventListener('input', function () {
-      setTimeout(function () {
-        field.value = formatPhone(field.value);
-      }, 0);
+    field.addEventListener('input', reformat);
+    field.addEventListener('paste', function () {
+      setTimeout(reformat, 0);
     });
   }
 })();
