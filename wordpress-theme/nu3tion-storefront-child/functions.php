@@ -124,6 +124,17 @@ function nu3tion_cart_drawer_body_fragment( $fragments ) {
 add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_drawer_body_fragment' );
 
 /**
+ * A imagem/nome do produto dentro do carrinho (lateral e pagina de carrinho)
+ * levam por padrao para a pagina avulsa do produto no WooCommerce — que
+ * ninguem desenhou, porque o site e' de pagina unica (tudo fica na secao
+ * "Comprar" da home). Troca esse link para apontar pra la em vez disso.
+ */
+function nu3tion_cart_item_permalink() {
+	return home_url( '/#comprar' );
+}
+add_filter( 'woocommerce_cart_item_permalink', 'nu3tion_cart_item_permalink' );
+
+/**
  * Valida o telefone no backend (checkout classico do WooCommerce), alem da
  * mascara no frontend. O campo aceita tanto "DDD + numero" (10-11 digitos)
  * quanto com o codigo do pais na frente, "55 + DDD + numero" (12-13 digitos)
