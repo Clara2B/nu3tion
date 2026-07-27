@@ -14,6 +14,8 @@
     setupCepAutofill();
     setupVideoMute();
     setupStockModal();
+    setupPhoneMask();
+    setupAjaxAddToCart();
   }
 
   /* ---------- Header ---------- */
@@ -236,6 +238,208 @@
     if (okBtn) okBtn.addEventListener('click', closeModal);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  /* ---------- Toast de carrinho (sucesso/erro) ---------- */
+  var toastTimer = null;
+
+  function dismissToast(toastEl) {
+    if (!toastEl || toastEl.classList.contains('is-leaving')) return;
+    toastEl.classList.add('is-leaving');
+    setTimeout(function () {
+      if (toastEl.parentNode) toastEl.parentNode.removeChild(toastEl);
+    }, 260);
+  }
+
+  function showCartToast(type, message, opts) {
+    var region = document.getElementById('cartToastRegion');
+    if (!region) return;
+
+    // Nunca duplica: remove qualquer toast ja visivel antes de mostrar o novo.
+    clearTimeout(toastTimer);
+    Array.prototype.forEach.call(region.querySelectorAll('.toast'), function (t) {
+      if (t.parentNode) t.parentNode.removeChild(t);
+    });
+
+    opts = opts || {};
+    var toast = document.createElement('div');
+    toast.className = 'toast toast--' + type;
+    toast.setAttribute('role', 'status');
+
+    var iconPath = type === 'success'
+      ? '<path d="M20 6 9 17l-5-5"/>'
+      : '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>';
+
+    var detailHtml = opts.detail ? '<p class="toast-detail">' + opts.detail + '</p>' : '';
+    var actionsHtml = '';
+    if (type === 'success') {
+      actionsHtml =
+        '<div class="toast-actions">' +
+          (opts.cartUrl ? '<a href="' + opts.cartUrl + '" class="toast-btn toast-btn--primary">Ver carrinho</a>' : '') +
+          '<button type="button" class="toast-btn toast-btn--ghost" data-toast-dismiss>Continuar comprando</button>' +
+        '</div>';
+    }
+
+    toast.innerHTML =
+      '<div class="toast-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">' + iconPath + '</svg></div>' +
+      '<div class="toast-body">' +
+        '<p class="toast-title">' + message + '</p>' +
+        detailHtml +
+        actionsHtml +
+      '</div>' +
+      '<button type="button" class="toast-close" aria-label="Fechar aviso">×</button>';
+
+    region.appendChild(toast);
+
+    toast.querySelector('.toast-close').addEventListener('click', function () { dismissToast(toast); });
+    var dismissBtn = toast.querySelector('[data-toast-dismiss]');
+    if (dismissBtn) dismissBtn.addEventListener('click', function () { dismissToast(toast); });
+
+    toastTimer = setTimeout(function () { dismissToast(toast); }, 6000);
+  }
+
+  /* ---------- Adicionar ao carrinho via AJAX (sem recarregar a pagina) ----------
+   * O formulario nativo do WooCommerce (form.cart) por padrao faz um POST
+   * tradicional com reload completo — e essa e a causa real da demora
+   * percebida ao clicar em "Adicionar ao carrinho". Aqui interceptamos o
+   * submit e chamamos o endpoint AJAX nativo do proprio WooCommerce
+   * (wc-ajax=add_to_cart), reaproveitando a resposta (fragments) que ele ja
+   * devolve para atualizar so o contador do carrinho, sem tocar no resto da
+   * pagina. So mostra o pop-up de sucesso depois da confirmacao real do
+   * servidor — nunca antes.
+   */
+  function setupAjaxAddToCart() {
+    var form = document.querySelector('.product-panel form.cart');
+    if (!form || typeof wc_add_to_cart_params === 'undefined') return;
+
+    var wrapper = form.closest('[data-product-id]');
+    var productId = wrapper ? wrapper.getAttribute('data-product-id') : null;
+    if (!productId) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var btn = form.querySelector('.single_add_to_cart_button');
+      if (!btn || btn.classList.contains('is-loading')) return; // trava clique duplicado
+
+      var qtyField = form.querySelector('input[name="quantity"]');
+      var quantity = qtyField ? qtyField.value : '1';
+      var productName = document.querySelector('.product-title');
+      productName = productName ? productName.textContent.trim() : '';
+
+      btn.classList.add('is-loading');
+
+      var formData = new FormData(form);
+      formData.set('product_id', productId);
+      formData.set('quantity', quantity);
+
+      var ajaxUrl = wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart');
+
+      fetch(ajaxUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Resposta HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (response) {
+          btn.classList.remove('is-loading');
+
+          if (!response || response.error) {
+            showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
+            return;
+          }
+
+          if (response.fragments) {
+            Object.keys(response.fragments).forEach(function (selector) {
+              document.querySelectorAll(selector).forEach(function (el) {
+                el.outerHTML = response.fragments[selector];
+              });
+            });
+          }
+
+          document.body.dispatchEvent(new CustomEvent('wc_fragment_refresh'));
+
+          showCartToast('success', 'Produto adicionado ao carrinho com sucesso.', {
+            detail: quantity + 'x ' + productName,
+            cartUrl: wc_add_to_cart_params.cart_url
+          });
+        })
+        .catch(function (err) {
+          btn.classList.remove('is-loading');
+          console.error('Erro ao adicionar ao carrinho:', err); // fica visivel no console pra depuracao, sem esconder do usuario
+          showCartToast('error', 'Não foi possível adicionar o produto. Tente novamente.');
+        });
+    });
+  }
+
+  /* ---------- Mascara de telefone: (DDD) 00000-0000 ----------
+   * Aplicada via delegacao de evento (funciona em qualquer campo de telefone
+   * que exista hoje ou seja adicionado depois via AJAX, sem precisar religar
+   * listeners). Cobre:
+   *   - #billing_phone: campo nativo do WooCommerce, usado tanto no checkout
+   *     classico quanto em Minha Conta > Enderecos (mesmo id nos dois).
+   *   - qualquer <input type="tel"> ou com name contendo "phone"/"telefone",
+   *     para pegar formularios de contato (ex: WPForms) sem depender de
+   *     marcacao especifica de um plugin.
+   * So mexe no que o usuario digitou (recalcula a partir dos digitos), entao
+   * funciona igual em Android, iPhone, Chrome, Safari e Firefox — nao depende
+   * de nenhuma API especifica de teclado, so de value/selectionStart, que sao
+   * padrao em qualquer navegador.
+   */
+  function isPhoneField(el) {
+    if (!el || el.tagName !== 'INPUT') return false;
+    if (el.id === 'billing_phone') return true;
+    if (el.type === 'tel') return true;
+    var name = (el.name || '').toLowerCase();
+    return name.indexOf('phone') !== -1 || name.indexOf('telefone') !== -1;
+  }
+
+  function formatPhoneBR(digits) {
+    digits = digits.slice(0, 11);
+    if (!digits.length) return '';
+    if (digits.length <= 2) return '(' + digits;
+    var ddd = digits.slice(0, 2);
+    var rest = digits.slice(2);
+    if (rest.length <= 5) return '(' + ddd + ') ' + rest;
+    return '(' + ddd + ') ' + rest.slice(0, 5) + '-' + rest.slice(5, 9);
+  }
+
+  function setupPhoneMask() {
+    document.addEventListener('input', function (e) {
+      var el = e.target;
+      if (!isPhoneField(el)) return;
+
+      var raw = el.value;
+      var cursor = el.selectionStart === null ? raw.length : el.selectionStart;
+      var digitsBeforeCursor = raw.slice(0, cursor).replace(/\D/g, '').length;
+
+      var digits = raw.replace(/\D/g, '').slice(0, 11);
+      var formatted = formatPhoneBR(digits);
+      el.value = formatted;
+
+      // Recoloca o cursor logo apos o mesmo numero de digitos que havia antes
+      // do cursor, contando dentro do texto ja formatado (evita o cursor
+      // "pular" pro fim a cada tecla, que e o que costuma parecer quebrado).
+      var seen = 0;
+      var pos = formatted.length;
+      for (var i = 0; i < formatted.length; i++) {
+        if (/\d/.test(formatted[i])) seen++;
+        if (seen === digitsBeforeCursor) { pos = i + 1; break; }
+      }
+      if (digitsBeforeCursor === 0) pos = 0;
+      el.setSelectionRange(pos, pos);
+    });
+
+    // Cola (paste) tambem passa pelo evento "input" acima na maioria dos
+    // navegadores modernos, mas alguns webviews antigos so disparam "paste" —
+    // tratamos os dois pra garantir consistencia entre Android/iPhone/desktop.
+    document.addEventListener('paste', function (e) {
+      if (!isPhoneField(e.target)) return;
+      setTimeout(function () {
+        var el = e.target;
+        var digits = el.value.replace(/\D/g, '').slice(0, 11);
+        el.value = formatPhoneBR(digits);
+      }, 0);
     });
   }
 

@@ -39,10 +39,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 		</div>
+
+		<div class="container footer-trust">
+			<div class="footer-trust-item">
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+				<span>Compra segura</span>
+			</div>
+			<div class="footer-trust-item">
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3Z"/></svg>
+				<span>Site protegido por SSL</span>
+			</div>
+			<div class="footer-trust-item">
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+				<span>Pagamento processado em ambiente seguro</span>
+			</div>
+		</div>
+
 		<div class="container footer-bottom">
-			<p>nu3tion · CNPJ 55.664.335/0001-04</p>
+			<p>
+				nu3tion · CNPJ 55.664.335/0001-04
+				<?php if ( function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ) : ?>
+					· <a href="<?php echo esc_url( get_privacy_policy_url() ); ?>">Política de Privacidade</a>
+				<?php endif; ?>
+			</p>
 		</div>
 	</footer>
+
+	<div class="toast-region" id="cartToastRegion" aria-live="polite" aria-atomic="true"></div>
 
 <?php wp_footer(); ?>
 </body>

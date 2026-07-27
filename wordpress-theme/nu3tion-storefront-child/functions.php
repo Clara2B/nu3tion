@@ -45,6 +45,14 @@ function nu3tion_enqueue_assets() {
 		wp_get_theme()->get( 'Version' ),
 		true
 	);
+
+	// Garante que o script nativo de add-to-cart via AJAX do WooCommerce (e o
+	// objeto `wc_add_to_cart_params` que ele localiza) esteja disponivel na
+	// front-page, ja que ela nao e uma pagina de produto/loja "de verdade" aos
+	// olhos do WooCommerce (por isso ele nao enfileira isso aqui sozinho).
+	if ( function_exists( 'WC' ) ) {
+		wp_enqueue_script( 'wc-add-to-cart' );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'nu3tion_enqueue_assets', 20 );
 
@@ -97,3 +105,21 @@ function nu3tion_cart_count_fragment( $fragments ) {
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'nu3tion_cart_count_fragment' );
+
+/**
+ * Valida o telefone no backend (checkout classico do WooCommerce), alem da
+ * mascara no frontend. Aceita 10 ou 11 digitos (DDD + numero fixo/celular).
+ * A mascara visual fica no campo, mas o que importa aqui e a quantidade de
+ * digitos reais, entao normalizamos removendo tudo que nao for numero antes
+ * de validar.
+ */
+function nu3tion_validate_billing_phone( $data, $errors ) {
+	if ( empty( $data['billing_phone'] ) ) {
+		return;
+	}
+	$digits = preg_replace( '/\D/', '', $data['billing_phone'] );
+	if ( strlen( $digits ) < 10 || strlen( $digits ) > 11 ) {
+		$errors->add( 'billing_phone', __( 'Informe um telefone valido com DDD, no formato (11) 94001-1535.', 'nu3tion' ) );
+	}
+}
+add_action( 'woocommerce_after_checkout_validation', 'nu3tion_validate_billing_phone', 10, 2 );
