@@ -67,6 +67,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="toast-region" id="cartToastRegion" aria-live="polite" aria-atomic="true"></div>
 
+	<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+	<div class="cart-backdrop" id="cartBackdrop"></div>
+	<aside class="cart-drawer" id="cartDrawer" aria-hidden="true" data-nonce="<?php echo esc_attr( wp_create_nonce( 'nu3tion_cart_actions' ) ); ?>">
+		<div class="cart-drawer-head">
+			<h3>Seu carrinho</h3>
+			<button class="icon-btn" id="cartClose" aria-label="Fechar carrinho">
+				<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+			</button>
+		</div>
+		<div class="cart-drawer-body">
+			<?php woocommerce_mini_cart(); ?>
+		</div>
+	</aside>
+
+	<iframe name="nu3tion-cart-frame" title="Processamento do carrinho" style="display:none;" aria-hidden="true"></iframe>
+	<?php endif; ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -123,3 +123,121 @@ function nu3tion_validate_billing_phone( $data, $errors ) {
 	}
 }
 add_action( 'woocommerce_after_checkout_validation', 'nu3tion_validate_billing_phone', 10, 2 );
+
+/**
+ * RECONSTRUCAO — funcionalidades avancadas do carrinho lateral / checkout em
+ * 3 passos / confirmacao de pagamento na pagina de agradecimento.
+ *
+ * O front-end (assets/js/site.js) que ja estava no ar depende destes 3
+ * endpoints AJAX e destes 2 hooks. O arquivo original que os continha foi
+ * sobrescrito sem backup, entao isto foi reconstruido a partir do que o
+ * proprio JS chama (nomes de endpoint, parametros esperados, formato de
+ * resposta) — nao e uma restauracao literal do codigo antigo, e uma
+ * reimplementacao com o mesmo contrato. Teste com atencao, especialmente
+ * cupom e confirmacao de pagamento.
+ */
+define( 'NU3TION_CART_NONCE_ACTION', 'nu3tion_cart_actions' );
+
+/**
+ * Endpoint AJAX: aplicar cupom de desconto no carrinho lateral.
+ * Chamado pelo JS em POST /?wc-ajax=nu3tion_apply_coupon (nonce, coupon_code).
+ */
+function nu3tion_ajax_apply_coupon() {
+	check_ajax_referer( NU3TION_CART_NONCE_ACTION, 'nonce' );
+
+	$coupon_code = isset( $_POST['coupon_code'] ) ? wc_format_coupon_code( wp_unslash( $_POST['coupon_code'] ) ) : '';
+
+	ob_start();
+	if ( $coupon_code && ! WC()->cart->has_discount( $coupon_code ) ) {
+		WC()->cart->add_discount( $coupon_code );
+	}
+	wc_print_notices();
+	$notices_html = ob_get_clean();
+
+	wp_send_json(
+		array(
+			'fragments'    => apply_filters( 'woocommerce_add_to_cart_fragments', array() ),
+			'notices_html' => $notices_html,
+		)
+	);
+}
+add_action( 'wc_ajax_nu3tion_apply_coupon', 'nu3tion_ajax_apply_coupon' );
+
+/**
+ * Endpoint AJAX: alterar a quantidade de um item do carrinho lateral.
+ * Chamado pelo JS em POST /?wc-ajax=nu3tion_update_cart_qty (nonce, cart_item_key, quantity).
+ */
+function nu3tion_ajax_update_cart_qty() {
+	check_ajax_referer( NU3TION_CART_NONCE_ACTION, 'nonce' );
+
+	$cart_item_key = isset( $_POST['cart_item_key'] ) ? sanitize_text_field( wp_unslash( $_POST['cart_item_key'] ) ) : '';
+	$quantity      = isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : 0;
+
+	if ( $cart_item_key && $quantity > 0 ) {
+		WC()->cart->set_quantity( $cart_item_key, $quantity, true );
+	}
+
+	wp_send_json(
+		array(
+			'fragments' => apply_filters( 'woocommerce_add_to_cart_fragments', array() ),
+		)
+	);
+}
+add_action( 'wc_ajax_nu3tion_update_cart_qty', 'nu3tion_ajax_update_cart_qty' );
+
+/**
+ * Endpoint AJAX: consultar se um pedido ja foi pago. Usado na pagina de
+ * agradecimento para exibir o popup assim que a confirmacao chegar (ex: Pix).
+ * Chamado pelo JS em GET /?wc-ajax=nu3tion_check_order_payment (order_id, order_key).
+ */
+function nu3tion_ajax_check_order_payment() {
+	$order_id  = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
+	$order_key = isset( $_GET['order_key'] ) ? sanitize_text_field( wp_unslash( $_GET['order_key'] ) ) : '';
+	$order     = $order_id ? wc_get_order( $order_id ) : false;
+
+	$paid = $order && hash_equals( $order->get_order_key(), $order_key ) && $order->is_paid();
+
+	wp_send_json( array( 'paid' => (bool) $paid ) );
+}
+add_action( 'wc_ajax_nu3tion_check_order_payment', 'nu3tion_ajax_check_order_payment' );
+
+/**
+ * Envolve o formulario de checkout numa div ".wc-checkout-card", que o JS
+ * (setupWooCheckoutSteps) usa para transformar o checkout nativo num
+ * assistente de 3 passos (Dados de entrega / Pagamento / Revisar).
+ */
+add_action(
+	'woocommerce_before_checkout_form',
+	function () {
+		echo '<div class="wc-checkout-card">';
+	},
+	5
+);
+add_action(
+	'woocommerce_after_checkout_form',
+	function () {
+		echo '</div>';
+	},
+	100
+);
+
+/**
+ * Elemento lido pelo JS (setupOrderPaymentWatcher) na pagina de agradecimento,
+ * com os dados do pedido pra saber quando o pagamento (ex: Pix) confirmar.
+ */
+add_action(
+	'woocommerce_thankyou',
+	function ( $order_id ) {
+		$order = $order_id ? wc_get_order( $order_id ) : false;
+		if ( ! $order ) {
+			return;
+		}
+		printf(
+			'<div id="orderPaymentWatcher" style="display:none" data-order-id="%1$d" data-order-key="%2$s" data-home-url="%3$s" data-paid="%4$s"></div>',
+			esc_attr( $order_id ),
+			esc_attr( $order->get_order_key() ),
+			esc_url( home_url( '/' ) ),
+			$order->is_paid() ? '1' : '0'
+		);
+	}
+);
