@@ -412,20 +412,27 @@
 
     /* O carrinho nativo do WooCommerce (wc-cart-fragments.js) as vezes
      * substitui o conteudo do mini-carrinho (ex: fragments em cache no
-     * sessionStorage, aplicados logo no carregamento da pagina) sem disparar
-     * "wc_fragments_refreshed" a tempo do nosso listener acima ja' estar
-     * pronto — deixando a quantidade sem os botoes -/+ ate a proxima mudanca
-     * no carrinho. Um MutationObserver no corpo do painel garante que a
-     * pilula de quantidade e o campo de cupom sejam re-inseridos sempre que
-     * o conteudo mudar, seja qual for a causa.
+     * sessionStorage, aplicados logo no carregamento da pagina, ou o nosso
+     * proprio fragmento "div.cart-drawer-body" apos adicionar um produto)
+     * sem disparar "wc_fragments_refreshed" a tempo do nosso listener acima
+     * ja' estar pronto — deixando a quantidade sem os botoes -/+ ate a
+     * proxima mudanca no carrinho. Um MutationObserver garante que a pilula
+     * de quantidade e o campo de cupom sejam re-inseridos sempre que o
+     * conteudo mudar, seja qual for a causa.
+     *
+     * Observamos o proprio #cartDrawer (nao o ".cart-drawer-body" de dentro
+     * dele), porque nosso fragmento troca ".cart-drawer-body" inteiro via
+     * outerHTML — isso desconecta o elemento observado do DOM e o
+     * MutationObserver para de disparar. O #cartDrawer em si nunca e'
+     * substituido, so' o que tem dentro dele, entao ele continua vendo
+     * qualquer mudanca.
      */
-    var drawerBody = drawer.querySelector('.cart-drawer-body');
-    if (drawerBody && window.MutationObserver) {
+    if (window.MutationObserver) {
       var observer = new MutationObserver(function () {
         ensureCouponForm();
         enhanceQuantities();
       });
-      observer.observe(drawerBody, { childList: true, subtree: true });
+      observer.observe(drawer, { childList: true, subtree: true });
     }
 
     function ensureCouponForm() {
