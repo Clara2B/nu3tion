@@ -203,7 +203,21 @@ $product    = ( $product_id && class_exists( 'WooCommerce' ) ) ? wc_get_product(
 						}
 						?>
 						<?php if ( $product_image_id ) : ?>
-							<?php echo wp_get_attachment_image( $product_image_id, 'large', false, array( 'class' => 'product-media-img' ) ); ?>
+							<?php
+							// Forca o corte quadrado via estilo inline (alem da classe),
+							// porque a imagem enviada pode ter qualquer proporcao original
+							// e o WooCommerce as vezes injeta CSS que sobrescreve o
+							// "object-fit" da nossa folha de estilo.
+							echo wp_get_attachment_image(
+								$product_image_id,
+								'large',
+								false,
+								array(
+									'class' => 'product-media-img',
+									'style' => 'width:100%;height:100%;object-fit:cover;display:block;',
+								)
+							);
+							?>
 						<?php else : ?>
 							<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/Nu3tion 3.avif' ); ?>" alt="Pacote de OraProtein®, sabor açaí com abacaxi, 500g" class="product-media-img">
 						<?php endif; ?>
