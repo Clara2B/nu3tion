@@ -1107,23 +1107,48 @@
       return '(' + ddd + ') ' + rest.slice(0, 5) + '-' + rest.slice(5, 9);
     }
 
+    function applyCursor(formatted, digitsBeforeCursor) {
+      try {
+        var seen = 0;
+        var pos = formatted.length;
+        for (var i = 0; i < formatted.length; i++) {
+          if (/\d/.test(formatted[i])) seen++;
+          if (seen === digitsBeforeCursor) { pos = i + 1; break; }
+        }
+        if (digitsBeforeCursor === 0) pos = 0;
+        field.setSelectionRange(pos, pos);
+      } catch (err) {
+        // Alguns navegadores nao suportam setSelectionRange em certos
+        // momentos — ignora e deixa o cursor onde o proprio navegador colocou.
+      }
+    }
+
     function reformat() {
       var raw = field.value;
-      var cursor = field.selectionStart === null ? raw.length : field.selectionStart;
+      var cursor = ( field.selectionStart === null || field.selectionStart === undefined ) ? raw.length : field.selectionStart;
       var digitsBeforeCursor = raw.slice(0, cursor).replace(/\D/g, '').length;
 
       var digits = raw.replace(/\D/g, '').slice(0, 11);
       var formatted = formatPhone(digits);
+      if (field.value === formatted) return; // ja esta formatado, nao mexe no cursor a toa
+
       field.value = formatted;
 
-      var seen = 0;
-      var pos = formatted.length;
-      for (var i = 0; i < formatted.length; i++) {
-        if (/\d/.test(formatted[i])) seen++;
-        if (seen === digitsBeforeCursor) { pos = i + 1; break; }
+      /* No iOS Safari, mudar o "value" e mexer no cursor de forma sincrona
+       * dentro do mesmo evento "input" e' um bug conhecido do WebKit: o
+       * teclado/autocorretor do iPhone ainda esta processando o toque que
+       * gerou esse evento, e a troca de cursor entra em conflito com isso
+       * (o cursor pula ou o teclado trava). No desktop isso nunca aparece
+       * porque nao tem teclado virtual por tras. Adiar o reposicionamento
+       * pra proxima animation frame da tempo do WebKit terminar o que
+       * estava fazendo — mesma tecnica usada por bibliotecas de mascara
+       * conhecidas (ex: Cleave.js) especificamente pra esse problema no iOS.
+       */
+      if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(function () { applyCursor(formatted, digitsBeforeCursor); });
+      } else {
+        applyCursor(formatted, digitsBeforeCursor);
       }
-      if (digitsBeforeCursor === 0) pos = 0;
-      field.setSelectionRange(pos, pos);
     }
 
     setTimeout(function () {
@@ -1137,5 +1162,9 @@
     field.addEventListener('paste', function () {
       setTimeout(reformat, 0);
     });
+    // Alguns fluxos de autopreenchimento no iOS (sugestao de contato/QuickType)
+    // disparam "change" sem um "input" padrao antes — reformata aqui tambem;
+    // e' seguro chamar de novo, a funcao ja sai cedo se o valor ja esta certo.
+    field.addEventListener('change', reformat);
   }
 })();
