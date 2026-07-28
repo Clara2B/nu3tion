@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.1.4
+Version: 1.1.5
 Text Domain: nu3tion
 */
 
@@ -973,12 +973,33 @@ body.nu3tion-page {
   }
   .main-nav.is-open a { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
   .main-nav.is-open a:last-child { border-bottom: none; }
-  /* z-index alto de proposito: o indicador de conta/avatar de outro plugin
-     do site (o mesmo que colide com a faixa verde) pode estar sobrepondo
-     este botao visualmente mesmo ele existindo e tendo tamanho normal no
-     DOM — sem saber o z-index exato desse widget externo, colocamos o
-     nosso bem alto pra garantir que fique por cima. */
-  .mobile-menu-btn { display: inline-flex; position: relative; z-index: 50; }
+  /* O botao do menu virou um elemento fixo independente, fora do header
+     (ver header.php) — depois de confirmar via DevTools que display, cor,
+     tamanho e opacidade estavam todos corretos e ele CONTINUAVA invisivel,
+     a explicacao que sobrou e' algo cobrindo esse canto especifico da tela
+     (provavelmente o indicador de conta/avatar de outro plugin, que ja
+     causa problema na faixa verde). Em vez de seguir competindo por esse
+     mesmo espaco, ele agora fica no canto superior ESQUERDO, com fundo
+     proprio (como o botao flutuante do carrinho), longe de onde esse
+     indicador aparece. */
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 18px;
+    left: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border: none;
+    box-shadow: var(--shadow-pop);
+    z-index: 45;
+    transition: background 0.2s var(--ease);
+  }
+  .mobile-menu-btn:hover { background: var(--color-primary-soft); }
 
   #cartToggle { width: 46px; height: 46px; }
   #cartToggle svg { width: 26px; height: 26px; }

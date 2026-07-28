@@ -58,12 +58,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</a>
 			<?php endif; ?>
 			<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="btn btn-primary btn-sm header-cta">Compre Agora</a>
-			<button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false">
-				<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-			</button>
 		</div>
 	</div>
 </header>
+
+<?php
+/*
+ * Botao do menu mobile, movido pra FORA do header depois de varias
+ * tentativas (display, z-index, cor, opacidade — todas corretas nos
+ * DevTools, mas ele continuava invisivel). A causa mais provavel e'
+ * algum elemento externo (o indicador de conta/avatar de outro plugin,
+ * que ja causa problema na faixa verde) cobrindo esse canto especifico
+ * da tela. Em vez de continuar competindo por esse mesmo espaco, o
+ * botao virou um elemento fixo independente, no canto superior
+ * ESQUERDO — do outro lado da tela, longe de onde esse indicador
+ * aparece. Mesmo padrao ja usado com sucesso pro botao flutuante do
+ * carrinho (mobile-cta-float) mais abaixo.
+ */
+?>
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false">
+	<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+</button>
 
 <?php
 /*
