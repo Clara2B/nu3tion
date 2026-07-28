@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.3
+Version: 1.0.4
 Text Domain: nu3tion
 */
 
@@ -144,7 +144,7 @@ body.nu3tion-page {
 }
 .site-header.scrolled { border-color: var(--color-border); box-shadow: 0 4px 20px rgba(20,21,15,0.05); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--color-primary); text-transform: uppercase; }
+.nu3tion .logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--color-primary); text-transform: uppercase; }
 .header-inner .logo { text-transform: none; }
 .logo-img { height: 46px; width: auto; }
 .site-footer .logo-img { height: 40px; }
@@ -164,7 +164,12 @@ body.nu3tion-page {
 .cart-count.pulse { animation: pulse-count 0.4s var(--ease); }
 @keyframes pulse-count { 0% { transform: scale(1); } 45% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .mobile-menu-btn { display: none; }
-.mobile-cta-float { display: none; }
+/* Precisa ser ".nu3tion .mobile-cta-float" (nao so' ".mobile-cta-float")
+   porque esse elemento tambem tem a classe ".btn", e ".nu3tion .btn" (mais
+   acima) define "display: inline-flex" com a MESMA especificidade de duas
+   classes — sem o prefixo aqui, aquela regra vencia por vir depois no
+   arquivo e o popup ficava visivel o tempo todo, inclusive no desktop. */
+.nu3tion .mobile-cta-float { display: none; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding: 72px 0 96px; overflow: hidden; }
