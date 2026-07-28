@@ -57,10 +57,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span class="cart-count"><?php echo esc_html( WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ); ?></span>
 				</a>
 			<?php endif; ?>
-			<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="btn btn-primary btn-sm">Comprar</a>
+			<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="btn btn-primary btn-sm header-cta">Compre Agora</a>
 			<button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false">
 				<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
 			</button>
 		</div>
 	</div>
 </header>
+
+<?php
+/*
+ * Copia separada do "Compre Agora", so' pro mobile, fora do <header>.
+ * Precisa ficar fora porque o <header> tem backdrop-filter (efeito de
+ * desfoque), e isso faz qualquer position:fixed dentro dele ficar preso
+ * ao proprio header em vez de grudar na tela toda (limitacao do CSS,
+ * nao bug de codigo). Escondido por padrao; so aparece via CSS abaixo
+ * de 900px, como popup fixo na lateral direita.
+ */
+?>
+<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="btn btn-primary btn-sm mobile-cta-float">Compre Agora</a>

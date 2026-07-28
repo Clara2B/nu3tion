@@ -156,6 +156,7 @@ body.nu3tion-page {
 .cart-count.pulse { animation: pulse-count 0.4s var(--ease); }
 @keyframes pulse-count { 0% { transform: scale(1); } 45% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .mobile-menu-btn { display: none; }
+.mobile-cta-float { display: none; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding: 72px 0 96px; overflow: hidden; }
@@ -713,6 +714,22 @@ body.nu3tion-page {
   .main-nav.is-open a { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
   .main-nav.is-open a:last-child { border-bottom: none; }
   .mobile-menu-btn { display: inline-flex; }
+
+  /* No mobile, esconde a copia do "Compre Agora" de dentro do header (ela
+     continua existindo pro desktop) e mostra a copia separada como popup
+     fixo grudado na lateral direita da tela, sempre visivel durante a
+     rolagem, em qualquer pagina do site (header.php carrega em todas). */
+  .header-cta { display: none; }
+  .mobile-cta-float {
+    display: inline-flex;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 45;
+    border-radius: 999px 0 0 999px;
+    box-shadow: var(--shadow-pop);
+  }
 }
 
 /* ---------- Blog ---------- */
@@ -803,7 +820,4 @@ body.nu3tion-page {
   .closing-line { font-size: 16px; line-height: 1.7; }
   .closing-line--accent { font-size: 25px; margin: 10px 0; }
   .closing-line--soft { margin-top: 20px; font-size: 15px; }
-}
-@media (max-width: 400px) {
-  .header-actions .btn-primary.btn-sm { display: none; }
 }
