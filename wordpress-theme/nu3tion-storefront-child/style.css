@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.1
+Version: 1.0.2
 Text Domain: nu3tion
 */
 
@@ -157,6 +157,12 @@ body.nu3tion-page {
 @keyframes pulse-count { 0% { transform: scale(1); } 45% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .mobile-menu-btn { display: none; }
 .mobile-cta-float { display: none; }
+/* O plugin Elementor injeta ".elementor-kit-XXXX a { font-size: 45px; ... }"
+   valendo pra qualquer link do site inteiro, com mais especificidade CSS do
+   que ".btn"/".btn-sm" sozinhos (classe+tag vence so'-classe). Combinar duas
+   classes aqui (".header-cta.btn-sm") empata em especificidade e da'
+   preferencia a esta regra, que vem depois no arquivo. */
+.header-cta.btn-sm { font-size: 14px; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding: 72px 0 96px; overflow: hidden; }
@@ -723,7 +729,7 @@ body.nu3tion-page {
      sobrepor o popup de "produto adicionado ao carrinho", que usa o
      canto inferior direito. */
   .header-cta { display: none; }
-  .mobile-cta-float {
+  .mobile-cta-float.btn-sm {
     display: inline-flex;
     position: fixed;
     top: 80px;
