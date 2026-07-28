@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.1.0
+Version: 1.1.1
 Text Domain: nu3tion
 */
 
@@ -135,7 +135,7 @@ body.nu3tion-page {
 .icon-btn:hover { background: var(--color-primary-soft); }
 
 /* ---------- Announce bar ---------- */
-.announce-bar { background: var(--color-primary); color: #fff; margin-bottom: 15px; }
+.announce-bar { background: var(--color-primary); color: #fff; margin-bottom: 0; }
 .announce-bar p { margin: 0; text-align: center; font-size: 13px; padding: 8px 16px; color: rgba(255,255,255,0.92); }
 
 /* ---------- Header ---------- */
@@ -959,6 +959,9 @@ body.nu3tion-page {
   .main-nav.is-open a { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
   .main-nav.is-open a:last-child { border-bottom: none; }
   .mobile-menu-btn { display: inline-flex; }
+
+  #cartToggle { width: 46px; height: 46px; }
+  #cartToggle svg { width: 26px; height: 26px; }
 
   /* No mobile, esconde a copia do "Compre Agora" de dentro do header (ela
      continua existindo pro desktop, sem nenhuma mudanca) e mostra o botao
