@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.1.2
+Version: 1.1.3
 Text Domain: nu3tion
 */
 
@@ -142,7 +142,15 @@ body.nu3tion-page {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 40;
+  /* 55 (nao mais 40): o "backdrop-filter" logo abaixo cria um contexto de
+     empilhamento proprio pro header, entao QUALQUER z-index dado a algo
+     DENTRO dele (como o botao do menu mobile) so' compete com outras
+     coisas dentro do header — nunca com elementos de fora, tipo o
+     indicador de conta/avatar de outro plugin. So' subir o z-index do
+     proprio header tem efeito real contra esse elemento externo. Mantido
+     abaixo de 60 de proposito, pra continuar atras dos nossos proprios
+     modais/pop-ups (.modal-backdrop, .cart-drawer, .toast-region etc). */
+  z-index: 55;
   background: rgba(251, 247, 238, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
