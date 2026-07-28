@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.2
+Version: 1.0.3
 Text Domain: nu3tion
 */
 
@@ -47,7 +47,7 @@ Text Domain: nu3tion
 
 /* ---------- Reset (escopado ao conteudo do nosso design, nao mexe no admin) ---------- */
 .nu3tion * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 /* O cabecalho e' fixo (sticky, 72px) — sem isso, ao clicar em "Comprar" no
    header, o topo da secao do produto fica escondido atras do cabecalho. */
 #comprar { scroll-margin-top: 88px; }
@@ -58,6 +58,7 @@ body.nu3tion-page {
   background: var(--color-bg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 .nu3tion h1, .nu3tion h2, .nu3tion h3 { font-family: var(--font-body); font-weight: 700; margin: 0 0 0.5em; color: var(--color-ink); }
 .nu3tion p { margin: 0 0 1em; color: var(--color-ink-soft); }
@@ -82,8 +83,15 @@ body.nu3tion-page {
 .reveal[data-reveal-delay="4"] { transition-delay: 0.32s; }
 .reveal[data-reveal-delay="5"] { transition-delay: 0.4s; }
 
-/* ---------- Buttons ---------- */
-.btn {
+/* ---------- Buttons ----------
+   Prefixado com ".nu3tion" (o body inteiro tem essa classe) de proposito:
+   o plugin Elementor injeta uma regra global ".elementor-kit-XXXX a" (uma
+   classe + a tag "a") que, com apenas ".btn"/".btn-primary" etc (uma classe
+   so), teria mais forca no CSS e vencia — e foi exatamente isso que deixou
+   TODOS os botoes do site com fonte gigante (~45px) e texto preto herdado
+   em vez da cor certa. Com ".nu3tion" na frente (duas classes), nossas
+   regras sempre ganham dessa do Elementor, em qualquer botao do site. */
+.nu3tion .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -96,14 +104,14 @@ body.nu3tion-page {
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), background-position 0.35s var(--ease);
   white-space: nowrap;
 }
-.btn:active { transform: scale(0.97); }
-.btn-primary { background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark)); background-size: 160% 160%; background-position: 0% 50%; color: #fff; box-shadow: 0 6px 16px rgba(28, 62, 126, 0.22); }
-.btn-primary:hover { background-position: 100% 50%; box-shadow: 0 10px 24px rgba(28, 62, 126, 0.32); transform: translateY(-1px); }
-.btn-secondary { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-border); }
-.btn-secondary:hover { border-color: var(--color-ink-muted); }
-.btn-sm { padding: 9px 18px; font-size: 14px; }
-.btn-lg { padding: 15px 30px; font-size: 16px; }
-.btn-block { width: 100%; }
+.nu3tion .btn:active { transform: scale(0.97); }
+.nu3tion .btn-primary { background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark)); background-size: 160% 160%; background-position: 0% 50%; color: #fff; box-shadow: 0 6px 16px rgba(28, 62, 126, 0.22); }
+.nu3tion .btn-primary:hover { background-position: 100% 50%; box-shadow: 0 10px 24px rgba(28, 62, 126, 0.32); transform: translateY(-1px); }
+.nu3tion .btn-secondary { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-border); }
+.nu3tion .btn-secondary:hover { border-color: var(--color-ink-muted); }
+.nu3tion .btn-sm { padding: 9px 18px; font-size: 14px; }
+.nu3tion .btn-lg { padding: 15px 30px; font-size: 16px; }
+.nu3tion .btn-block { width: 100%; }
 
 .icon-btn {
   background: none;
@@ -157,12 +165,6 @@ body.nu3tion-page {
 @keyframes pulse-count { 0% { transform: scale(1); } 45% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .mobile-menu-btn { display: none; }
 .mobile-cta-float { display: none; }
-/* O plugin Elementor injeta ".elementor-kit-XXXX a { font-size: 45px; ... }"
-   valendo pra qualquer link do site inteiro, com mais especificidade CSS do
-   que ".btn"/".btn-sm" sozinhos (classe+tag vence so'-classe). Combinar duas
-   classes aqui (".header-cta.btn-sm") empata em especificidade e da'
-   preferencia a esta regra, que vem depois no arquivo. */
-.header-cta.btn-sm { font-size: 14px; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding: 72px 0 96px; overflow: hidden; }
