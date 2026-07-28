@@ -48,6 +48,9 @@ Text Domain: nu3tion
 /* ---------- Reset (escopado ao conteudo do nosso design, nao mexe no admin) ---------- */
 .nu3tion * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* O cabecalho e' fixo (sticky, 72px) — sem isso, ao clicar em "Comprar" no
+   header, o topo da secao do produto fica escondido atras do cabecalho. */
+#comprar { scroll-margin-top: 88px; }
 body.nu3tion-page {
   margin: 0;
   font-family: var(--font-body);
