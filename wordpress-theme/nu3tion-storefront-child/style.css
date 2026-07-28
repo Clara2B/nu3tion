@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.1.5
+Version: 1.1.6
 Text Domain: nu3tion
 */
 
@@ -987,7 +987,7 @@ body.nu3tion-page {
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: 18px;
+    top: 62px;
     left: 16px;
     width: 44px;
     height: 44px;
