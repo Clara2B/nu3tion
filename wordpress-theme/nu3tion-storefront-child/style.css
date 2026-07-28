@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.5
+Version: 1.0.6
 Text Domain: nu3tion
 */
 
@@ -407,7 +407,26 @@ body.nu3tion-page {
 /* Formulario nativo de compra do WooCommerce, estilizado para bater com o design */
 .product-panel form.cart { margin: 0; }
 .product-panel .quantity { display: inline-flex; align-items: center; border: 1px solid var(--color-border); border-radius: 999px; padding: 6px 16px; background: var(--color-surface); margin-bottom: 20px; }
-.product-panel .quantity .qty { border: none; width: 40px; text-align: center; font-weight: 600; font-size: 14px; }
+.product-panel .quantity .qty {
+  border: none;
+  width: 40px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-ink);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+/* Remove a setinha de incremento nativa do input number (Chrome/Safari) —
+   ja temos os botoes "-"/"+" proprios, ela so' duplicava a funcao e deixava
+   o numero com aparencia de caixinha cinza. */
+.product-panel .quantity .qty::-webkit-outer-spin-button,
+.product-panel .quantity .qty::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 /* Botoes "-"/"+" que o site.js injeta (setupProductQuantityStepper) dentro
    do pill de quantidade — nunca tinham regra propria, entao apareciam com a
    aparencia crua do navegador (fundo cinza, borda). */
