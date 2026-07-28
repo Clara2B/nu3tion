@@ -67,12 +67,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 /*
- * Copia separada do "Compre Agora", so' pro mobile, fora do <header>.
+ * Botao flutuante de compra, so' pro mobile, fora do <header>.
  * Precisa ficar fora porque o <header> tem backdrop-filter (efeito de
  * desfoque), e isso faz qualquer position:fixed dentro dele ficar preso
  * ao proprio header em vez de grudar na tela toda (limitacao do CSS,
  * nao bug de codigo). Escondido por padrao; so aparece via CSS abaixo
- * de 900px, como popup fixo na lateral direita.
+ * de 900px, como um botao circular (FAB) com icone de carrinho, centralizado
+ * na lateral direita da tela — longe do indicador de conta no topo e do
+ * toast de "adicionado ao carrinho" no rodape.
  */
 ?>
-<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="btn btn-primary btn-sm mobile-cta-float">Compre Agora</a>
+<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="mobile-cta-float" aria-label="Ir para a área de compra">
+	<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
+</a>

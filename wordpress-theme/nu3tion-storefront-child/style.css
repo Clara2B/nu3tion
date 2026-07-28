@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.9
+Version: 1.1.0
 Text Domain: nu3tion
 */
 
@@ -961,28 +961,37 @@ body.nu3tion-page {
   .mobile-menu-btn { display: inline-flex; }
 
   /* No mobile, esconde a copia do "Compre Agora" de dentro do header (ela
-     continua existindo pro desktop, sem nenhuma mudanca) e mostra a copia
-     separada como um popup pequeno, flutuando no canto superior direito,
-     sempre visivel durante a rolagem, em qualquer pagina do site
-     (header.php carrega em todas). Fica no canto de CIMA pra nunca
-     sobrepor o popup de "produto adicionado ao carrinho", que usa o
-     canto inferior direito. */
-  /* ".nu3tion .header-cta" (nao so' ".header-cta"): mesmo motivo do
-     ".nu3tion .mobile-cta-float" mais acima — ".nu3tion .btn" define
-     "display: inline-flex" com 2 classes de especificidade, entao uma
-     regra de 1 classe so' nunca conseguia esconder este botao no mobile,
-     e ele ficava duplicado ao lado do popup flutuante. */
+     continua existindo pro desktop, sem nenhuma mudanca) e mostra o botao
+     flutuante como um FAB circular com icone de carrinho, centralizado na
+     lateral direita da tela (top:50%). Antes ficava colado no topo
+     (top:80px) e colidia com o indicador de conta/avatar que outro plugin
+     do site ja mostra ali; centralizado na vertical ele fica longe tanto
+     desse indicador (que so' ocupa o topo) quanto do toast de "produto
+     adicionado ao carrinho" (que so' ocupa o rodape, bottom:20px). */
   .nu3tion .header-cta { display: none; }
-  .mobile-cta-float.btn-sm {
-    display: inline-flex;
+  .nu3tion .mobile-cta-float {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    top: 80px;
-    right: 12px;
-    z-index: 45;
-    padding: 10px 16px;
-    font-size: 13px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+    color: #fff;
     box-shadow: var(--shadow-pop);
+    z-index: 45;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
   }
+  .nu3tion .mobile-cta-float:active { transform: translateY(-50%) scale(0.92); }
+
+  /* Reserva espaco no canto direito da faixa de aviso pro indicador de
+     conta (login/avatar) de outro plugin do site, que nao faz parte deste
+     tema — sem isso o texto quebra em cima dele no mobile. */
+  .announce-bar p { padding-right: 68px; font-size: 12px; }
 }
 
 /* ---------- Blog ---------- */
