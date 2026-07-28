@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.1.6
+Version: 1.1.7
 Text Domain: nu3tion
 */
 
@@ -1000,6 +1000,22 @@ body.nu3tion-page {
     transition: background 0.2s var(--ease);
   }
   .mobile-menu-btn:hover { background: var(--color-primary-soft); }
+  /* !important de proposito aqui (excecao — nao usamos isso em nenhum
+     outro lugar do arquivo): depois de 4 tentativas normais (display,
+     z-index, cor do botao, opacidade) sem resultado, o problema real e'
+     especificamente o <svg> por dentro do botao sendo escondido por
+     alguma regra do Storefront que nao conseguimos identificar (ele
+     provavelmente espera icones via fonte, nao SVG cru, dentro de
+     <button>). Forcando aqui pra garantir. */
+  .mobile-menu-btn svg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    stroke: var(--color-ink) !important;
+    fill: none !important;
+    width: 22px !important;
+    height: 22px !important;
+  }
 
   #cartToggle { width: 46px; height: 46px; }
   #cartToggle svg { width: 26px; height: 26px; }
