@@ -716,18 +716,21 @@ body.nu3tion-page {
   .mobile-menu-btn { display: inline-flex; }
 
   /* No mobile, esconde a copia do "Compre Agora" de dentro do header (ela
-     continua existindo pro desktop) e mostra a copia separada como popup
-     fixo grudado na lateral direita da tela, sempre visivel durante a
-     rolagem, em qualquer pagina do site (header.php carrega em todas). */
+     continua existindo pro desktop, sem nenhuma mudanca) e mostra a copia
+     separada como um popup pequeno, flutuando no canto superior direito,
+     sempre visivel durante a rolagem, em qualquer pagina do site
+     (header.php carrega em todas). Fica no canto de CIMA pra nunca
+     sobrepor o popup de "produto adicionado ao carrinho", que usa o
+     canto inferior direito. */
   .header-cta { display: none; }
   .mobile-cta-float {
     display: inline-flex;
     position: fixed;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+    top: 80px;
+    right: 12px;
     z-index: 45;
-    border-radius: 999px 0 0 999px;
+    padding: 10px 16px;
+    font-size: 13px;
     box-shadow: var(--shadow-pop);
   }
 }
