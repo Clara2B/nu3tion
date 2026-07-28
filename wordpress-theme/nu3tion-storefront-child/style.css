@@ -4,7 +4,7 @@ Theme URI: https://nu3tion.com.br
 Description: Tema filho do Storefront para o site/loja da Nu3tion (OraProtein), construido a partir do prototipo aprovado pelo cliente.
 Author: Clara
 Template: storefront
-Version: 1.0.8
+Version: 1.0.9
 Text Domain: nu3tion
 */
 
@@ -941,9 +941,17 @@ body.nu3tion-page {
 }
 @media (max-width: 900px) {
   .main-nav { display: none; }
+  /* "position: absolute" (nao "fixed") de proposito: ".main-nav" fica
+     dentro do <header>, que tem "backdrop-filter" — isso cria um novo
+     containing block pra qualquer "position: fixed" dentro dele (mesmo
+     problema documentado no header.php sobre o botao flutuante), fazendo
+     o menu renderizar preso/errado em vez de solido sobre a pagina. Como
+     ".site-header" ja tem "position: sticky" (containing block valido pra
+     "absolute"), usar absolute + "top: 100%" resolve isso e ainda se
+     adapta sozinho a qualquer altura futura do header. */
   .main-nav.is-open {
     display: flex; flex-direction: column; gap: 4px;
-    position: fixed; top: 72px; left: 0; right: 0;
+    position: absolute; top: 100%; left: 0; right: 0;
     background: var(--color-surface); padding: 16px 24px 20px;
     border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-card);
     z-index: 39;
@@ -959,7 +967,12 @@ body.nu3tion-page {
      (header.php carrega em todas). Fica no canto de CIMA pra nunca
      sobrepor o popup de "produto adicionado ao carrinho", que usa o
      canto inferior direito. */
-  .header-cta { display: none; }
+  /* ".nu3tion .header-cta" (nao so' ".header-cta"): mesmo motivo do
+     ".nu3tion .mobile-cta-float" mais acima — ".nu3tion .btn" define
+     "display: inline-flex" com 2 classes de especificidade, entao uma
+     regra de 1 classe so' nunca conseguia esconder este botao no mobile,
+     e ele ficava duplicado ao lado do popup flutuante. */
+  .nu3tion .header-cta { display: none; }
   .mobile-cta-float.btn-sm {
     display: inline-flex;
     position: fixed;

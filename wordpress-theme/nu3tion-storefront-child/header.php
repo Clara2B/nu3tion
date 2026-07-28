@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="header-actions">
 			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-				<a class="icon-btn" href="<?php echo esc_url( wc_get_cart_url() ); ?>" aria-label="Ver carrinho">
+				<a class="icon-btn" id="cartToggle" href="<?php echo esc_url( wc_get_cart_url() ); ?>" aria-label="Ver carrinho">
 					<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
 					<span class="cart-count"><?php echo esc_html( WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ); ?></span>
 				</a>
