@@ -17,6 +17,7 @@
     setupProductQuantityStepper();
     setupAddToCartIcon();
     setupAjaxAddToCart();
+    setupMobileCartFloat();
     setupCartDrawer();
     setupCartDrawerEnhancements();
     setupWooCheckoutSteps();
@@ -390,6 +391,65 @@
         detail: qty + 'x ' + productName
       });
     }
+  }
+
+  /* ---------- Botao flutuante de carrinho (mobile) ----------
+   * Mesmo caminho rapido do formulario de compra (fetch em /?wc-ajax=add_to_cart,
+   * sem recarregar a pagina), mas sem depender do formulario da secao
+   * "Comprar" estar na tela — usa o "data-product-id" do proprio botao.
+   * Ao terminar, abre o painel lateral do carrinho (o mesmo elemento que o
+   * icone do header abre) simulando um clique nele — igual o botao "Ver
+   * carrinho" do toast de sucesso ja faz mais abaixo neste arquivo. Se o
+   * fetch falhar por qualquer motivo, cai pro href normal do botao (que
+   * adiciona via URL e manda pra pagina padrao do carrinho).
+   */
+  function setupMobileCartFloat() {
+    var btn = document.getElementById('mobileCartFloat');
+    if (!btn) return;
+    var productId = btn.getAttribute('data-product-id');
+    if (!productId) return; // sem produto configurado: deixa o link normal (ancora #comprar)
+
+    btn.addEventListener('click', function (e) {
+      if (btn.classList.contains('is-loading')) {
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+      btn.classList.add('is-loading');
+
+      var formData = new FormData();
+      formData.set('product_id', productId);
+      formData.set('quantity', '1');
+
+      fetch('/?wc-ajax=add_to_cart', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Resposta HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (response) {
+          if (!response || response.error) throw new Error('Resposta invalida do add_to_cart');
+          btn.classList.remove('is-loading');
+          if (response.fragments) {
+            Object.keys(response.fragments).forEach(function (selector) {
+              document.querySelectorAll(selector).forEach(function (el) {
+                el.outerHTML = response.fragments[selector];
+              });
+            });
+          }
+          var cartToggle = document.getElementById('cartToggle');
+          if (cartToggle) cartToggle.click();
+        })
+        .catch(function (err) {
+          console.warn('Botao flutuante: add-to-cart via AJAX falhou, navegando direto.', err);
+          btn.classList.remove('is-loading');
+          window.location.href = btn.getAttribute('href');
+        });
+    });
   }
 
   /* ---------- Painel lateral do carrinho (dados reais do WooCommerce) ----------

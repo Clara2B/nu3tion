@@ -92,6 +92,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $nu3tion_float_product_id = function_exists( 'nu3tion_get_main_product_id' ) ? nu3tion_get_main_product_id() : 0;
 if ( class_exists( 'WooCommerce' ) && $nu3tion_float_product_id ) {
+	// Href serve so' de reserva pra quando o JS nao roda: adiciona o produto
+	// e manda pra pagina padrao do carrinho. Com JS ativo (site.js,
+	// setupMobileCartFloat), o clique e' interceptado e usa o mesmo caminho
+	// AJAX + painel lateral que o resto do site ja usa (visual customizado,
+	// sem recarregar a pagina).
 	$nu3tion_float_cart_url = add_query_arg(
 		array(
 			'add-to-cart'           => $nu3tion_float_product_id,
@@ -103,6 +108,12 @@ if ( class_exists( 'WooCommerce' ) && $nu3tion_float_product_id ) {
 	$nu3tion_float_cart_url = home_url( '/#comprar' );
 }
 ?>
-<a href="<?php echo esc_url( $nu3tion_float_cart_url ); ?>" class="mobile-cta-float" aria-label="Adicionar ao carrinho e ver carrinho">
+<a
+	href="<?php echo esc_url( $nu3tion_float_cart_url ); ?>"
+	class="mobile-cta-float"
+	id="mobileCartFloat"
+	aria-label="Adicionar ao carrinho e ver carrinho"
+	<?php echo $nu3tion_float_product_id ? ' data-product-id="' . esc_attr( $nu3tion_float_product_id ) . '"' : ''; ?>
+>
 	<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
 </a>
