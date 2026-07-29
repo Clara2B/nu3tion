@@ -869,6 +869,11 @@ body.nu3tion-page {
   gap: 10px;
   margin: 0 0 20px;
 }
+/* "Ver carrinho" e' redundante aqui: clicar no icone do carrinho ja abre
+   este mesmo painel, entao esconde so esse botao e deixa "Finalizar compra". */
+.cart-drawer-body .woocommerce-mini-cart__buttons .button:not(.checkout) {
+  display: none;
+}
 .cart-drawer-body .woocommerce-mini-cart__buttons .button {
   display: flex;
   align-items: center;
