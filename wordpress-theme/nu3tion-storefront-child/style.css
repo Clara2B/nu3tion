@@ -1244,8 +1244,19 @@ body.woocommerce-checkout .entry-title {
 }
 .woocommerce-checkout .woocommerce-error { border-left-color: #c0392b; }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  .wc-checkout-card,
+  .checkout-progress,
+  .woocommerce-checkout .woocommerce-form-coupon-toggle .woocommerce-info,
+  .woocommerce-checkout .woocommerce-form-coupon {
+    max-width: 100%;
+  }
   .wc-checkout-card { padding: 24px 18px; }
+  body.woocommerce-checkout .content-area,
+  body.woocommerce-checkout #primary {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }
 
 /* ---------- Footer ---------- */
