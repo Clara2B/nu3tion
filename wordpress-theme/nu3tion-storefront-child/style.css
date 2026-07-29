@@ -1043,6 +1043,18 @@ body.woocommerce-checkout .entry-title {
   padding: 32px;
   overflow: hidden;
 }
+/* O WooCommerce/Storefront colocam "Detalhes de cobranca" e "Resumo do
+   pedido" lado a lado (float) por padrao -- isso so' e' corrigido depois
+   que o JS esconde o resumo (posicionando ele fora do fluxo), causando um
+   "flash" da pagina larga assim que carrega e, no mobile, um scroll lateral
+   que fica preso mesmo depois do layout se corrigir. Desliga o float aqui
+   direto, valendo desde o primeiro carregamento, sem depender do JS. */
+.wc-checkout-card #customer_details,
+.wc-checkout-card #order_review,
+.wc-checkout-card #order_review_heading {
+  float: none !important;
+  width: 100% !important;
+}
 /* Titulo nativo "Seu pedido" do WooCommerce -- os titulos de cada passo
    (Dados de entrega / Forma de pagamento / Revisar e confirmar) ja cobrem
    essa funcao, e esse aqui nao era escondido pelo assistente de passos
