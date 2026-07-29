@@ -84,8 +84,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * de 900px, como um botao circular (FAB) com icone de carrinho, centralizado
  * na lateral direita da tela — longe do indicador de conta no topo e do
  * toast de "adicionado ao carrinho" no rodape.
+ *
+ * Quando o WooCommerce esta ativo e o produto principal existe, o link usa
+ * o padrao nativo ?add-to-cart=ID na URL do carrinho: o WooCommerce adiciona
+ * o produto e ja carrega a tela do carrinho, sem JS extra. Sem WooCommerce
+ * ou produto configurado, cai de volta para a ancora da secao de compra.
  */
+$nu3tion_float_product_id = function_exists( 'nu3tion_get_main_product_id' ) ? nu3tion_get_main_product_id() : 0;
+if ( class_exists( 'WooCommerce' ) && $nu3tion_float_product_id ) {
+	$nu3tion_float_cart_url = add_query_arg( 'add-to-cart', $nu3tion_float_product_id, wc_get_cart_url() );
+} else {
+	$nu3tion_float_cart_url = home_url( '/#comprar' );
+}
 ?>
-<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>" class="mobile-cta-float" aria-label="Ir para a área de compra">
+<a href="<?php echo esc_url( $nu3tion_float_cart_url ); ?>" class="mobile-cta-float" aria-label="Adicionar ao carrinho e ver carrinho">
 	<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
 </a>
