@@ -1069,8 +1069,13 @@ body.woocommerce-checkout .entry-title {
   margin-bottom: 20px;
 }
 
-.wc-checkout-card .col2-set { display: block; }
-.wc-checkout-card .col-1, .wc-checkout-card .col-2 { width: 100%; float: none; }
+.wc-checkout-card .col2-set { display: block !important; }
+.wc-checkout-card .col2-set .col-1,
+.wc-checkout-card .col2-set .col-2 {
+  width: 100% !important;
+  float: none !important;
+  margin: 0 !important;
+}
 
 .wc-checkout-card .form-row { margin-bottom: 16px; }
 .wc-checkout-card label {
