@@ -92,7 +92,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $nu3tion_float_product_id = function_exists( 'nu3tion_get_main_product_id' ) ? nu3tion_get_main_product_id() : 0;
 if ( class_exists( 'WooCommerce' ) && $nu3tion_float_product_id ) {
-	$nu3tion_float_cart_url = add_query_arg( 'add-to-cart', $nu3tion_float_product_id, wc_get_cart_url() );
+	$nu3tion_float_cart_url = add_query_arg(
+		array(
+			'add-to-cart'           => $nu3tion_float_product_id,
+			'nu3tion-cart-redirect' => 1,
+		),
+		wc_get_cart_url()
+	);
 } else {
 	$nu3tion_float_cart_url = home_url( '/#comprar' );
 }

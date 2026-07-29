@@ -93,6 +93,24 @@ function nu3tion_get_main_product_id() {
 }
 
 /**
+ * O WooCommerce, por padrao, processa "?add-to-cart=ID" e depois redireciona
+ * de volta pra pagina de onde veio a requisicao (wp_get_referer()) em vez de
+ * ficar na URL que foi de fato acessada — entao o botao flutuante do
+ * carrinho (mobile-cta-float) adicionava o produto mas devolvia o visitante
+ * pra mesma pagina, sem nunca chegar na tela do carrinho. Esse filtro so
+ * forca o redirecionamento pro carrinho quando o link tem o marcador
+ * "nu3tion-cart-redirect" (adicionado so' no botao flutuante), sem alterar o
+ * comportamento padrao (via AJAX) do resto do site.
+ */
+function nu3tion_redirect_float_cart_to_cart_page( $url ) {
+	if ( isset( $_GET['nu3tion-cart-redirect'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return wc_get_cart_url();
+	}
+	return $url;
+}
+add_filter( 'woocommerce_add_to_cart_redirect', 'nu3tion_redirect_float_cart_to_cart_page' );
+
+/**
  * Atualiza o numerinho do carrinho no header via AJAX (sem recarregar a
  * pagina) quando o cliente clica em "Adicionar ao carrinho".
  */
