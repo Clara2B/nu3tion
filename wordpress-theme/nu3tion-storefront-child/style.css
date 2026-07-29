@@ -924,15 +924,18 @@ body.nu3tion-page {
   .cart-drawer { width: 100%; max-width: 100%; }
 }
 
-/* ---------- Checkout do WooCommerce ----------
-   O checkout usa o formulario padrao do WooCommerce (shortcode
-   [woocommerce_checkout]) dentro do template generico de pagina do
-   Storefront, que nunca ganhou estilo proprio do tema — por isso ficava
-   com a barra lateral de blog (Recent Posts etc.) e tipografia gigante
-   herdada do kit global do Elementor. Escopado com "body.woocommerce-page"
-   / "body.woocommerce-checkout", classes que o proprio WooCommerce
-   adiciona ao <body> nessas paginas, entao funciona independente de qual
-   template estiver renderizando por baixo. */
+/* ---------- Checkout do WooCommerce (assistente em 3 passos) ----------
+   O checkout usa um assistente de 3 passos que ja existe via JS
+   (setupWooCheckoutSteps, em site.js): Dados de entrega -> Forma de
+   pagamento -> Revisar e confirmar, dentro de um cartao centralizado
+   (.wc-checkout-card). O JS ja monta toda a logica (mostrar/esconder cada
+   passo, navegacao, validacao, resumo do pedido) — so faltava o CSS, que
+   nunca tinha sido escrito. Sem ele, "checkout-step-hidden" nao escondia
+   nada de verdade (so trocava a classe) e tudo aparecia junto, sem estilo,
+   herdando a tipografia gigante do kit global do Elementor.
+   Escopado com "body.woocommerce-page"/"body.woocommerce-checkout" (classes
+   que o proprio WooCommerce ja adiciona ao body, funciona independente do
+   template por baixo) e ".wc-checkout-card" (o cartao do assistente). */
 body.woocommerce-page #secondary,
 body.woocommerce-page .widget-area {
   display: none;
@@ -943,18 +946,18 @@ body.woocommerce-page .content-area {
   width: 100% !important;
   float: none !important;
 }
-
 body.woocommerce-checkout .content-area,
 body.woocommerce-checkout #primary {
-  max-width: 1160px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 48px 24px 96px;
 }
 body.woocommerce-checkout .entry-title {
   font-family: var(--font-display);
-  font-size: 30px;
-  margin-bottom: 32px;
+  font-size: 28px;
+  margin-bottom: 24px;
   color: var(--color-ink);
+  text-align: center;
 }
 
 /* Aviso "Tem um cupom?" */
@@ -973,6 +976,7 @@ body.woocommerce-checkout .entry-title {
 }
 .woocommerce-checkout .showcoupon {
   color: var(--color-accent);
+  font-size: 14px;
   font-weight: 700;
   text-decoration: underline;
 }
@@ -987,7 +991,7 @@ body.woocommerce-checkout .entry-title {
   gap: 12px;
   align-items: flex-end;
 }
-.woocommerce-checkout .woocommerce-form-coupon p { margin: 0; flex: 1 1 220px; }
+.woocommerce-checkout .woocommerce-form-coupon p { margin: 0; flex: 1 1 220px; font-size: 14px; }
 .woocommerce-checkout .woocommerce-form-coupon .input-text {
   width: 100%;
   border: 1px solid var(--color-border);
@@ -1004,45 +1008,72 @@ body.woocommerce-checkout .entry-title {
   color: #fff;
   font-weight: 600;
   font-family: inherit;
+  font-size: 14px;
   cursor: pointer;
 }
 
-/* Layout: dados a esquerda, pedido a direita */
-.woocommerce-checkout form.checkout {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 40px;
-  align-items: start;
+/* Indicador de passos (bolinhas) */
+.checkout-progress {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 28px;
 }
-.woocommerce-checkout #customer_details { grid-column: 1; }
-.woocommerce-checkout #order_review_heading,
-.woocommerce-checkout #order_review {
-  grid-column: 2;
-  grid-row: 1 / span 2;
+.checkout-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.woocommerce-checkout .col2-set { display: block; }
-.woocommerce-checkout .col-1, .woocommerce-checkout .col-2 { width: 100%; float: none; }
+.checkout-dot.is-active { background: var(--color-accent); transform: scale(1.25); }
 
-.woocommerce-checkout h3,
-.woocommerce-checkout #order_review_heading {
-  font-family: var(--font-display);
-  font-size: 19px;
-  margin-bottom: 18px;
+/* Cartao do assistente */
+.wc-checkout-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+  overflow: hidden;
+}
+.wc-checkout-card .checkout-step h3:not(:first-child) {
+  font-size: 15px;
+  color: var(--color-ink-soft);
+  margin-top: 22px;
+  margin-bottom: 14px;
+}
+.wc-checkout-card .checkout-step > h3:first-child {
+  font-size: 22px;
   color: var(--color-ink);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.checkout-step-heading-2,
+.checkout-step-heading-3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--color-ink);
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
-.woocommerce-checkout .form-row { margin-bottom: 16px; }
-.woocommerce-checkout label {
+.wc-checkout-card .col2-set { display: block; }
+.wc-checkout-card .col-1, .wc-checkout-card .col-2 { width: 100%; float: none; }
+
+.wc-checkout-card .form-row { margin-bottom: 16px; }
+.wc-checkout-card label {
   display: block;
   font-size: 13px;
   font-weight: 600;
   color: var(--color-ink-soft);
   margin-bottom: 6px;
 }
-.woocommerce-checkout label .required { color: var(--color-accent); text-decoration: none; }
-.woocommerce-checkout .input-text,
-.woocommerce-checkout select,
-.woocommerce-checkout textarea {
+.wc-checkout-card label .required { color: var(--color-accent); text-decoration: none; }
+.wc-checkout-card .input-text,
+.wc-checkout-card select,
+.wc-checkout-card textarea {
   width: 100%;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -1052,13 +1083,13 @@ body.woocommerce-checkout .entry-title {
   color: var(--color-ink);
   background: var(--color-surface);
 }
-.woocommerce-checkout .input-text:focus,
-.woocommerce-checkout select:focus,
-.woocommerce-checkout textarea:focus {
+.wc-checkout-card .input-text:focus,
+.wc-checkout-card select:focus,
+.wc-checkout-card textarea:focus {
   outline: none;
   border-color: var(--color-accent);
 }
-.woocommerce-checkout .select2-container .select2-selection--single {
+.wc-checkout-card .select2-container .select2-selection--single {
   height: 44px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -1066,73 +1097,40 @@ body.woocommerce-checkout .entry-title {
   align-items: center;
   padding: 0 14px;
 }
-
-/* Cartao do resumo do pedido */
-.woocommerce-checkout #order_review {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--shadow-card);
-}
-.woocommerce-checkout table.shop_table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 16px;
-}
-.woocommerce-checkout table.shop_table th,
-.woocommerce-checkout table.shop_table td {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 14px;
-  text-align: left;
-}
-.woocommerce-checkout table.shop_table th.product-total,
-.woocommerce-checkout table.shop_table td.product-total {
-  text-align: right;
-}
-.woocommerce-checkout table.shop_table thead th {
-  color: var(--color-ink-muted);
-  font-weight: 600;
-  font-size: 12.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.woocommerce-checkout table.shop_table tfoot th,
-.woocommerce-checkout table.shop_table tfoot td { border-bottom: none; }
-.woocommerce-checkout table.shop_table tfoot .order-total th,
-.woocommerce-checkout table.shop_table tfoot .order-total td {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--color-primary);
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
+.wc-checkout-card .form-row.has-error .input-text,
+.wc-checkout-card .form-row.has-error select,
+.wc-checkout-card .form-row.has-error textarea {
+  border-color: #c0392b;
 }
 
-/* Formas de pagamento */
-.woocommerce-checkout ul.wc_payment_methods {
+/* A tabela nativa do pedido fica escondida -- so serve de fonte de dados
+   pro resumo bonito (.checkout-summary) que o JS monta no passo 3. */
+.wc-checkout-card table.shop_table { display: none; }
+
+/* Formas de pagamento (passo 2) */
+.wc-checkout-card ul.wc_payment_methods {
   list-style: none;
-  margin: 0 0 20px;
+  margin: 0 0 4px;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.woocommerce-checkout ul.wc_payment_methods li.wc_payment_method {
+.wc-checkout-card ul.wc_payment_methods li.wc_payment_method {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius);
   padding: 14px 16px;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
-.woocommerce-checkout ul.wc_payment_methods li.wc_payment_method:has(input:checked) {
+.wc-checkout-card ul.wc_payment_methods li.wc_payment_method:has(input:checked) {
   border-color: var(--color-accent);
   background: var(--color-accent-soft);
 }
-.woocommerce-checkout ul.wc_payment_methods input[type="radio"] {
+.wc-checkout-card ul.wc_payment_methods input[type="radio"] {
   margin-right: 10px;
   accent-color: var(--color-accent);
 }
-.woocommerce-checkout ul.wc_payment_methods label {
+.wc-checkout-card ul.wc_payment_methods label {
   display: inline-flex;
   align-items: center;
   font-weight: 600;
@@ -1141,8 +1139,8 @@ body.woocommerce-checkout .entry-title {
   margin-bottom: 0;
   cursor: pointer;
 }
-.woocommerce-checkout ul.wc_payment_methods label img { height: 20px; margin-left: 8px; }
-.woocommerce-checkout .payment_box {
+.wc-checkout-card ul.wc_payment_methods label img { height: 20px; margin-left: 8px; }
+.wc-checkout-card .payment_box {
   margin-top: 10px;
   padding: 12px 14px;
   background: var(--color-tint);
@@ -1150,12 +1148,44 @@ body.woocommerce-checkout .entry-title {
   font-size: 13px;
   color: var(--color-ink-soft);
 }
-.woocommerce-checkout .payment_box p { margin: 0 0 8px; }
-.woocommerce-checkout .payment_box p:last-child { margin-bottom: 0; }
+.wc-checkout-card .payment_box p { margin: 0 0 8px; }
+.wc-checkout-card .payment_box p:last-child { margin-bottom: 0; }
 
-/* Botao finalizar */
-.woocommerce-checkout .place-order { margin-top: 20px; }
-.woocommerce-checkout #place_order {
+/* Resumo do pedido (passo 3) */
+.checkout-summary { margin-bottom: 20px; }
+.checkout-summary p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+  margin: 0;
+}
+.checkout-summary p:last-child {
+  border-bottom: none;
+  border-top: 1px solid var(--color-border);
+  margin-top: 6px;
+  padding-top: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Navegacao entre passos */
+.wc-checkout-card .checkout-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.wc-checkout-card .checkout-nav .btn { flex: 1; }
+.wc-checkout-card .place-order {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+.wc-checkout-card #place_order {
   width: 100%;
   border: none;
   border-radius: 999px;
@@ -1169,16 +1199,26 @@ body.woocommerce-checkout .entry-title {
   box-shadow: 0 6px 16px rgba(28, 62, 126, 0.22);
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.woocommerce-checkout #place_order:hover {
+.wc-checkout-card #place_order:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(28, 62, 126, 0.32);
 }
-.woocommerce-checkout .woocommerce-privacy-policy-text {
+.wc-checkout-card .woocommerce-privacy-policy-text {
   font-size: 12px;
   color: var(--color-ink-muted);
-  margin-top: 14px;
 }
-.woocommerce-checkout .woocommerce-privacy-policy-text a { color: var(--color-accent); text-decoration: underline; }
+.wc-checkout-card .woocommerce-privacy-policy-text a { color: var(--color-accent); text-decoration: underline; }
+
+/* Passos escondidos: fora do fluxo e invisiveis, mas continuam "presentes"
+   no DOM (position+visibility, nunca display:none) -- necessario pro script
+   do Mercado Pago (cartao/boleto) conseguir se conectar aos campos de
+   pagamento antes do cliente chegar no passo 2 (ver comentario no site.js,
+   funcao toggleStepVisibility). */
+.checkout-step-hidden {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
 
 /* Avisos e erros */
 .woocommerce-checkout .woocommerce-error,
@@ -1194,14 +1234,8 @@ body.woocommerce-checkout .entry-title {
 }
 .woocommerce-checkout .woocommerce-error { border-left-color: #c0392b; }
 
-@media (max-width: 900px) {
-  .woocommerce-checkout form.checkout { grid-template-columns: 1fr; }
-  .woocommerce-checkout #customer_details,
-  .woocommerce-checkout #order_review_heading,
-  .woocommerce-checkout #order_review {
-    grid-column: 1;
-    grid-row: auto;
-  }
+@media (max-width: 480px) {
+  .wc-checkout-card { padding: 24px 18px; }
 }
 
 /* ---------- Footer ---------- */
