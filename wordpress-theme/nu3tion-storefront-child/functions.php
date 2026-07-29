@@ -111,6 +111,17 @@ function nu3tion_redirect_float_cart_to_cart_page( $url ) {
 add_filter( 'woocommerce_add_to_cart_redirect', 'nu3tion_redirect_float_cart_to_cart_page' );
 
 /**
+ * Ao cancelar um pedido pendente (ex: na tela de pagamento do Pix), o
+ * WooCommerce manda o cliente pra "Minha Conta" por padrao — uma area que
+ * o tema nunca desenhou, ja que o site e' de pagina unica. Manda pra home
+ * em vez disso.
+ */
+function nu3tion_cancel_order_redirect_url( $url ) {
+	return add_query_arg( 'redirect', rawurlencode( home_url( '/' ) ), $url );
+}
+add_filter( 'woocommerce_get_cancel_order_url', 'nu3tion_cancel_order_redirect_url' );
+
+/**
  * Atualiza o numerinho do carrinho no header via AJAX (sem recarregar a
  * pagina) quando o cliente clica em "Adicionar ao carrinho".
  */
