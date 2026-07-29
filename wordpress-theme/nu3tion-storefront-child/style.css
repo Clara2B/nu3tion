@@ -1234,7 +1234,12 @@ body.woocommerce-checkout .entry-title {
   font-size: 12px;
   color: var(--color-ink-muted);
 }
-.wc-checkout-card .woocommerce-privacy-policy-text a { color: var(--color-accent); text-decoration: underline; }
+.wc-checkout-card .woocommerce-privacy-policy-text a {
+  font-size: inherit;
+  font-weight: inherit;
+  color: var(--color-accent);
+  text-decoration: underline;
+}
 
 /* Passos escondidos: fora do fluxo e invisiveis, mas continuam "presentes"
    no DOM (position+visibility, nunca display:none) -- necessario pro script
@@ -1245,6 +1250,14 @@ body.woocommerce-checkout .entry-title {
   position: absolute;
   visibility: hidden;
   pointer-events: none;
+}
+/* "visibility: hidden" deveria bastar pra esconder tudo dentro, mas algum
+   CSS (WooCommerce ou Elementor) forca "visibility: visible !important" nos
+   asteriscos de campo obrigatorio (".required") por acessibilidade — isso
+   "vaza" atraves do passo escondido e sobra um "*" solto na tela. Reforca
+   escondendo especificamente esses asteriscos tambem. */
+.checkout-step-hidden .required {
+  visibility: hidden !important;
 }
 
 /* Avisos e erros */
