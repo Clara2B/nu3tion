@@ -965,11 +965,12 @@ body.woocommerce-checkout .entry-title {
   display: flex;
   align-items: center;
   gap: 10px;
+  max-width: 560px;
+  margin: 0 auto 24px;
   background: var(--color-accent-soft);
   color: var(--color-accent);
   border-radius: var(--radius-sm);
   padding: 14px 18px;
-  margin-bottom: 24px;
   font-size: 14px;
   font-weight: 600;
   list-style: none;
@@ -981,11 +982,12 @@ body.woocommerce-checkout .entry-title {
   text-decoration: underline;
 }
 .woocommerce-checkout .woocommerce-form-coupon {
+  max-width: 560px;
+  margin: 0 auto 24px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 20px;
-  margin-bottom: 24px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -1017,6 +1019,7 @@ body.woocommerce-checkout .entry-title {
   display: flex;
   justify-content: center;
   gap: 10px;
+  max-width: 560px;
   margin: 0 auto 28px;
 }
 .checkout-dot {
@@ -1031,6 +1034,8 @@ body.woocommerce-checkout .entry-title {
 /* Cartao do assistente */
 .wc-checkout-card {
   position: relative;
+  max-width: 560px;
+  margin: 0 auto;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -1038,6 +1043,11 @@ body.woocommerce-checkout .entry-title {
   padding: 32px;
   overflow: hidden;
 }
+/* Titulo nativo "Seu pedido" do WooCommerce -- os titulos de cada passo
+   (Dados de entrega / Forma de pagamento / Revisar e confirmar) ja cobrem
+   essa funcao, e esse aqui nao era escondido pelo assistente de passos
+   (so ficava sobrando, solto). */
+.wc-checkout-card #order_review_heading { display: none; }
 .wc-checkout-card .checkout-step h3:not(:first-child) {
   font-size: 15px;
   color: var(--color-ink-soft);
