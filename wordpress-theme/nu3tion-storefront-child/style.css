@@ -1274,6 +1274,76 @@ body.woocommerce-checkout .entry-title {
 }
 .woocommerce-checkout .woocommerce-error { border-left-color: #c0392b; }
 
+/* ---------- Detalhes do pedido (pagina de agradecimento / pagamento pendente) ----------
+   Mesma causa das outras paginas do WooCommerce: nunca recebeu CSS do tema,
+   entao os botoes "Pagar"/"Cancelar" (classes nativas do WooCommerce, usadas
+   tambem em "Meus pedidos") herdavam a fonte gigante do kit global do
+   Elementor. */
+.woocommerce-order-details,
+.woocommerce-order {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.woocommerce-order-details h2,
+.woocommerce-order-details h3,
+.woocommerce-order > h2 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin: 32px 0 16px;
+  color: var(--color-ink);
+}
+table.woocommerce-table--order-details {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-size: 14px;
+}
+table.woocommerce-table--order-details th,
+table.woocommerce-table--order-details td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+table.woocommerce-table--order-details tfoot th,
+table.woocommerce-table--order-details tfoot td { border-bottom: none; }
+table.woocommerce-table--order-details a {
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  padding: 11px 22px !important;
+  margin: 4px 8px 4px 0;
+  cursor: pointer;
+  text-decoration: none !important;
+  background: var(--color-primary);
+  color: #fff !important;
+}
+.woocommerce a.button.cancel {
+  background: transparent;
+  color: var(--color-ink) !important;
+  border: 1.5px solid var(--color-border);
+}
+.woocommerce a.button.pay {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+}
+
 @media (max-width: 640px) {
   .wc-checkout-card,
   .checkout-progress,
