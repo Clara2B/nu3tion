@@ -273,6 +273,25 @@
     );
   }
 
+  /* ---------- Dispara o evento nativo do WooCommerce apos add-to-cart via AJAX customizado ----------
+   * O script nativo do WooCommerce (wc-add-to-cart.js) dispara "added_to_cart"
+   * no <body> via jQuery sempre que um produto entra no carrinho — e' esse
+   * evento que os plugins de pixel/rastreamento (Meta, Google, TikTok, Reddit,
+   * Snapchat...) escutam pra contar a conversao de "adicionar ao carrinho".
+   * Como nosso caminho rapido de add-to-cart (fetch direto pro endpoint,
+   * sem carregar o script nativo) nunca disparava esse evento, esses pixels
+   * nunca registravam a adicao ao carrinho. Reproduz o disparo aqui, com a
+   * mesma assinatura que o WooCommerce usa (fragments, cart_hash, botao).
+   */
+  function triggerAddedToCartEvent(fragments, cartHash, buttonEl) {
+    if (!window.jQuery) return;
+    window.jQuery(document.body).trigger('added_to_cart', [
+      fragments || {},
+      cartHash || '',
+      buttonEl ? window.jQuery(buttonEl) : window.jQuery()
+    ]);
+  }
+
   /* ---------- Adicionar ao carrinho sem sair da pagina inicial ----------
    * Caminho rapido: chama direto o endpoint nativo de add-to-cart do
    * WooCommerce via fetch (resposta leve em JSON). So' cai pro metodo de
@@ -333,6 +352,7 @@
           if (!response || response.error) throw new Error('Resposta invalida do add_to_cart');
           if (btn) btn.classList.remove('is-loading');
           applyCartUpdate(response.fragments, quantity);
+          triggerAddedToCartEvent(response.fragments, response.cart_hash, btn);
         })
         .catch(function (err) {
           // Caminho rapido falhou (ex: pixel de rastreamento interferindo na
@@ -363,6 +383,7 @@
         .then(function (response) {
           if (!response || !response.fragments) return;
           applyCartUpdate(response.fragments, qty);
+          triggerAddedToCartEvent(response.fragments, response.cart_hash, btn);
         })
         .catch(function (err) {
           console.error('Erro ao adicionar ao carrinho:', err);
@@ -441,6 +462,7 @@
               });
             });
           }
+          triggerAddedToCartEvent(response.fragments, response.cart_hash, btn);
           var cartToggle = document.getElementById('cartToggle');
           if (cartToggle) cartToggle.click();
         })
