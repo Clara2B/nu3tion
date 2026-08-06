@@ -492,6 +492,17 @@
       drawer.classList.add('is-open');
       backdrop.classList.add('is-open');
       drawer.setAttribute('aria-hidden', 'false');
+
+      /* O carrinho e' um painel lateral (nunca uma navegacao de verdade pra
+       * uma pagina de carrinho), entao nenhum rastreamento baseado em
+       * "carregou a pagina X" consegue ver isso acontecer. Como o Meta nao
+       * tem um evento padrao pra "visualizou o carrinho", disparamos um
+       * evento customizado aqui — o unico lugar por onde passam TODOS os
+       * caminhos que abrem o painel (icone do header, botao flutuante do
+       * mobile, botao "Ver carrinho" do toast de confirmacao). */
+      if (typeof window.fbq === 'function') {
+        window.fbq('trackCustom', 'ViewCart');
+      }
     }
 
     function closeDrawer() {
