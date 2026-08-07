@@ -796,6 +796,18 @@
       }
     }
 
+    /* Dispara o evento "Lead" do Meta Pixel no momento exato em que os dados
+     * da etapa 1 (nome, telefone, endereco etc.) passam pela nossa propria
+     * validacao e o cliente avanca de verdade pro passo 2 — nunca antes
+     * disso (ex: clique que a validacao bloqueia por campo vazio nao conta).
+     * So dispara saindo do passo 1; nos passos 2 e 3 nao se aplica.
+     */
+    function maybeFireLead(fromStep) {
+      if (fromStep !== 1) return;
+      if (typeof window.fbq !== 'function') return;
+      window.fbq('track', 'Lead');
+    }
+
     function bindStepNav() {
       form.addEventListener('click', function (e) {
         var nextBtn = e.target.closest('.checkout-next');
@@ -804,6 +816,7 @@
           e.preventDefault();
           var currentStep = parseInt(card.getAttribute('data-current-step'), 10) || 1;
           if (!validateStep(currentStep)) return;
+          maybeFireLead(currentStep);
           goToStep(parseInt(nextBtn.getAttribute('data-next'), 10));
         } else if (backBtn) {
           e.preventDefault();
@@ -825,6 +838,7 @@
         e.preventDefault();
         e.stopPropagation();
         if (!validateStep(currentStep)) return;
+        maybeFireLead(currentStep);
         goToStep(currentStep + 1);
       }, true);
     }
