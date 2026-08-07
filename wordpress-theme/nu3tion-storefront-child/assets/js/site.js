@@ -23,6 +23,26 @@
     setupWooCheckoutSteps();
     setupOrderPaymentWatcher();
     setupStockModal();
+    setupViewContentTracking();
+  }
+
+  /* ---------- Dispara ViewContent (Meta Pixel) nos CTAs que levam ao produto ----------
+   * O produto nao tem pagina propria nesse site — fica todo na secao
+   * "Comprar" da home, acessada por ancora (#comprar). Entao "ver o
+   * produto" = clicar em qualquer CTA que leva pra essa secao (o "Compre
+   * Agora" do header, e os varios "Experimentar/Quero o OraProtein®"
+   * espalhados pela pagina). Um unico listener delegado no documento cobre
+   * todos eles de uma vez, sem precisar de uma regra por botao na
+   * ferramenta visual do Meta (que se mostrou pouco confiavel nesse site —
+   * ver ViewCart e Lead, que tambem foram resolvidos assim).
+   */
+  function setupViewContentTracking() {
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href$="#comprar"]');
+      if (!link) return;
+      if (typeof window.fbq !== 'function') return;
+      window.fbq('track', 'ViewContent');
+    });
   }
 
   /* ---------- Header ---------- */
