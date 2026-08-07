@@ -1,6 +1,56 @@
 (function () {
   'use strict';
 
+  /* ---------- Bloqueia o evento automatico indesejado "SubscribedButtonClick" ----------
+   * O recurso de deteccao automatica de eventos do proprio Meta Pixel insiste
+   * em disparar "SubscribedButtonClick" em varios cliques do site, mesmo
+   * depois de desativado nas configuracoes da conta (Events Manager > Site
+   * Nu3tion WP > Configuracoes > "Rastrear eventos automaticamente sem
+   * codigo") — o toggle nao teve efeito pratico, mesmo horas depois de
+   * desativado. Como isso e' um recurso interno do proprio SDK da Meta, fora
+   * do nosso controle direto, intercepta aqui a funcao fbq() e bloqueia
+   * especificamente qualquer chamada relacionada a esse evento antes dela
+   * seguir pro pixel de verdade — sem afetar nenhum outro evento (AddToCart,
+   * ViewContent, Lead etc. continuam passando normalmente).
+   *
+   * Roda imediatamente (fora do DOMContentLoaded) pra interceptar o quanto
+   * antes, com algumas tentativas caso o script do pixel demore um pouco
+   * pra definir "window.fbq".
+   */
+  function setupBlockUnwantedFbqEvent() {
+    var blocked = ['SubscribedButtonClick'];
+    var attempts = 0;
+
+    function tryWrap() {
+      attempts++;
+      if (typeof window.fbq === 'function' && !window.fbq.__nu3tionBlocklist) {
+        var original = window.fbq;
+
+        var wrapped = function () {
+          var args = Array.prototype.slice.call(arguments);
+          var isBlocked = args.some(function (arg) {
+            return typeof arg === 'string' && blocked.indexOf(arg) !== -1;
+          });
+          if (isBlocked) return;
+          return original.apply(this, args);
+        };
+
+        wrapped.__nu3tionBlocklist = true;
+        // Preserva propriedades do fbq original (queue, callMethod, etc.)
+        // que o proprio SDK do Meta usa internamente.
+        for (var key in original) {
+          if (Object.prototype.hasOwnProperty.call(original, key)) wrapped[key] = original[key];
+        }
+        window.fbq = wrapped;
+        return;
+      }
+      if (attempts < 20) setTimeout(tryWrap, 250); // tenta por ate 5s
+    }
+
+    tryWrap();
+  }
+  setupBlockUnwantedFbqEvent();
+
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
